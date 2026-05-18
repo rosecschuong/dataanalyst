@@ -1,329 +1,869 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard Thống Kê Issue 2024–2026</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dashboard Thống Kê Issue – Omicall 2024–2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f3ef; color: #2c2c2a; font-size: 14px; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  .top-bar { background: #2c2c2a; color: #fff; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
-  .top-bar h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.01em; }
-  .top-bar .meta { font-size: 12px; color: #aaa; margin-top: 2px; }
-  .gs-btn { background: #4285F4; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-  .gs-btn:hover { background: #2b6fd4; }
-  .gs-btn svg { width: 16px; height: 16px; fill: white; }
+:root{
+  --navy:#0d1b3e;
+  --navy2:#15244a;
+  --blue:#2563eb;
+  --blue2:#3b82f6;
+  --purple:#7c3aed;
+  --red:#dc2626;
+  --red-bg:#fee2e2;
+  --orange:#ea580c;
+  --orange-bg:#ffedd5;
+  --sky:#0284c7;
+  --sky-bg:#dbeafe;
+  --gray-bg:#f1f5f9;
+  --border:#e2e8f0;
+  --text:#0f172a;
+  --muted:#64748b;
+  --light:#94a3b8;
+}
 
-  .page { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+body{font-family:'Inter',sans-serif;background:var(--gray-bg);color:var(--text);min-height:100vh;}
 
-  /* ---- EDIT GUIDE ---- */
-  .edit-guide { background: #E6F1FB; border-left: 4px solid #378ADD; border-radius: 6px; padding: 14px 18px; margin-bottom: 24px; }
-  .edit-guide h3 { font-size: 13px; font-weight: 600; color: #185FA5; margin-bottom: 8px; }
-  .edit-guide ul { padding-left: 18px; }
-  .edit-guide li { font-size: 12px; color: #444; line-height: 1.8; }
-  .edit-guide code { background: rgba(24,95,165,0.12); color: #185FA5; padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+/* ===== TOP BAR ===== */
+.topbar{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;
+  padding:0 28px;
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;top:0;z-index:999;
+  box-shadow:0 4px 24px rgba(0,0,0,.22);
+}
+.top-left{display:flex;align-items:center;gap:16px;}
+.top-logo{width:36px;height:36px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.top-title{font-size:18px;font-weight:800;letter-spacing:-.02em;}
+.top-sub{font-size:11px;color:#93afd4;margin-top:2px;}
+.top-right{display:flex;align-items:center;gap:10px;}
+.live-dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.6;transform:scale(1.4);}}
+.live-label{font-size:12px;color:#86efac;font-weight:600;}
+.btn-action{
+  border:none;padding:9px 16px;border-radius:10px;font-weight:600;font-size:13px;
+  cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;
+}
+.btn-refresh{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);}
+.btn-refresh:hover{background:rgba(255,255,255,.22);}
+.btn-sheet{background:#fff;color:var(--navy);}
+.btn-sheet:hover{background:#dbeafe;color:var(--blue);}
+.last-update{font-size:11px;color:#93afd4;white-space:nowrap;}
 
-  /* ---- METRICS ---- */
-  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-  .metric { background: #fff; border-radius: 8px; padding: 16px; border: 0.5px solid #ddd; }
-  .metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-  .metric-value { font-size: 26px; font-weight: 700; color: #2c2c2a; line-height: 1; }
-  .metric-sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+/* ===== LOADING ===== */
+#loadingOverlay{
+  position:fixed;inset:0;background:rgba(13,27,62,.88);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:9999;transition:.3s;
+}
+#loadingOverlay.hidden{opacity:0;pointer-events:none;}
+.spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.2);border-top-color:#3b82f6;border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{color:#fff;font-size:16px;font-weight:600;}
+.loading-sub{color:#93afd4;font-size:13px;margin-top:6px;}
 
-  /* ---- CHARTS ---- */
-  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-  .chart-card { background: #fff; border-radius: 10px; padding: 20px; border: 0.5px solid #ddd; }
-  .chart-card.wide { grid-column: 1 / -1; }
-  .chart-title { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px; }
-  .chart-sub { font-size: 11px; color: #aaa; margin-bottom: 14px; }
-  .chart-wrap { position: relative; }
+/* ===== ERROR ===== */
+#errorBox{
+  background:#fef2f2;border:1px solid #fecaca;border-radius:16px;padding:20px 24px;
+  margin:24px;display:none;align-items:flex-start;gap:14px;
+}
+#errorBox.show{display:flex;}
+.err-icon{font-size:28px;flex-shrink:0;}
+.err-title{font-size:15px;font-weight:700;color:#b91c1c;margin-bottom:6px;}
+.err-text{font-size:13px;color:#64748b;line-height:1.7;}
 
-  /* ---- LEGEND ---- */
-  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
-  .legend span { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #666; }
-  .leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+/* ===== LAYOUT ===== */
+.page{padding:20px 24px;display:flex;flex-direction:column;gap:20px;}
 
-  /* ---- TABLE ---- */
-  .table-card { background: #fff; border-radius: 10px; border: 0.5px solid #ddd; overflow: hidden; margin-bottom: 20px; }
-  .table-header { padding: 16px 20px; border-bottom: 0.5px solid #eee; display: flex; align-items: center; justify-content: space-between; }
-  .table-header h2 { font-size: 14px; font-weight: 600; color: #333; }
-  table { width: 100%; border-collapse: collapse; }
-  thead th { background: #2c2c2a; color: #fff; font-size: 11px; font-weight: 600; padding: 10px 12px; text-align: left; text-transform: uppercase; letter-spacing: 0.04em; position: sticky; top: 0; }
-  tbody tr:nth-child(even) { background: #fafaf8; }
-  tbody tr:hover { background: #f0f0ed; }
-  tbody td { padding: 9px 12px; font-size: 13px; border-bottom: 0.5px solid #eee; vertical-align: middle; }
-  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
-  .b-red    { background: #FCEBEB; color: #A32D2D; }
-  .b-amber  { background: #FAEEDA; color: #854F0B; }
-  .b-blue   { background: #E6F1FB; color: #185FA5; }
-  .b-gray   { background: #F1EFE8; color: #5F5E5A; }
-  .bar-wrap { display: flex; align-items: center; gap: 6px; }
-  .bar-bg   { background: #eee; border-radius: 3px; height: 7px; flex: 1; overflow: hidden; min-width: 60px; }
-  .bar-fill { height: 100%; border-radius: 3px; }
-  .num { font-weight: 700; }
+/* ===== METRICS ===== */
+.metrics-row{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+.metric{
+  background:#fff;border-radius:18px;padding:20px 22px;
+  border:1px solid var(--border);
+  box-shadow:0 2px 12px rgba(15,23,42,.05);
+  position:relative;overflow:hidden;
+}
+.metric::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+}
+.metric-icon{font-size:22px;margin-bottom:10px;}
+.metric-label{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.metric-value{font-size:32px;font-weight:800;color:var(--text);line-height:1;}
+.metric-sub{font-size:12px;color:var(--light);margin-top:8px;}
+.metric-badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 8px;border-radius:6px;background:#dcfce7;color:#166534;margin-top:6px;}
 
-  /* ---- FOOTER ---- */
-  .footer { text-align: center; font-size: 11px; color: #aaa; padding: 20px 0; }
+/* ===== MAIN GRID ===== */
+.main-grid{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;}
+.center-col{display:flex;flex-direction:column;gap:20px;}
+.right-col{display:flex;flex-direction:column;gap:20px;}
 
-  @media (max-width: 768px) {
-    .metrics { grid-template-columns: 1fr 1fr; }
-    .charts-row { grid-template-columns: 1fr; }
-    .charts-row .chart-card.wide { grid-column: 1; }
-  }
+/* ===== CARDS ===== */
+.card{background:#fff;border-radius:18px;border:1px solid var(--border);box-shadow:0 2px 12px rgba(15,23,42,.05);overflow:hidden;}
+.card-head{
+  padding:18px 22px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card-title{font-size:15px;font-weight:700;}
+.card-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.card-body{padding:20px 22px;}
+
+/* ===== CHARTS ===== */
+.charts-2col{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;}
+.chart-wrap{position:relative;}
+
+/* ===== FILTER BAR ===== */
+.filter-bar{
+  background:#fff;border-radius:18px;border:1px solid var(--border);
+  box-shadow:0 2px 12px rgba(15,23,42,.05);
+  padding:16px 22px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.filter-bar label{font-size:12px;font-weight:700;color:var(--muted);white-space:nowrap;}
+.filter-input{
+  flex:1;min-width:160px;padding:9px 14px;
+  border:1px solid var(--border);border-radius:10px;
+  font-size:13px;font-family:inherit;outline:none;
+  transition:border .2s;
+}
+.filter-input:focus{border-color:var(--blue);}
+.filter-select{
+  padding:9px 14px;border:1px solid var(--border);border-radius:10px;
+  font-size:13px;font-family:inherit;outline:none;background:#fff;
+  min-width:160px;cursor:pointer;
+}
+.filter-select:focus{border-color:var(--blue);}
+.filter-count{font-size:12px;color:var(--muted);white-space:nowrap;margin-left:auto;}
+.btn-clear{
+  padding:9px 14px;border-radius:10px;border:1px solid var(--border);
+  background:#fff;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;
+}
+.btn-clear:hover{background:var(--gray-bg);}
+
+/* ===== TABLE ===== */
+.table-wrap{overflow-x:auto;max-height:520px;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;}
+thead th{
+  background:linear-gradient(135deg,var(--navy),var(--navy2));
+  color:#fff;padding:12px 14px;
+  text-align:left;font-size:11px;font-weight:700;
+  letter-spacing:.05em;text-transform:uppercase;
+  position:sticky;top:0;z-index:2;white-space:nowrap;
+}
+tbody tr:nth-child(even){background:#f8fafc;}
+tbody tr:hover{background:#eff6ff;cursor:default;}
+td{padding:11px 14px;border-bottom:1px solid #f1f5f9;font-size:13px;vertical-align:middle;}
+.td-num{font-weight:700;text-align:right;}
+.bar-cell{display:flex;align-items:center;gap:8px;}
+.bar-bg{height:6px;background:#e2e8f0;border-radius:4px;flex:1;min-width:60px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:4px;transition:width .4s;}
+
+/* ===== BADGE ===== */
+.badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;
+}
+.b-red{background:var(--red-bg);color:#b91c1c;}
+.b-orange{background:var(--orange-bg);color:#c2410c;}
+.b-blue{background:var(--sky-bg);color:#1d4ed8;}
+.b-gray{background:#f1f5f9;color:#475569;}
+
+/* ===== INSIGHT ===== */
+.insight-item{
+  display:flex;gap:12px;padding:14px;border-radius:14px;
+  background:#f8fafc;margin-bottom:10px;border:1px solid var(--border);
+  transition:.2s;
+}
+.insight-item:hover{background:#eff6ff;border-color:var(--sky-bg);}
+.insight-item:last-child{margin-bottom:0;}
+.ins-icon{
+  width:42px;height:42px;border-radius:12px;background:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+  flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.ins-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.ins-text{font-size:12px;color:var(--muted);line-height:1.65;}
+
+/* ===== QUICK STATS ===== */
+.qs-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f1f5f9;}
+.qs-row:last-child{border-bottom:none;padding-bottom:0;}
+.qs-label{font-size:13px;color:var(--muted);}
+.qs-val{font-size:14px;font-weight:700;}
+
+/* ===== PROGRESS LIST ===== */
+.prog-item{margin-bottom:14px;}
+.prog-item:last-child{margin-bottom:0;}
+.prog-label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;}
+.prog-name{font-weight:600;color:var(--text);}
+.prog-pct{color:var(--muted);}
+.prog-bg{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:4px;}
+
+/* ===== REC CARD ===== */
+.rec-item{
+  display:flex;align-items:flex-start;gap:10px;padding:10px 12px;
+  border-radius:12px;background:#f8fafc;margin-bottom:8px;
+  font-size:13px;line-height:1.6;
+}
+.rec-item:last-child{margin-bottom:0;}
+.rec-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+
+/* ===== FOOTER ===== */
+.footer{text-align:center;padding:24px;color:var(--light);font-size:12px;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:1280px){
+  .main-grid{grid-template-columns:1fr;}
+  .charts-2col{grid-template-columns:1fr;}
+  .metrics-row{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:640px){
+  .metrics-row{grid-template-columns:1fr 1fr;}
+  .topbar{padding:0 16px;}
+  .page{padding:14px;}
+}
 </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <div>
-    <h1>Dashboard Thống Kê Issue – Hệ thống 2024–2026</h1>
-    <div class="meta">Nguồn: Omicall Ticket System · Cập nhật: tháng 5/2026 · Thanh toán thủ công đã gộp chung</div>
+<!-- LOADING -->
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">Đang tải dữ liệu Google Sheets…</div>
+  <div class="loading-sub">Vui lòng chờ trong giây lát</div>
+</div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="top-left">
+    <div class="top-logo">📊</div>
+    <div>
+      <div class="top-title">DASHBOARD THỐNG KÊ ISSUE</div>
+      <div class="top-sub">Omicall · Dữ liệu realtime từ Google Sheets · Auto refresh 5 phút</div>
+    </div>
   </div>
-  <a class="gs-btn" href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" target="_blank">
-    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 14H8v-2h4v2zm4-4H8v-2h8v2zm0-4H8V7h8v2z"/></svg>
-    Mở Google Sheets
-  </a>
+  <div class="top-right">
+    <div style="display:flex;align-items:center;gap:6px;margin-right:4px;">
+      <div class="live-dot"></div>
+      <span class="live-label">LIVE</span>
+    </div>
+    <span class="last-update" id="lastUpdate">—</span>
+    <button class="btn-action btn-refresh" onclick="loadData(true)">🔄 Làm mới</button>
+    <a class="btn-action btn-sheet" target="_blank"
+       href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535">
+      📄 Mở Google Sheet
+    </a>
+  </div>
 </div>
 
 <div class="page">
 
-  <!-- EDIT GUIDE -->
-  <!--<div class="edit-guide">
-    <h3>✏️ Hướng dẫn cập nhật dữ liệu khi có phát sinh mới</h3>
-    <ul>
-      <li><strong>Thêm issue mới:</strong> Mở Google Sheets → sheet <code>ListIssue</code> → thêm dòng mới với: STT, Nhóm, Tiêu đề lỗi, Số Issue, Tần suất (Rất cao / Cao / Trung bình / Thấp)</li>
-      <li><strong>Cập nhật HTML này:</strong> Tìm phần <code>// ===== DATA =====</code> trong thẻ &lt;script&gt; cuối trang → sửa mảng <code>issues[]</code> và <code>chartData</code> → lưu lại file HTML</li>
-      <li><strong>Thanh toán thủ công đã gộp:</strong> VNPay (3,973) + Thủ công (2,209) + Momo (1,821) + Zalo (838) + Payoo (760) + VietQR (623) = <strong>10,224</strong> — đây là 1 dòng duy nhất</li>
-      <li><strong>Màu tần suất:</strong> Rất cao ≥5,000 → đỏ | Cao 2,000–5,000 → cam | Trung bình 500–2,000 → xanh | Thấp &lt;500 → xám</li>
-    </ul>
-  </div> -->
+  <!-- ERROR -->
+  <div id="errorBox">
+    <div class="err-icon">⚠️</div>
+    <div>
+      <div class="err-title">Không thể tải dữ liệu từ Google Sheets</div>
+      <div class="err-text" id="errorMsg">Vui lòng kiểm tra kết nối internet hoặc đảm bảo Google Sheet đã được xuất bản (Publish to web).<br>
+        <br><strong>Hướng dẫn fix:</strong> Mở Google Sheet → File → Share → Publish to web → Sheet "ListIssue" → CSV → Publish. Sau đó bấm "Làm mới".</div>
+    </div>
+  </div>
 
   <!-- METRICS -->
-  <div class="metrics">
+  <div class="metrics-row">
     <div class="metric">
-      <div class="metric-label">Tổng phiếu ghi</div>
-      <div class="metric-value">196,894</div>
-      <div class="metric-sub">2024 – tháng 5/2026</div>
+      <div class="metric-icon">📋</div>
+      <div class="metric-label">Tổng lần ghi nhận</div>
+      <div class="metric-value" id="mTotal">—</div>
+      <div class="metric-sub">Tất cả issue 2024–2026</div>
     </div>
     <div class="metric">
-      <div class="metric-label">Năm 2024</div>
-      <div class="metric-value">50,538</div>
-      <div class="metric-sub">Năm đầu thu thập</div>
+      <div class="metric-icon">🗂️</div>
+      <div class="metric-label">Số loại issue</div>
+      <div class="metric-value" id="mRows">—</div>
+      <div class="metric-sub">Dòng issue chuẩn hóa</div>
     </div>
     <div class="metric">
-      <div class="metric-label">Năm 2025</div>
-      <div class="metric-value">95,038</div>
-      <div class="metric-sub">+88% so với 2024</div>
+      <div class="metric-icon">🏷️</div>
+      <div class="metric-label">Số nhóm (Group)</div>
+      <div class="metric-value" id="mGroups">—</div>
+      <div class="metric-sub">Group chuẩn hóa</div>
     </div>
     <div class="metric">
-      <div class="metric-label">2026 (5 tháng)</div>
-      <div class="metric-value">51,318</div>
-      <div class="metric-sub">≈ 10,000 phiếu/tháng</div>
+      <div class="metric-icon">🔴</div>
+      <div class="metric-label">Tần suất Rất cao + Cao</div>
+      <div class="metric-value" id="mHigh" style="color:var(--red)">—</div>
+      <div class="metric-sub">Issue ưu tiên xử lý ngay</div>
+    </div>
+    <div class="metric">
+      <div class="metric-icon">📈</div>
+      <div class="metric-label">Top 3 nhóm chiếm</div>
+      <div class="metric-value" id="mTop3">—</div>
+      <div class="metric-sub">Tổng issue toàn hệ thống</div>
     </div>
   </div>
 
-  <!-- CHARTS ROW 1 -->
-  <div class="charts-row">
-    <div class="chart-card wide">
-      <div class="chart-title">Top 10 Issue – Tần suất cao nhất (2024–2026)</div>
-      <div class="chart-sub">Thanh toán thủ công đã gộp chung tất cả kênh (VNPay / Momo / Zalo / Payoo / VietQR)</div>
-      <div class="chart-wrap" style="height:300px">
-        <canvas id="top10Chart" role="img" aria-label="Top 10 issue theo số lần ghi nhận"></canvas>
+  <!-- FILTER BAR -->
+  <div class="filter-bar">
+    <label>🔍 Tìm kiếm:</label>
+    <input class="filter-input" id="searchInput" type="text" placeholder="Nhập tiêu đề issue…">
+    <label>Nhóm:</label>
+    <select class="filter-select" id="groupFilter"><option value="">Tất cả nhóm</option></select>
+    <label>Type Issue:</label>
+    <select class="filter-select" id="typeFilter"><option value="">Tất cả type</option></select>
+    <label>Tần suất:</label>
+    <select class="filter-select" id="freqFilter">
+      <option value="">Tất cả</option>
+      <option value="Rất cao">Rất cao</option>
+      <option value="Cao">Cao</option>
+      <option value="Trung bình">Trung bình</option>
+      <option value="Thấp">Thấp</option>
+    </select>
+    <span class="filter-count" id="filterCount"></span>
+    <button class="btn-clear" onclick="clearFilters()">✕ Xóa lọc</button>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- CENTER -->
+    <div class="center-col">
+
+      <!-- CHARTS -->
+      <div class="charts-2col">
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Phân bố theo nhóm (Group)</div>
+              <div class="card-sub">Tỷ trọng số issue – dùng Tiêu Đề Chuẩn Hóa & Group</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap" style="height:320px">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">Top 10 – Số lần ghi nhận</div>
+              <div class="card-sub">Tiêu Đề Chuẩn Hóa có tần suất cao nhất</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrap" style="height:320px">
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- TABLE -->
+      <div class="card">
+        <div class="card-head">
+          <div>
+            <div class="card-title">Chi tiết issue – Tiêu Đề Chuẩn Hóa</div>
+            <div class="card-sub">Sắp xếp theo số lần ghi nhận giảm dần · Thanh toán thủ công đã gộp</div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:40px">#</th>
+                <th>Tiêu đề chuẩn hóa</th>
+                <th>Nhóm</th>
+                <th>Type Issue</th>
+                <th style="min-width:80px">Số lần</th>
+                <th style="min-width:100px">Tần suất</th>
+                <th style="min-width:130px">Tỷ lệ</th>
+              </tr>
+            </thead>
+            <tbody id="issueTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-col">
+
+      <!-- INSIGHT -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">🔥 Insight nổi bật</div>
+        </div>
+        <div class="card-body" id="insightBox"></div>
+      </div>
+
+      <!-- TOP 5 PROGRESS -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">📊 Top nhóm theo tỷ trọng</div>
+        </div>
+        <div class="card-body" id="progressBox"></div>
+      </div>
+
+      <!-- QUICK STATS -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">⚡ Thống kê nhanh</div>
+        </div>
+        <div class="card-body">
+          <div class="qs-row"><span class="qs-label">Tổng dòng data</span><span class="qs-val" id="qsRows">—</span></div>
+          <div class="qs-row"><span class="qs-label">Nhóm (Group)</span><span class="qs-val" id="qsGroups">—</span></div>
+          <div class="qs-row"><span class="qs-label">Type issue</span><span class="qs-val" id="qsTypes">—</span></div>
+          <div class="qs-row"><span class="qs-label">Issue "Rất cao"</span><span class="qs-val" style="color:var(--red)" id="qsVH">—</span></div>
+          <div class="qs-row"><span class="qs-label">Issue "Cao"</span><span class="qs-val" style="color:var(--orange)" id="qsH">—</span></div>
+          <div class="qs-row"><span class="qs-label">Issue "Trung bình"</span><span class="qs-val" style="color:var(--sky)" id="qsM">—</span></div>
+          <div class="qs-row"><span class="qs-label">Issue "Thấp"</span><span class="qs-val" style="color:var(--muted)" id="qsL">—</span></div>
+        </div>
+      </div>
+
+      <!-- RECOMMENDATIONS -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">💡 Khuyến nghị hành động</div>
+        </div>
+        <div class="card-body">
+          <div class="rec-item"><div class="rec-dot" style="background:#dc2626"></div><div>Triển khai <strong>Watchdog auto-restart</strong> cho services POS & Farcard – giảm 2 issue lớn nhất</div></div>
+          <div class="rec-item"><div class="rec-dot" style="background:#ea580c"></div><div>Chuẩn hóa quy trình <strong>thanh toán thủ công</strong> (VNPay/Momo/Zalo) – training thu ngân</div></div>
+          <div class="rec-item"><div class="rec-dot" style="background:#2563eb"></div><div>Xây dựng <strong>knowledge base & video FAQ</strong> cho nhóm User Ops (lock bàn, đóng ca, hủy TT)</div></div>
+          <div class="rec-item"><div class="rec-dot" style="background:#0284c7"></div><div>Giám sát proactive <strong>uptime RK7 Manager</strong> – alert trước khi nhà hàng báo lỗi</div></div>
+          <div class="rec-item"><div class="rec-dot" style="background:#7c3aed"></div><div>Auto classify issue bằng AI để giảm nhóm <strong>"Chưa Xác Định"</strong></div></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <!-- CHARTS ROW 2 -->
-  <div class="charts-row">
-    <div class="chart-card">
-      <div class="chart-title">Tỷ trọng theo nhóm issue</div>
-      <div class="chart-sub">Gộp tất cả issue cùng nhóm</div>
-      <div class="chart-wrap" style="height:260px">
-        <canvas id="pieChart" role="img" aria-label="Pie chart phân nhóm issue"></canvas>
-      </div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Xu hướng theo năm</div>
-      <div class="chart-sub">Top phân loại phiếu ghi thô (2026 = 5 tháng)</div>
-      <div class="legend">
-        <span><span class="leg-dot" style="background:#E24B4A"></span>POS lỗi kết nối</span>
-        <span><span class="leg-dot" style="background:#EF9F27"></span>Farcard lỗi</span>
-        <span><span class="leg-dot" style="background:#378ADD"></span>Thanh toán thủ công</span>
-        <span><span class="leg-dot" style="background:#1D9E75"></span>User Ops</span>
-        <span><span class="leg-dot" style="background:#888780"></span>Khác</span>
-      </div>
-      <div class="chart-wrap" style="height:220px">
-        <canvas id="trendChart" role="img" aria-label="Xu hướng phiếu ghi theo năm"></canvas>
-      </div>
-    </div>
-  </div>
+</div>
 
-  <!-- TABLE -->
-  <div class="table-card">
-    <div class="table-header">
-      <h2>Danh sách issue ưu tiên xử lý</h2>
-      <span style="font-size:12px;color:#aaa">30 issue · Thanh toán gộp chung</span>
-    </div>
-    <table>
-      <thead>
-        <tr>
-          <th style="width:36px">#</th>
-          <th>Tiêu đề lỗi</th>
-          <th style="width:140px">Nhóm</th>
-          <th style="width:90px">Số Issue</th>
-          <th style="width:110px">Tần suất</th>
-          <th style="width:160px">Tỷ lệ</th>
-        </tr>
-      </thead>
-      <tbody id="issueTable"></tbody>
-    </table>
-  </div>
-
-  <div class="footer">Dashboard · Hệ thống Omicall 2024–2026 · Dữ liệu: ListIssue chuẩn hóa · Google Sheets: <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" style="color:#378ADD">Mở link</a></div>
+<div class="footer">
+  Dashboard · Omicall Ticket System 2024–2026 · Dữ liệu: Google Sheets ListIssue chuẩn hóa · Auto refresh mỗi 5 phút
 </div>
 
 <script>
-// ===== DATA =====
-// Để cập nhật: sửa mảng issues[] bên dưới, thêm/xóa object, lưu file lại
-const issues = [
-  { rank:1,  label:"POS không vào được / Không khởi động được phần mềm POS",           group:"Phần mềm POS",    count:10570, freq:"Rất cao"    },
-  { rank:2,  label:"Hỗ trợ thanh toán thủ công (VNPay / Momo / Zalo / Payoo / VietQR)",group:"Payment Hub",     count:10224, freq:"Rất cao"    },
-  { rank:3,  label:"Farcard lỗi / Lỗi gửi dữ liệu tới GGFCLO / Tích điểm không được", group:"CRM / Farcard",   count:8670,  freq:"Rất cao"    },
-  { rank:4,  label:"POS bị treo / Trắng màn hình / Đơ không thao tác được",            group:"Phần mềm POS",    count:6824,  freq:"Rất cao"    },
-  { rank:5,  label:"Không vào được phần mềm RK7 Manager",                               group:"RK7 Manager",    count:4543,  freq:"Cao"        },
-  { rank:6,  label:"Hủy tạm tính",                                                      group:"User Operations", count:2770,  freq:"Trung bình" },
-  { rank:7,  label:"Bàn bị lock không vào được",                                        group:"User Operations", count:2535,  freq:"Trung bình" },
-  { rank:8,  label:"Hỗ trợ nhà hàng đóng ca chung / Dayend",                            group:"User Operations", count:2451,  freq:"Trung bình" },
-  { rank:9,  label:"Máy in không ra bill (kẹt lệnh in)",                                group:"Hardware",        count:2076,  freq:"Trung bình" },
-  { rank:10, label:"SkyTab không vào được phần mềm / Tablet timeout",                   group:"SkyTab",          count:1642,  freq:"Trung bình" },
-  { rank:11, label:"Đồng bộ bộ dữ liệu lên POS",                                       group:"Phần mềm POS",    count:1631,  freq:"Trung bình" },
-  { rank:12, label:"Hướng dẫn khách hàng thao tác trên hệ thống POS",                  group:"User Operations", count:1104,  freq:"Trung bình" },
-  { rank:13, label:"OM không kết nối được với máy chủ",                                 group:"OM",              count:1000,  freq:"Trung bình" },
-  { rank:14, label:"Màn hình phụ không lên / không hiện món / không có mã QR",          group:"SkyGuestScreen",  count:809,   freq:"Thấp"       },
-  { rank:15, label:"Thiếu báo cáo trên RK7",                                            group:"RK7 Manager",    count:698,   freq:"Thấp"       },
-  { rank:16, label:"Hỗ trợ kiểm tra, điều chỉnh Master Data theo yêu cầu",             group:"Master Data",     count:553,   freq:"Thấp"       },
-  { rank:17, label:"Máy POS bị treo tạm tính",                                          group:"Phần mềm POS",    count:552,   freq:"Thấp"       },
-  { rank:18, label:"Máy POS bị mất mạng internet",                                      group:"Network",         count:498,   freq:"Thấp"       },
-  { rank:19, label:"Thiếu bill trên SkyInvoice",                                        group:"Skyinvoice",      count:480,   freq:"Thấp"       },
-  { rank:20, label:"Máy POS không vào được hệ điều hành / lỗi restore Windows",         group:"Hardware",        count:442,   freq:"Thấp"       },
-  { rank:21, label:"CO/SO mất kết nối với POS (module khách hàng)",                     group:"Third Party",     count:348,   freq:"Thấp"       },
-  { rank:22, label:"Máy POS phụ không vào được phần mềm",                               group:"Phần mềm POS",    count:336,   freq:"Thấp"       },
-  { rank:23, label:"Máy in các quầy không ra bill",                                      group:"Hardware",        count:234,   freq:"Thấp"       },
-  { rank:24, label:"Nhà hàng quên id+pass RK7",                                          group:"User Operations", count:219,   freq:"Thấp"       },
-  { rank:25, label:"Máy POS không lên nguồn (hư nguồn)",                                group:"Hardware",        count:215,   freq:"Thấp"       },
-  { rank:26, label:"Hướng dẫn sử dụng coupon / ecode / điều khoản",                     group:"CRM / Farcard",   count:185,   freq:"Thấp"       },
-  { rank:27, label:"OM không xác nhận được đơn do đã có đơn tồn tại trên POS",          group:"OM",              count:177,   freq:"Thấp"       },
-  { rank:28, label:"KDS không lên món",                                                   group:"KDS",             count:177,   freq:"Thấp"       },
-  { rank:29, label:"Nhà hàng không đóng được bàn do thao tác sai",                      group:"User Operations", count:155,   freq:"Thấp"       },
-  { rank:30, label:"DB Trung gian bị sai lệch dữ liệu",                                 group:"DB Trung gian",   count:152,   freq:"Thấp"       },
-];
+// ============================================================
+// CONFIG — chỉnh sửa URL nếu link CSV thay đổi
+// ============================================================
+const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu_C0BHpfmNWnfR00Xiaw5_F_YUfmwcEjxbTTHDnjk4diz9My7CFMa_UMFmglcgvhlF5K2YyvlkoMC/pub?gid=51800535&single=true&output=csv';
 
-// ===== CHART DATA (cập nhật khi thêm/bớt issue) =====
-const chartData = {
-  top10Labels: ["POS không vào được","Thanh toán thủ công (gộp)","Farcard / GGFCLO","POS bị treo / đơ","RK7 Manager lỗi","Hủy tạm tính","Bàn bị lock","Đóng ca chung","Máy in kẹt lệnh","SkyTab timeout"],
-  top10Data:   [10570,10224,8670,6824,4543,2770,2535,2451,2076,1642],
-  top10Colors: ["#E24B4A","#E24B4A","#E24B4A","#E24B4A","#EF9F27","#378ADD","#378ADD","#378ADD","#378ADD","#378ADD"],
+// Mapping gộp thanh toán thủ công → Payment Hub
+const PAYMENT_KEYWORDS = ['vnpay','momo','vietqr','payoo','zalo pay','thanh toán thủ công','thanh toán vnpay','thanh toán momo','thanh toán zalo','thanh toán payoo','thanh toán vietqr'];
 
-  pieLabels: ["Phần mềm POS","Payment Hub","CRM / Farcard","RK7 Manager","User Operations","Hardware","SkyTab","Khác"],
-  pieData:   [19913, 10224, 8855, 5241, 9234, 2967, 1642, 2921],
-  pieColors: ["#E24B4A","#EF9F27","#F09595","#378ADD","#1D9E75","#639922","#7F77DD","#888780"],
+const PALETTE = ['#2563eb','#7c3aed','#db2777','#dc2626','#ea580c','#ca8a04','#16a34a','#0891b2','#0284c7','#9333ea','#c026d3','#65a30d'];
 
-  trendLabels: ["2024","2025","2026 (5T)"],
-  trendSeries: [
-    { label:"POS lỗi kết nối",       data:[5669,16611,18470], color:"#E24B4A" },
-    { label:"Farcard lỗi",           data:[1653, 7082,  736], color:"#EF9F27" },
-    { label:"Thanh toán thủ công",   data:[   0, 8370, 2118], color:"#378ADD" },
-    { label:"User Ops",              data:[4655, 7957, 1084], color:"#1D9E75" },
-    { label:"Khác",                  data:[38561,55018,28910],color:"#D3D1C7" },
-  ]
-};
+let allIssues = [];
+let pieInst, barInst;
 
-// ===== FREQ HELPERS =====
-function freqBadge(f) {
-  if (f==="Rất cao")   return "b-red";
-  if (f==="Cao")       return "b-amber";
-  if (f==="Trung bình")return "b-blue";
-  return "b-gray";
+// ============================================================
+// PARSE CSV
+// ============================================================
+function parseCSV(text) {
+  const lines = text.split('\n');
+  const result = [];
+  let headerRow = -1;
+
+  // Find header row — look for row containing "Tiêu Đề Chuẩn Hóa" or "Số issue"
+  for (let i = 0; i < Math.min(lines.length, 8); i++) {
+    const low = lines[i].toLowerCase();
+    if (low.includes('s\u1ed1 issue') || low.includes('ti\u00eau \u0111\u1ec1 chu\u1ea9n h\u00f3a')) {
+      headerRow = i;
+      break;
+    }
+  }
+
+  const parseRow = (line) => {
+    const cols = [];
+    let cur = '', inQ = false;
+    for (const ch of line) {
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
+      else { cur += ch; }
+    }
+    cols.push(cur.trim());
+    return cols;
+  };
+
+  const headers = headerRow >= 0 ? parseRow(lines[headerRow]) : [];
+
+  // Find column indices
+  let idxSoIssue = 4, idxTanSuat = 5, idxChuanHoa = 6, idxType = 7, idxGroup = 1, idxTieuDe = 3;
+
+  if (headers.length > 0) {
+    headers.forEach((h, i) => {
+      const hh = h.toLowerCase().replace(/\s+/g,'');
+      if (hh.includes('soissue') || hh === 's\u1ed1issue') idxSoIssue = i;
+      if (hh.includes('t\u1ea7nsu\u1ea5t')) idxTanSuat = i;
+      if (hh.includes('ti\u00eau\u0111\u1ec1chu\u1ea9nh\u00f3a') || hh.includes('ti\u00eau\u0111\u1ec1chu\u1ea9n')) idxChuanHoa = i;
+      if (hh.includes('typeissue') || hh.includes('typeis')) idxType = i;
+      if (hh.includes('group')) idxGroup = i;
+      if (hh.includes('ti\u00eau\u0111\u1ec1l\u1ed7i') || hh === 'ti\u00eau\u0111\u1ec1l\u1ed7i') idxTieuDe = i;
+    });
+  }
+
+  const startRow = headerRow >= 0 ? headerRow + 1 : 3;
+
+  for (let i = startRow; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const cols = parseRow(lines[i]);
+    if (cols.length < 5) continue;
+
+    const clean = s => (s || '').replace(/^"+|"+$/g,'').trim();
+
+    let tieuDeChuanHoa = clean(cols[idxChuanHoa]);
+    let typeIssue      = clean(cols[idxType]);
+    let soIssue        = parseInt(clean(cols[idxSoIssue]).replace(/\D/g,'')) || 0;
+    let tanSuat        = clean(cols[idxTanSuat]);
+    let group          = clean(cols[idxGroup]);
+    let tieuDeLoi      = clean(cols[idxTieuDe]);
+
+    if (!tieuDeChuanHoa || tieuDeChuanHoa.toLowerCase() === 'nan' || tieuDeChuanHoa === '') continue;
+    if (soIssue === 0) continue;
+
+    // Fix tần suất nếu thiếu
+    if (!tanSuat) {
+      if (soIssue >= 5000) tanSuat = 'Rất cao';
+      else if (soIssue >= 2000) tanSuat = 'Cao';
+      else if (soIssue >= 500) tanSuat = 'Trung bình';
+      else tanSuat = 'Thấp';
+    }
+
+    // Gộp Payment Hub
+    const combined = (tieuDeChuanHoa + ' ' + tieuDeLoi).toLowerCase();
+    const isPayment = PAYMENT_KEYWORDS.some(kw => combined.includes(kw));
+    if (isPayment) {
+      group = 'Payment Hub';
+      if (!typeIssue || typeIssue.toLowerCase() === 'nan') typeIssue = 'Hỗ trợ thanh toán thủ công';
+    }
+
+    // Fix group nan
+    if (!group || group.toLowerCase() === 'nan') group = 'Chưa xác định';
+    if (!typeIssue || typeIssue.toLowerCase() === 'nan') typeIssue = 'Chưa xác định';
+
+    result.push({ tieuDeChuanHoa, typeIssue, soIssue, tanSuat, group, tieuDeLoi });
+  }
+
+  // Sort desc
+  result.sort((a, b) => b.soIssue - a.soIssue);
+  return result;
 }
-function barColor(f) {
-  if (f==="Rất cao")   return "#E24B4A";
-  if (f==="Cao")       return "#EF9F27";
-  if (f==="Trung bình")return "#378ADD";
-  return "#888780";
+
+// ============================================================
+// LOAD DATA
+// ============================================================
+async function loadData(manual = false) {
+  if (manual) {
+    document.getElementById('loadingOverlay').classList.remove('hidden');
+    document.getElementById('errorBox').classList.remove('show');
+  }
+
+  try {
+    const res = await fetch(CSV_URL + '&t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    allIssues = parseCSV(text);
+
+    if (allIssues.length === 0) throw new Error('Không tìm thấy dữ liệu. Kiểm tra lại sheet được publish.');
+
+    buildFilters(allIssues);
+    render(allIssues);
+    document.getElementById('lastUpdate').textContent = 'Cập nhật: ' + new Date().toLocaleTimeString('vi-VN');
+    document.getElementById('errorBox').classList.remove('show');
+  } catch (e) {
+    document.getElementById('errorMsg').innerHTML =
+      `<strong>Lỗi:</strong> ${e.message}<br><br>
+       <strong>Nguyên nhân thường gặp:</strong> Google Sheet chưa Publish to web, hoặc CORS bị chặn khi chạy local.<br>
+       <strong>Fix:</strong> File → Share → Publish to web → Chọn sheet ListIssue → CSV → Publish. <br>
+       <strong>Hoặc:</strong> Mở file HTML này trên web server (không mở trực tiếp từ file:// trên một số trình duyệt).`;
+    document.getElementById('errorBox').classList.add('show');
+    if (allIssues.length === 0) showFallback();
+  } finally {
+    document.getElementById('loadingOverlay').classList.add('hidden');
+  }
 }
 
-// ===== BUILD TABLE =====
-const maxCount = Math.max(...issues.map(i=>i.count));
-const tbody = document.getElementById("issueTable");
-issues.forEach(d => {
-  const pct = Math.round(d.count/maxCount*100);
-  tbody.innerHTML += `<tr>
-    <td style="color:#aaa;font-size:12px;text-align:center">${d.rank}</td>
-    <td>${d.label}</td>
-    <td style="color:#666;font-size:12px">${d.group}</td>
-    <td class="num" style="text-align:right">${d.count.toLocaleString("vi-VN")}</td>
-    <td><span class="badge ${freqBadge(d.freq)}">${d.freq}</span></td>
-    <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${barColor(d.freq)}"></div></div><span style="font-size:11px;color:#aaa;min-width:30px">${pct}%</span></div></td>
-  </tr>`;
-});
+// Fallback data khi không fetch được
+function showFallback() {
+  const fallback = [
+    {tieuDeChuanHoa:'Phần mềm POS không vào được do services',group:'Phần mềm POS',typeIssue:'Pos software issue - Core rk - services not start',soIssue:10570,tanSuat:'Rất cao'},
+    {tieuDeChuanHoa:'Hỗ trợ thanh toán thủ công (gộp)',group:'Payment Hub',typeIssue:'Hỗ trợ thanh toán thủ công',soIssue:10224,tanSuat:'Rất cao'},
+    {tieuDeChuanHoa:'Farcard bị stop',group:'CRM',typeIssue:'Pos software issue - Core rk - services not start',soIssue:8670,tanSuat:'Rất cao'},
+    {tieuDeChuanHoa:'Phần mềm POS bị treo do hệ thống',group:'Phần mềm POS',typeIssue:'Pos software issue - Core RK - freezing',soIssue:6824,tanSuat:'Rất cao'},
+    {tieuDeChuanHoa:'Rk7 Manager không vào được do Services',group:'RK7 MANAGER',typeIssue:'Pos software issue - Core rk - services not start',soIssue:4543,tanSuat:'Cao'},
+    {tieuDeChuanHoa:'Hỗ trợ hủy tạm tính',group:'Thao tác Vận Hành Người Dùng',typeIssue:'Hướng dẫn người dùng - Thao tác POS sai',soIssue:2770,tanSuat:'Trung bình'},
+    {tieuDeChuanHoa:'Hỗ trợ POS bị lock bàn',group:'Thao tác Vận Hành Người Dùng',typeIssue:'Hướng dẫn người dùng - Hướng dẫn thao tác tác vụ trên pos',soIssue:2535,tanSuat:'Trung bình'},
+    {tieuDeChuanHoa:'Hướng dẫn nhà hàng đóng ca chung (DayEnd)',group:'Thao tác Vận Hành Người Dùng',typeIssue:'Hướng dẫn người dùng - Hướng dẫn thao tác tác vụ trên pos',soIssue:2451,tanSuat:'Trung bình'},
+    {tieuDeChuanHoa:'Máy in không ra bill (kẹt lệnh in)',group:'HARDWARE/ SOFTWARE',typeIssue:'Hardware - Printer (Printer/paper/network)',soIssue:2076,tanSuat:'Trung bình'},
+    {tieuDeChuanHoa:'SkyTab không vào được do Services',group:'SkyTab',typeIssue:'Pos software issue - Core rk - services not start',soIssue:1642,tanSuat:'Trung bình'},
+  ];
+  allIssues = fallback;
+  buildFilters(fallback);
+  render(fallback);
+  document.getElementById('lastUpdate').textContent = '⚠️ Dữ liệu mẫu (offline)';
+}
 
-// ===== CHART 1: TOP 10 HORIZONTAL BAR =====
-new Chart(document.getElementById("top10Chart"), {
-  type: "bar",
-  data: {
-    labels: chartData.top10Labels,
-    datasets: [{ label:"Số issue", data:chartData.top10Data, backgroundColor:chartData.top10Colors, borderRadius:4, borderSkipped:false }]
-  },
-  options: {
-    indexAxis:"y", responsive:true, maintainAspectRatio:false,
-    plugins:{ legend:{display:false}, tooltip:{callbacks:{label: ctx=>" "+ctx.raw.toLocaleString("vi-VN")+" lần"}} },
-    scales:{
-      x:{ grid:{color:"rgba(0,0,0,0.06)"}, ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+"k":v, font:{size:11}} },
-      y:{ ticks:{font:{size:12}}, grid:{display:false} }
-    }
+// ============================================================
+// BUILD FILTERS
+// ============================================================
+function buildFilters(issues) {
+  const groups = [...new Set(issues.map(i => i.group))].sort();
+  const types  = [...new Set(issues.map(i => i.typeIssue).filter(t => t && t !== 'Chưa xác định'))].sort();
+
+  const gSel = document.getElementById('groupFilter');
+  const tSel = document.getElementById('typeFilter');
+  const gVal = gSel.value, tVal = tSel.value;
+
+  gSel.innerHTML = '<option value="">Tất cả nhóm</option>' + groups.map(g => `<option value="${g}">${g}</option>`).join('');
+  tSel.innerHTML = '<option value="">Tất cả type</option>' + types.map(t => `<option value="${t}">${t}</option>`).join('');
+
+  if (gVal) gSel.value = gVal;
+  if (tVal) tSel.value = tVal;
+}
+
+function getFiltered() {
+  const kw   = document.getElementById('searchInput').value.toLowerCase().trim();
+  const grp  = document.getElementById('groupFilter').value;
+  const tp   = document.getElementById('typeFilter').value;
+  const freq = document.getElementById('freqFilter').value;
+
+  return allIssues.filter(i => {
+    if (kw  && !i.tieuDeChuanHoa.toLowerCase().includes(kw)) return false;
+    if (grp && i.group !== grp) return false;
+    if (tp  && i.typeIssue !== tp) return false;
+    if (freq && i.tanSuat !== freq) return false;
+    return true;
+  });
+}
+
+function clearFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('groupFilter').value = '';
+  document.getElementById('typeFilter').value = '';
+  document.getElementById('freqFilter').value = '';
+  render(allIssues);
+}
+
+['searchInput','groupFilter','typeFilter','freqFilter'].forEach(id => {
+  document.getElementById(id).addEventListener('change', () => render(getFiltered()));
+  if (id === 'searchInput') {
+    document.getElementById(id).addEventListener('input', () => render(getFiltered()));
   }
 });
 
-// ===== CHART 2: PIE =====
-new Chart(document.getElementById("pieChart"), {
-  type:"doughnut",
-  data:{
-    labels:chartData.pieLabels,
-    datasets:[{ data:chartData.pieData, backgroundColor:chartData.pieColors, borderWidth:2, borderColor:"#fff" }]
-  },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    cutout:"52%",
-    plugins:{
-      legend:{position:"right", labels:{font:{size:11}, boxWidth:12, padding:8}},
-      tooltip:{callbacks:{label: ctx => ctx.label+": "+ctx.raw.toLocaleString("vi-VN")}}
-    }
-  }
-});
+// ============================================================
+// RENDER
+// ============================================================
+function render(issues) {
+  const total = issues.reduce((s, i) => s + i.soIssue, 0);
+  const allTotal = allIssues.reduce((s, i) => s + i.soIssue, 0);
 
-// ===== CHART 3: STACKED BAR TREND =====
-new Chart(document.getElementById("trendChart"), {
-  type:"bar",
-  data:{
-    labels:chartData.trendLabels,
-    datasets: chartData.trendSeries.map(s=>({
-      label:s.label, data:s.data, backgroundColor:s.color, borderRadius:3
-    }))
-  },
-  options:{
-    responsive:true, maintainAspectRatio:false,
-    plugins:{
-      legend:{display:false},
-      tooltip:{mode:"index", callbacks:{label:ctx=>ctx.dataset.label+": "+ctx.raw.toLocaleString("vi-VN")}}
-    },
-    scales:{
-      x:{stacked:true, grid:{display:false}, ticks:{font:{size:12}}},
-      y:{stacked:true, grid:{color:"rgba(0,0,0,0.06)"}, ticks:{callback:v=>(v/1000).toFixed(0)+"k", font:{size:11}}}
+  // Metrics
+  document.getElementById('mTotal').textContent = allTotal.toLocaleString('vi-VN');
+  document.getElementById('mRows').textContent  = allIssues.length;
+  document.getElementById('mGroups').textContent = [...new Set(allIssues.map(i=>i.group))].length;
+  document.getElementById('mHigh').textContent  = allIssues.filter(i => i.tanSuat==='Rất cao'||i.tanSuat==='Cao').length;
+
+  const groupMap = {};
+  allIssues.forEach(i => groupMap[i.group] = (groupMap[i.group]||0) + i.soIssue);
+  const top3 = Object.values(groupMap).sort((a,b)=>b-a).slice(0,3).reduce((s,v)=>s+v,0);
+  document.getElementById('mTop3').textContent = ((top3/allTotal)*100).toFixed(1)+'%';
+
+  // Quick stats (always full data)
+  document.getElementById('qsRows').textContent   = allIssues.length;
+  document.getElementById('qsGroups').textContent = [...new Set(allIssues.map(i=>i.group))].length;
+  document.getElementById('qsTypes').textContent  = [...new Set(allIssues.map(i=>i.typeIssue))].length;
+  document.getElementById('qsVH').textContent = allIssues.filter(i=>i.tanSuat==='Rất cao').length;
+  document.getElementById('qsH').textContent  = allIssues.filter(i=>i.tanSuat==='Cao').length;
+  document.getElementById('qsM').textContent  = allIssues.filter(i=>i.tanSuat==='Trung bình').length;
+  document.getElementById('qsL').textContent  = allIssues.filter(i=>i.tanSuat==='Thấp').length;
+
+  // Filter count
+  document.getElementById('filterCount').textContent =
+    issues.length < allIssues.length ? `Hiển thị ${issues.length} / ${allIssues.length} issue` : `${issues.length} issue`;
+
+  buildCharts(issues, total);
+  buildTable(issues, total);
+  buildInsights(issues);
+  buildProgress(groupMap, allTotal);
+}
+
+// ============================================================
+// CHARTS
+// ============================================================
+function buildCharts(issues, total) {
+  // Group by group
+  const gMap = {};
+  issues.forEach(i => gMap[i.group] = (gMap[i.group]||0) + i.soIssue);
+  const sorted = Object.entries(gMap).sort((a,b)=>b[1]-a[1]).slice(0,10);
+
+  const labels = sorted.map(e=>e[0]);
+  const data   = sorted.map(e=>e[1]);
+  const colors = labels.map((_,i) => PALETTE[i % PALETTE.length]);
+
+  // PIE
+  if (pieInst) pieInst.destroy();
+  pieInst = new Chart(document.getElementById('pieChart'), {
+    type:'doughnut',
+    data:{ labels, datasets:[{ data, backgroundColor:colors, borderWidth:2, borderColor:'#fff' }] },
+    options:{
+      responsive:true, maintainAspectRatio:false, cutout:'56%',
+      plugins:{
+        legend:{ position:'bottom', labels:{ font:{size:11}, boxWidth:12, padding:10, generateLabels:(chart)=>{
+          return chart.data.labels.map((label,i)=>({
+            text: label.length > 22 ? label.slice(0,22)+'…' : label,
+            fillStyle: colors[i], hidden:false, index:i,
+            fontColor:'#475569'
+          }));
+        }}},
+        tooltip:{ callbacks:{ label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString('vi-VN')} (${((ctx.raw/total)*100).toFixed(1)}%)` }}
+      }
     }
+  });
+
+  // BAR — top 10 issues (Tiêu Đề Chuẩn Hóa)
+  const top10 = issues.slice(0,10);
+  const barLabels = top10.map(i => i.tieuDeChuanHoa.length > 32 ? i.tieuDeChuanHoa.slice(0,32)+'…' : i.tieuDeChuanHoa);
+  const barData   = top10.map(i => i.soIssue);
+  const barColors = top10.map(i => {
+    if (i.tanSuat==='Rất cao') return '#dc2626';
+    if (i.tanSuat==='Cao')     return '#ea580c';
+    if (i.tanSuat==='Trung bình') return '#2563eb';
+    return '#94a3b8';
+  });
+
+  if (barInst) barInst.destroy();
+  barInst = new Chart(document.getElementById('barChart'), {
+    type:'bar',
+    data:{ labels:barLabels, datasets:[{ data:barData, backgroundColor:barColors, borderRadius:6, borderSkipped:false }] },
+    options:{
+      indexAxis:'y', responsive:true, maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{ callbacks:{ label: ctx => ' ' + ctx.raw.toLocaleString('vi-VN') + ' lần' }}
+      },
+      scales:{
+        x:{ grid:{color:'rgba(0,0,0,.05)'}, ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v, font:{size:11}} },
+        y:{ ticks:{font:{size:11}}, grid:{display:false} }
+      }
+    }
+  });
+}
+
+// ============================================================
+// TABLE
+// ============================================================
+function buildTable(issues, total) {
+  const maxCount = issues[0]?.soIssue || 1;
+  const tbody = document.getElementById('issueTable');
+  tbody.innerHTML = '';
+
+  issues.forEach((item, idx) => {
+    const pct = ((item.soIssue / total)*100).toFixed(1);
+    const barPct = Math.round((item.soIssue / maxCount)*100);
+    const bClass = item.tanSuat==='Rất cao'?'b-red':item.tanSuat==='Cao'?'b-orange':item.tanSuat==='Trung bình'?'b-blue':'b-gray';
+    const barClr = item.tanSuat==='Rất cao'?'#dc2626':item.tanSuat==='Cao'?'#ea580c':item.tanSuat==='Trung bình'?'#2563eb':'#94a3b8';
+
+    tbody.innerHTML += `<tr>
+      <td style="color:#94a3b8;text-align:center;font-size:12px">${idx+1}</td>
+      <td>${item.tieuDeChuanHoa}</td>
+      <td style="color:#475569;font-size:12px">${item.group}</td>
+      <td style="color:#94a3b8;font-size:11px;max-width:160px">${item.typeIssue.length>40?item.typeIssue.slice(0,40)+'…':item.typeIssue}</td>
+      <td class="td-num">${item.soIssue.toLocaleString('vi-VN')}</td>
+      <td><span class="badge ${bClass}">${item.tanSuat}</span></td>
+      <td>
+        <div class="bar-cell">
+          <div class="bar-bg"><div class="bar-fill" style="width:${barPct}%;background:${barClr}"></div></div>
+          <span style="font-size:11px;color:#94a3b8;min-width:36px">${pct}%</span>
+        </div>
+      </td>
+    </tr>`;
+  });
+
+  if (issues.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;color:#94a3b8;">Không tìm thấy issue phù hợp với bộ lọc</td></tr>';
   }
-});
+}
+
+// ============================================================
+// INSIGHTS
+// ============================================================
+function buildInsights(issues) {
+  const top = issues[0];
+  const highCount = issues.filter(i=>i.tanSuat==='Rất cao').length;
+  const totalCount = issues.reduce((s,i)=>s+i.soIssue,0);
+  const payIssue = issues.find(i=>i.group==='Payment Hub');
+
+  const payTotal = issues.filter(i=>i.group==='Payment Hub').reduce((s,i)=>s+i.soIssue,0);
+
+  document.getElementById('insightBox').innerHTML = `
+    ${top ? `<div class="insight-item">
+      <div class="ins-icon">🔥</div>
+      <div>
+        <div class="ins-title">Issue lớn nhất</div>
+        <div class="ins-text">${top.tieuDeChuanHoa}<br>Ghi nhận <strong>${top.soIssue.toLocaleString('vi-VN')}</strong> lần · ${top.group}</div>
+      </div>
+    </div>` : ''}
+    ${highCount > 0 ? `<div class="insight-item">
+      <div class="ins-icon">⚠️</div>
+      <div>
+        <div class="ins-title">${highCount} issue "Rất cao"</div>
+        <div class="ins-text">Cần xử lý khẩn cấp, chiếm <strong>${((issues.filter(i=>i.tanSuat==='Rất cao').reduce((s,i)=>s+i.soIssue,0)/totalCount)*100).toFixed(1)}%</strong> tổng issue.</div>
+      </div>
+    </div>` : ''}
+    ${payTotal > 0 ? `<div class="insight-item">
+      <div class="ins-icon">💳</div>
+      <div>
+        <div class="ins-title">Payment Hub</div>
+        <div class="ins-text">Tổng <strong>${payTotal.toLocaleString('vi-VN')}</strong> lần ghi nhận.<br>VNPay + Momo + Zalo + Payoo + VietQR đã gộp chung.</div>
+      </div>
+    </div>` : ''}
+    <div class="insight-item">
+      <div class="ins-icon">📈</div>
+      <div>
+        <div class="ins-title">Xu hướng 2026</div>
+        <div class="ins-text">Tốc độ phiếu ghi ~<strong>10,000/tháng</strong>. POS lỗi kết nối tăng liên tục so với 2024–2025.</div>
+      </div>
+    </div>
+  `;
+}
+
+// ============================================================
+// PROGRESS BAR
+// ============================================================
+function buildProgress(groupMap, total) {
+  const sorted = Object.entries(groupMap).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const colors = PALETTE;
+  document.getElementById('progressBox').innerHTML = sorted.map((e,i) => {
+    const pct = ((e[1]/total)*100).toFixed(1);
+    return `<div class="prog-item">
+      <div class="prog-label"><span class="prog-name">${e[0]}</span><span class="prog-pct">${e[1].toLocaleString('vi-VN')} (${pct}%)</span></div>
+      <div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${colors[i%colors.length]}"></div></div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadData();
+setInterval(() => loadData(), 300000); // 5 phút
 </script>
 </body>
 </html>
