@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Thống Kê Issue 2024–2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f3ef; color: #2c2c2a; font-size: 14px; }
+
+  .top-bar { background: #2c2c2a; color: #fff; padding: 14px 28px; display: flex; align-items: center; justify-content: space-between; }
+  .top-bar h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.01em; }
+  .top-bar .meta { font-size: 12px; color: #aaa; margin-top: 2px; }
+  .gs-btn { background: #4285F4; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .gs-btn:hover { background: #2b6fd4; }
+  .gs-btn svg { width: 16px; height: 16px; fill: white; }
+
+  .page { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  /* ---- EDIT GUIDE ---- */
+  .edit-guide { background: #E6F1FB; border-left: 4px solid #378ADD; border-radius: 6px; padding: 14px 18px; margin-bottom: 24px; }
+  .edit-guide h3 { font-size: 13px; font-weight: 600; color: #185FA5; margin-bottom: 8px; }
+  .edit-guide ul { padding-left: 18px; }
+  .edit-guide li { font-size: 12px; color: #444; line-height: 1.8; }
+  .edit-guide code { background: rgba(24,95,165,0.12); color: #185FA5; padding: 1px 5px; border-radius: 3px; font-size: 11px; }
+
+  /* ---- METRICS ---- */
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .metric { background: #fff; border-radius: 8px; padding: 16px; border: 0.5px solid #ddd; }
+  .metric-label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .metric-value { font-size: 26px; font-weight: 700; color: #2c2c2a; line-height: 1; }
+  .metric-sub { font-size: 11px; color: #aaa; margin-top: 4px; }
+
+  /* ---- CHARTS ---- */
+  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .chart-card { background: #fff; border-radius: 10px; padding: 20px; border: 0.5px solid #ddd; }
+  .chart-card.wide { grid-column: 1 / -1; }
+  .chart-title { font-size: 13px; font-weight: 600; color: #444; margin-bottom: 4px; }
+  .chart-sub { font-size: 11px; color: #aaa; margin-bottom: 14px; }
+  .chart-wrap { position: relative; }
+
+  /* ---- LEGEND ---- */
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; }
+  .legend span { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #666; }
+  .leg-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+
+  /* ---- TABLE ---- */
+  .table-card { background: #fff; border-radius: 10px; border: 0.5px solid #ddd; overflow: hidden; margin-bottom: 20px; }
+  .table-header { padding: 16px 20px; border-bottom: 0.5px solid #eee; display: flex; align-items: center; justify-content: space-between; }
+  .table-header h2 { font-size: 14px; font-weight: 600; color: #333; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th { background: #2c2c2a; color: #fff; font-size: 11px; font-weight: 600; padding: 10px 12px; text-align: left; text-transform: uppercase; letter-spacing: 0.04em; position: sticky; top: 0; }
+  tbody tr:nth-child(even) { background: #fafaf8; }
+  tbody tr:hover { background: #f0f0ed; }
+  tbody td { padding: 9px 12px; font-size: 13px; border-bottom: 0.5px solid #eee; vertical-align: middle; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .b-red    { background: #FCEBEB; color: #A32D2D; }
+  .b-amber  { background: #FAEEDA; color: #854F0B; }
+  .b-blue   { background: #E6F1FB; color: #185FA5; }
+  .b-gray   { background: #F1EFE8; color: #5F5E5A; }
+  .bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .bar-bg   { background: #eee; border-radius: 3px; height: 7px; flex: 1; overflow: hidden; min-width: 60px; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .num { font-weight: 700; }
+
+  /* ---- FOOTER ---- */
+  .footer { text-align: center; font-size: 11px; color: #aaa; padding: 20px 0; }
+
+  @media (max-width: 768px) {
+    .metrics { grid-template-columns: 1fr 1fr; }
+    .charts-row { grid-template-columns: 1fr; }
+    .charts-row .chart-card.wide { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div>
+    <h1>Dashboard Thống Kê Issue – Hệ thống 2024–2026</h1>
+    <div class="meta">Nguồn: Omicall Ticket System · Cập nhật: tháng 5/2026 · Thanh toán thủ công đã gộp chung</div>
+  </div>
+  <a class="gs-btn" href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" target="_blank">
+    <svg viewBox="0 0 24 24"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zm-7 14H8v-2h4v2zm4-4H8v-2h8v2zm0-4H8V7h8v2z"/></svg>
+    Mở Google Sheets
+  </a>
+</div>
+
+<div class="page">
+
+  <!-- EDIT GUIDE -->
+  <!--<div class="edit-guide">
+    <h3>✏️ Hướng dẫn cập nhật dữ liệu khi có phát sinh mới</h3>
+    <ul>
+      <li><strong>Thêm issue mới:</strong> Mở Google Sheets → sheet <code>ListIssue</code> → thêm dòng mới với: STT, Nhóm, Tiêu đề lỗi, Số Issue, Tần suất (Rất cao / Cao / Trung bình / Thấp)</li>
+      <li><strong>Cập nhật HTML này:</strong> Tìm phần <code>// ===== DATA =====</code> trong thẻ &lt;script&gt; cuối trang → sửa mảng <code>issues[]</code> và <code>chartData</code> → lưu lại file HTML</li>
+      <li><strong>Thanh toán thủ công đã gộp:</strong> VNPay (3,973) + Thủ công (2,209) + Momo (1,821) + Zalo (838) + Payoo (760) + VietQR (623) = <strong>10,224</strong> — đây là 1 dòng duy nhất</li>
+      <li><strong>Màu tần suất:</strong> Rất cao ≥5,000 → đỏ | Cao 2,000–5,000 → cam | Trung bình 500–2,000 → xanh | Thấp &lt;500 → xám</li>
+    </ul>
+  </div> -->
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Tổng phiếu ghi</div>
+      <div class="metric-value">196,894</div>
+      <div class="metric-sub">2024 – tháng 5/2026</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Năm 2024</div>
+      <div class="metric-value">50,538</div>
+      <div class="metric-sub">Năm đầu thu thập</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Năm 2025</div>
+      <div class="metric-value">95,038</div>
+      <div class="metric-sub">+88% so với 2024</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">2026 (5 tháng)</div>
+      <div class="metric-value">51,318</div>
+      <div class="metric-sub">≈ 10,000 phiếu/tháng</div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 1 -->
+  <div class="charts-row">
+    <div class="chart-card wide">
+      <div class="chart-title">Top 10 Issue – Tần suất cao nhất (2024–2026)</div>
+      <div class="chart-sub">Thanh toán thủ công đã gộp chung tất cả kênh (VNPay / Momo / Zalo / Payoo / VietQR)</div>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="top10Chart" role="img" aria-label="Top 10 issue theo số lần ghi nhận"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW 2 -->
+  <div class="charts-row">
+    <div class="chart-card">
+      <div class="chart-title">Tỷ trọng theo nhóm issue</div>
+      <div class="chart-sub">Gộp tất cả issue cùng nhóm</div>
+      <div class="chart-wrap" style="height:260px">
+        <canvas id="pieChart" role="img" aria-label="Pie chart phân nhóm issue"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Xu hướng theo năm</div>
+      <div class="chart-sub">Top phân loại phiếu ghi thô (2026 = 5 tháng)</div>
+      <div class="legend">
+        <span><span class="leg-dot" style="background:#E24B4A"></span>POS lỗi kết nối</span>
+        <span><span class="leg-dot" style="background:#EF9F27"></span>Farcard lỗi</span>
+        <span><span class="leg-dot" style="background:#378ADD"></span>Thanh toán thủ công</span>
+        <span><span class="leg-dot" style="background:#1D9E75"></span>User Ops</span>
+        <span><span class="leg-dot" style="background:#888780"></span>Khác</span>
+      </div>
+      <div class="chart-wrap" style="height:220px">
+        <canvas id="trendChart" role="img" aria-label="Xu hướng phiếu ghi theo năm"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-card">
+    <div class="table-header">
+      <h2>Danh sách issue ưu tiên xử lý</h2>
+      <span style="font-size:12px;color:#aaa">30 issue · Thanh toán gộp chung</span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>Tiêu đề lỗi</th>
+          <th style="width:140px">Nhóm</th>
+          <th style="width:90px">Số Issue</th>
+          <th style="width:110px">Tần suất</th>
+          <th style="width:160px">Tỷ lệ</th>
+        </tr>
+      </thead>
+      <tbody id="issueTable"></tbody>
+    </table>
+  </div>
+
+  <div class="footer">Dashboard · Hệ thống Omicall 2024–2026 · Dữ liệu: ListIssue chuẩn hóa · Google Sheets: <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" style="color:#378ADD">Mở link</a></div>
+</div>
+
+<script>
+// ===== DATA =====
+// Để cập nhật: sửa mảng issues[] bên dưới, thêm/xóa object, lưu file lại
+const issues = [
+  { rank:1,  label:"POS không vào được / Không khởi động được phần mềm POS",           group:"Phần mềm POS",    count:10570, freq:"Rất cao"    },
+  { rank:2,  label:"Hỗ trợ thanh toán thủ công (VNPay / Momo / Zalo / Payoo / VietQR)",group:"Payment Hub",     count:10224, freq:"Rất cao"    },
+  { rank:3,  label:"Farcard lỗi / Lỗi gửi dữ liệu tới GGFCLO / Tích điểm không được", group:"CRM / Farcard",   count:8670,  freq:"Rất cao"    },
+  { rank:4,  label:"POS bị treo / Trắng màn hình / Đơ không thao tác được",            group:"Phần mềm POS",    count:6824,  freq:"Rất cao"    },
+  { rank:5,  label:"Không vào được phần mềm RK7 Manager",                               group:"RK7 Manager",    count:4543,  freq:"Cao"        },
+  { rank:6,  label:"Hủy tạm tính",                                                      group:"User Operations", count:2770,  freq:"Trung bình" },
+  { rank:7,  label:"Bàn bị lock không vào được",                                        group:"User Operations", count:2535,  freq:"Trung bình" },
+  { rank:8,  label:"Hỗ trợ nhà hàng đóng ca chung / Dayend",                            group:"User Operations", count:2451,  freq:"Trung bình" },
+  { rank:9,  label:"Máy in không ra bill (kẹt lệnh in)",                                group:"Hardware",        count:2076,  freq:"Trung bình" },
+  { rank:10, label:"SkyTab không vào được phần mềm / Tablet timeout",                   group:"SkyTab",          count:1642,  freq:"Trung bình" },
+  { rank:11, label:"Đồng bộ bộ dữ liệu lên POS",                                       group:"Phần mềm POS",    count:1631,  freq:"Trung bình" },
+  { rank:12, label:"Hướng dẫn khách hàng thao tác trên hệ thống POS",                  group:"User Operations", count:1104,  freq:"Trung bình" },
+  { rank:13, label:"OM không kết nối được với máy chủ",                                 group:"OM",              count:1000,  freq:"Trung bình" },
+  { rank:14, label:"Màn hình phụ không lên / không hiện món / không có mã QR",          group:"SkyGuestScreen",  count:809,   freq:"Thấp"       },
+  { rank:15, label:"Thiếu báo cáo trên RK7",                                            group:"RK7 Manager",    count:698,   freq:"Thấp"       },
+  { rank:16, label:"Hỗ trợ kiểm tra, điều chỉnh Master Data theo yêu cầu",             group:"Master Data",     count:553,   freq:"Thấp"       },
+  { rank:17, label:"Máy POS bị treo tạm tính",                                          group:"Phần mềm POS",    count:552,   freq:"Thấp"       },
+  { rank:18, label:"Máy POS bị mất mạng internet",                                      group:"Network",         count:498,   freq:"Thấp"       },
+  { rank:19, label:"Thiếu bill trên SkyInvoice",                                        group:"Skyinvoice",      count:480,   freq:"Thấp"       },
+  { rank:20, label:"Máy POS không vào được hệ điều hành / lỗi restore Windows",         group:"Hardware",        count:442,   freq:"Thấp"       },
+  { rank:21, label:"CO/SO mất kết nối với POS (module khách hàng)",                     group:"Third Party",     count:348,   freq:"Thấp"       },
+  { rank:22, label:"Máy POS phụ không vào được phần mềm",                               group:"Phần mềm POS",    count:336,   freq:"Thấp"       },
+  { rank:23, label:"Máy in các quầy không ra bill",                                      group:"Hardware",        count:234,   freq:"Thấp"       },
+  { rank:24, label:"Nhà hàng quên id+pass RK7",                                          group:"User Operations", count:219,   freq:"Thấp"       },
+  { rank:25, label:"Máy POS không lên nguồn (hư nguồn)",                                group:"Hardware",        count:215,   freq:"Thấp"       },
+  { rank:26, label:"Hướng dẫn sử dụng coupon / ecode / điều khoản",                     group:"CRM / Farcard",   count:185,   freq:"Thấp"       },
+  { rank:27, label:"OM không xác nhận được đơn do đã có đơn tồn tại trên POS",          group:"OM",              count:177,   freq:"Thấp"       },
+  { rank:28, label:"KDS không lên món",                                                   group:"KDS",             count:177,   freq:"Thấp"       },
+  { rank:29, label:"Nhà hàng không đóng được bàn do thao tác sai",                      group:"User Operations", count:155,   freq:"Thấp"       },
+  { rank:30, label:"DB Trung gian bị sai lệch dữ liệu",                                 group:"DB Trung gian",   count:152,   freq:"Thấp"       },
+];
+
+// ===== CHART DATA (cập nhật khi thêm/bớt issue) =====
+const chartData = {
+  top10Labels: ["POS không vào được","Thanh toán thủ công (gộp)","Farcard / GGFCLO","POS bị treo / đơ","RK7 Manager lỗi","Hủy tạm tính","Bàn bị lock","Đóng ca chung","Máy in kẹt lệnh","SkyTab timeout"],
+  top10Data:   [10570,10224,8670,6824,4543,2770,2535,2451,2076,1642],
+  top10Colors: ["#E24B4A","#E24B4A","#E24B4A","#E24B4A","#EF9F27","#378ADD","#378ADD","#378ADD","#378ADD","#378ADD"],
+
+  pieLabels: ["Phần mềm POS","Payment Hub","CRM / Farcard","RK7 Manager","User Operations","Hardware","SkyTab","Khác"],
+  pieData:   [19913, 10224, 8855, 5241, 9234, 2967, 1642, 2921],
+  pieColors: ["#E24B4A","#EF9F27","#F09595","#378ADD","#1D9E75","#639922","#7F77DD","#888780"],
+
+  trendLabels: ["2024","2025","2026 (5T)"],
+  trendSeries: [
+    { label:"POS lỗi kết nối",       data:[5669,16611,18470], color:"#E24B4A" },
+    { label:"Farcard lỗi",           data:[1653, 7082,  736], color:"#EF9F27" },
+    { label:"Thanh toán thủ công",   data:[   0, 8370, 2118], color:"#378ADD" },
+    { label:"User Ops",              data:[4655, 7957, 1084], color:"#1D9E75" },
+    { label:"Khác",                  data:[38561,55018,28910],color:"#D3D1C7" },
+  ]
+};
+
+// ===== FREQ HELPERS =====
+function freqBadge(f) {
+  if (f==="Rất cao")   return "b-red";
+  if (f==="Cao")       return "b-amber";
+  if (f==="Trung bình")return "b-blue";
+  return "b-gray";
+}
+function barColor(f) {
+  if (f==="Rất cao")   return "#E24B4A";
+  if (f==="Cao")       return "#EF9F27";
+  if (f==="Trung bình")return "#378ADD";
+  return "#888780";
+}
+
+// ===== BUILD TABLE =====
+const maxCount = Math.max(...issues.map(i=>i.count));
+const tbody = document.getElementById("issueTable");
+issues.forEach(d => {
+  const pct = Math.round(d.count/maxCount*100);
+  tbody.innerHTML += `<tr>
+    <td style="color:#aaa;font-size:12px;text-align:center">${d.rank}</td>
+    <td>${d.label}</td>
+    <td style="color:#666;font-size:12px">${d.group}</td>
+    <td class="num" style="text-align:right">${d.count.toLocaleString("vi-VN")}</td>
+    <td><span class="badge ${freqBadge(d.freq)}">${d.freq}</span></td>
+    <td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${barColor(d.freq)}"></div></div><span style="font-size:11px;color:#aaa;min-width:30px">${pct}%</span></div></td>
+  </tr>`;
+});
+
+// ===== CHART 1: TOP 10 HORIZONTAL BAR =====
+new Chart(document.getElementById("top10Chart"), {
+  type: "bar",
+  data: {
+    labels: chartData.top10Labels,
+    datasets: [{ label:"Số issue", data:chartData.top10Data, backgroundColor:chartData.top10Colors, borderRadius:4, borderSkipped:false }]
+  },
+  options: {
+    indexAxis:"y", responsive:true, maintainAspectRatio:false,
+    plugins:{ legend:{display:false}, tooltip:{callbacks:{label: ctx=>" "+ctx.raw.toLocaleString("vi-VN")+" lần"}} },
+    scales:{
+      x:{ grid:{color:"rgba(0,0,0,0.06)"}, ticks:{callback:v=>v>=1000?(v/1000).toFixed(0)+"k":v, font:{size:11}} },
+      y:{ ticks:{font:{size:12}}, grid:{display:false} }
+    }
+  }
+});
+
+// ===== CHART 2: PIE =====
+new Chart(document.getElementById("pieChart"), {
+  type:"doughnut",
+  data:{
+    labels:chartData.pieLabels,
+    datasets:[{ data:chartData.pieData, backgroundColor:chartData.pieColors, borderWidth:2, borderColor:"#fff" }]
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    cutout:"52%",
+    plugins:{
+      legend:{position:"right", labels:{font:{size:11}, boxWidth:12, padding:8}},
+      tooltip:{callbacks:{label: ctx => ctx.label+": "+ctx.raw.toLocaleString("vi-VN")}}
+    }
+  }
+});
+
+// ===== CHART 3: STACKED BAR TREND =====
+new Chart(document.getElementById("trendChart"), {
+  type:"bar",
+  data:{
+    labels:chartData.trendLabels,
+    datasets: chartData.trendSeries.map(s=>({
+      label:s.label, data:s.data, backgroundColor:s.color, borderRadius:3
+    }))
+  },
+  options:{
+    responsive:true, maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{mode:"index", callbacks:{label:ctx=>ctx.dataset.label+": "+ctx.raw.toLocaleString("vi-VN")}}
+    },
+    scales:{
+      x:{stacked:true, grid:{display:false}, ticks:{font:{size:12}}},
+      y:{stacked:true, grid:{color:"rgba(0,0,0,0.06)"}, ticks:{callback:v=>(v/1000).toFixed(0)+"k", font:{size:11}}}
+    }
+  }
+});
+</script>
+</body>
+</html>
