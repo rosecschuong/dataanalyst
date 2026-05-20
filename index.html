@@ -831,7 +831,7 @@ function buildInsights(issues, total) {
   document.getElementById('insightBox').innerHTML = [
     top ? `<div class="ins"><div class="ins-ico">🔥</div><div><div class="ins-t">Issue ghi nhận nhiều nhất</div><div class="ins-b">${top.tieuDe}<br><b>${top.so.toLocaleString('vi-VN')}</b> lần · ${top.group}</div></div></div>` : '',
     vh.length ? `<div class="ins"><div class="ins-ico">⚠️</div><div><div class="ins-t">5 issue ghi nhận nhiều tỷ lệ "Rất cao"</div><div class="ins-b">Chiếm <b>${((vh.reduce((s,i)=>s+i.so,0)/total)*100).toFixed(1)}%</b> tổng issue. Xử lý khẩn cấp.</div></div></div>` : '',
-    payTotal ? `<div class="ins"><div class="ins-ico">💳</div><div><div class="ins-t">Payment Hub - Các Issue về hình thức thanh toán Online</div><div class="ins-b">Tổng <b>${payTotal.toLocaleString('vi-VN')}</b> lần – đã gộp VNPay, Momo, Zalo, Payoo, VietQR, MBBank, BAOKIM.</div></div></div>` : '',
+    payTotal ? `<div class="ins"><div class="ins-ico">💳</div><div><div class="ins-t">Payment Hub - Các Issue về hình thức thanh toán Online</div><div class="ins-b">Tổng <b>${payTotal.toLocaleString('vi-VN')}</b> lần – đã gộp VNPay, Momo, Zalo, Payoo, VietQR.</div></div></div>` : '',
     `<div class="ins"><div class="ins-ico">📈</div><div><div class="ins-t">Issue được ghi nhận đầu năm 2026</div><div class="ins-b">POS lỗi kết nối tăng <b>3.3×</b> (5,669→18,470) chỉ trong 5 tháng. Cần xử lý ngay.</div></div></div>`,
   ].join('');
 }
