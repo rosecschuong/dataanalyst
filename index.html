@@ -6,50 +6,78 @@
 <title>Dashboard Issue – Omicall 2024–2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --navy:#0d1b3e;--navy2:#1a2f5e;--blue:#2563eb;--purple:#7c3aed;
-  --red:#dc2626;--red-bg:#fef2f2;--orange:#ea580c;--orange-bg:#fff7ed;
-  --amber:#d97706;--green:#16a34a;--teal:#0d9488;--sky:#0284c7;
-  --sky-bg:#eff6ff;--border:#e2e8f0;--bg:#f0f2f7;--text:#0f172a;
-  --muted:#64748b;--light:#94a3b8;--card:#fff;
-  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(15,23,42,.05);
+  --bg:#07090F;
+  --surface:#0E1118;
+  --surface2:#131720;
+  --surface3:#181D28;
+  --border:#1C2333;
+  --border2:#232D42;
+  --accent:#4F8EF7;
+  --accent2:#7EB3FF;
+  --accent-glow:rgba(79,142,247,0.12);
+  --red:#F05252;
+  --orange:#FB923C;
+  --yellow:#FBBF24;
+  --green:#34D399;
+  --purple:#C084FC;
+  --teal:#2DD4BF;
+  --sky:#38BDF8;
+  --text:#E8F0FF;
+  --text2:#8896B0;
+  --text3:#3D4F6A;
+  --radius:12px;
 }
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;}
+body{
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -5%,rgba(79,142,247,.05) 0%,transparent 55%),
+    radial-gradient(ellipse 700px 500px at 85% 105%,rgba(192,132,252,.04) 0%,transparent 55%);
+}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
 
 /* ─── TOPBAR ─── */
-.topbar{background:linear-gradient(135deg,var(--navy),var(--navy2));padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:900;box-shadow:0 2px 20px rgba(0,0,0,.25);}
-.top-brand{display:flex;align-items:center;gap:12px;}
-.top-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.top-title{font-size:15px;font-weight:800;color:#fff;}
-.top-sub{font-size:11px;color:#7da5d8;margin-top:1px;}
-.top-right{display:flex;align-items:center;gap:8px;}
-.live-pill{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 10px;}
-.live-dot{width:7px;height:7px;background:#22c55e;border-radius:50%;animation:blink 2s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
-.live-txt{font-size:11px;font-weight:700;color:#86efac;}
-.upd-txt{font-size:11px;color:#7da5d8;}
-.tbtn{border:none;padding:7px 13px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;transition:.15s;text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
-.tbtn-ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);}
-.tbtn-ghost:hover{background:rgba(255,255,255,.18);}
-.tbtn-white{background:#fff;color:var(--navy);}
-.tbtn-white:hover{background:#dbeafe;color:var(--blue);}
+.topbar{
+  background:rgba(11,15,26,0.92);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);padding:0 24px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:900;
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-ico{width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#4F8EF7);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 18px rgba(79,142,247,.3);}
+.brand-name{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.03em;}
+.brand-sub{font-size:10px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-top:1px;}
+.topright{display:flex;align-items:center;gap:8px;}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(52,211,153,.09);border:1px solid rgba(52,211,153,.22);border-radius:99px;padding:4px 11px;}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#34D399;animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.live-txt{font-size:10px;font-weight:700;color:#34D399;letter-spacing:.1em;}
+.upd{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.btn{border:none;padding:7px 13px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:5px;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--text2);border:1px solid var(--border2);}
+.btn-ghost:hover{background:rgba(255,255,255,.08);color:var(--text);}
+.btn-accent{background:linear-gradient(135deg,#1D4ED8,#4F8EF7);color:#fff;text-decoration:none;box-shadow:0 0 14px rgba(79,142,247,.25);}
+.btn-accent:hover{box-shadow:0 0 22px rgba(79,142,247,.45);transform:translateY(-1px);}
 
-/* ─── TABS ─── */
-.nav-tabs{background:#fff;border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:2px;position:sticky;top:58px;z-index:800;}
-.nav-tab{padding:11px 16px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:.15s;white-space:nowrap;}
-.nav-tab:hover{color:var(--text);}
-.nav-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+/* ─── NAV ─── */
+.nav-tabs{background:rgba(14,17,24,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:2px;position:sticky;top:56px;z-index:800;}
+.nav-tab{padding:11px 15px;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap;letter-spacing:.02em;}
+.nav-tab:hover{color:var(--text2);}
+.nav-tab.active{color:var(--accent2);border-bottom-color:var(--accent);}
 
-/* ─── LOADING ─── */
-#loadBox{position:fixed;inset:0;background:rgba(13,27,62,.88);backdrop-filter:blur(4px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:.3s;}
+/* ─── LOAD ─── */
+#loadBox{position:fixed;inset:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:.35s;}
 #loadBox.off{opacity:0;pointer-events:none;}
-.spin{width:42px;height:42px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--blue);border-radius:50%;animation:spin .9s linear infinite;margin-bottom:12px;}
+.load-ring{width:44px;height:44px;border:2px solid rgba(79,142,247,.15);border-top-color:#4F8EF7;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:14px;box-shadow:0 0 20px rgba(79,142,247,.2);}
 @keyframes spin{to{transform:rotate(360deg);}}
-.load-t{color:#fff;font-size:14px;font-weight:700;}
-.load-s{color:#7da5d8;font-size:12px;margin-top:4px;}
+.load-t{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.02em;}
+.load-s{font-size:11px;color:var(--text3);margin-top:4px;font-family:'JetBrains Mono',monospace;}
 
 /* ─── PAGE ─── */
 .page{padding:18px 24px;display:flex;flex-direction:column;gap:16px;}
@@ -57,132 +85,163 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .tab-pane.active{display:flex;flex-direction:column;gap:16px;}
 
 /* ─── ERROR ─── */
-#errBox{background:var(--red-bg);border:1px solid #fecaca;border-radius:12px;padding:14px 18px;display:none;gap:10px;}
+#errBox{background:rgba(240,82,82,.07);border:1px solid rgba(240,82,82,.22);border-radius:10px;padding:13px 16px;display:none;gap:10px;align-items:flex-start;}
 #errBox.on{display:flex;}
 
 /* ─── METRICS ─── */
 .mrow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
-.mc{background:var(--card);border-radius:14px;padding:16px 18px;border:1px solid var(--border);box-shadow:var(--shadow);position:relative;overflow:hidden;}
-.mc::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple));}
-.mc-ico{font-size:18px;margin-bottom:7px;}
-.mc-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
-.mc-val{font-size:26px;font-weight:900;line-height:1;letter-spacing:-.03em;}
-.mc-sub{font-size:11px;color:var(--light);margin-top:5px;}
+.mc{background:var(--surface);border-radius:var(--radius);padding:16px 18px;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;}
+.mc:hover{border-color:var(--border2);transform:translateY(-2px);}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(79,142,247,.5),transparent);}
+.mc-ico{font-size:20px;margin-bottom:9px;opacity:.9;}
+.mc-lbl{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px;}
+.mc-val{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--text);}
+.mc-sub{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.5;}
+.mc-accent{color:var(--accent2)!important;}
+.mc-red{color:var(--red)!important;}
 
-/* ─── YEAR FILTER BAR ─── */
-.ybar{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow);padding:12px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.ybar-label{font-size:12px;font-weight:700;color:var(--muted);}
-.ytag{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:.15s;}
-.ytag:hover{border-color:var(--blue);color:var(--blue);}
-.ytag.active{border-color:var(--blue);background:var(--sky-bg);color:var(--blue);}
-.ytag.y2024.active{border-color:#2563eb;background:#eff6ff;color:#2563eb;}
-.ytag.y2025.active{border-color:#7c3aed;background:#f5f3ff;color:#7c3aed;}
-.ytag.y2026.active{border-color:#059669;background:#ecfdf5;color:#059669;}
+/* ─── YEAR BAR ─── */
+.ybar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.ybar-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;}
+.ytag{padding:5px 14px;border-radius:99px;border:1px solid var(--border2);background:transparent;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif;}
+.ytag:hover{border-color:var(--accent);color:var(--accent2);}
+.ytag.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent2);box-shadow:0 0 10px rgba(79,142,247,.12);}
+.ytag.y2024.active{border-color:#4F8EF7;background:rgba(79,142,247,.09);color:#7EB3FF;}
+.ytag.y2025.active{border-color:#C084FC;background:rgba(192,132,252,.09);color:#D8B4FE;}
+.ytag.y2026.active{border-color:#34D399;background:rgba(52,211,153,.09);color:#6EE7B7;}
 .ydivider{width:1px;height:20px;background:var(--border);}
-.yinfo{font-size:11px;color:var(--muted);margin-left:auto;}
-
-/* ─── FILTER BAR ─── */
-.fbar{background:var(--card);border-radius:12px;border:1px solid var(--border);box-shadow:var(--shadow);padding:12px 18px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.flabel{font-size:11px;font-weight:700;color:var(--muted);white-space:nowrap;}
-.finput{flex:1;min-width:160px;padding:8px 12px;border:1px solid var(--border);border-radius:9px;font-size:13px;font-family:inherit;outline:none;transition:border .15s;}
-.finput:focus{border-color:var(--blue);}
-.fsel{padding:8px 12px;border:1px solid var(--border);border-radius:9px;font-size:12px;font-family:inherit;outline:none;background:#fff;cursor:pointer;min-width:145px;}
-.fsel:focus{border-color:var(--blue);}
-.fcount{font-size:11px;color:var(--muted);margin-left:auto;white-space:nowrap;font-weight:600;}
-.fclear{padding:7px 12px;border-radius:9px;border:1px solid var(--border);background:#fff;color:var(--muted);font-size:12px;font-weight:600;cursor:pointer;}
-.fclear:hover{background:var(--bg);}
-
-/* ─── GRID LAYOUTS ─── */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
-.g13{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;}
-.g31{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.yinfo{font-size:10px;color:var(--text3);margin-left:auto;font-family:'JetBrains Mono',monospace;}
 
 /* ─── CARD ─── */
-.card{background:var(--card);border-radius:14px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;}
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:border-color .18s;}
+.card:hover{border-color:var(--border2);}
 .ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
-.ct{font-size:14px;font-weight:700;}
-.cs{font-size:11px;color:var(--muted);margin-top:2px;}
+.ct{font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.015em;}
+.cs{font-size:10px;color:var(--text3);margin-top:3px;}
 .cb{padding:16px 18px;}
 
+/* ─── GRIDS ─── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.g13{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;}
+
 /* ─── BADGE ─── */
-.bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap;}
-.b-r{background:#fef2f2;color:#b91c1c;}
-.b-o{background:#fff7ed;color:#c2410c;}
-.b-b{background:var(--sky-bg);color:#1d4ed8;}
-.b-g{background:#f1f5f9;color:#475569;}
+.bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap;letter-spacing:.03em;}
+.b-r{background:rgba(240,82,82,.14);color:#FCA5A5;border:1px solid rgba(240,82,82,.28);}
+.b-o{background:rgba(251,146,60,.14);color:#FED7AA;border:1px solid rgba(251,146,60,.28);}
+.b-b{background:rgba(79,142,247,.14);color:#BFDBFE;border:1px solid rgba(79,142,247,.28);}
+.b-g{background:rgba(61,79,106,.2);color:var(--text3);border:1px solid var(--border2);}
 
 /* ─── TABLE ─── */
-.twrap{overflow:auto;max-height:500px;}
+.twrap{overflow:auto;}
+.twrap-h{max-height:480px;}
 table{width:100%;border-collapse:collapse;}
-thead th{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:10px 13px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;position:sticky;top:0;z-index:2;white-space:nowrap;}
-tbody tr:nth-child(even){background:#f8fafc;}
-tbody tr:hover{background:var(--sky-bg);}
-td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:13px;vertical-align:middle;}
-.tnum{font-weight:700;text-align:right;}
-.barcell{display:flex;align-items:center;gap:6px;}
-.barbg{height:6px;background:#e2e8f0;border-radius:3px;flex:1;min-width:40px;overflow:hidden;}
+thead th{background:var(--surface2);color:var(--text3);padding:9px 13px;text-align:left;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;position:sticky;top:0;z-index:2;white-space:nowrap;border-bottom:1px solid var(--border);}
+tbody tr{border-bottom:1px solid rgba(28,35,51,.6);}
+tbody tr:hover{background:rgba(79,142,247,.04);}
+td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
+.tnum{font-weight:700;text-align:right;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;}
+.barcell{display:flex;align-items:center;gap:7px;}
+.barbg{height:4px;background:var(--border);border-radius:3px;flex:1;min-width:40px;overflow:hidden;}
 .barfill{height:100%;border-radius:3px;}
 
-/* ─── INSIGHT ─── */
-.ins{display:flex;gap:10px;padding:11px;border-radius:11px;background:#f8fafc;margin-bottom:8px;border:1px solid var(--border);transition:.15s;}
-.ins:hover{background:var(--sky-bg);}
-.ins:last-child{margin-bottom:0;}
-.ins-ico{width:36px;height:36px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.1);}
-.ins-t{font-size:13px;font-weight:700;margin-bottom:3px;}
-.ins-b{font-size:12px;color:var(--muted);line-height:1.6;}
+/* ─── CRITICAL ─── */
+.crit-item{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;margin-bottom:7px;border:1px solid transparent;transition:all .18s;position:relative;overflow:hidden;}
+.crit-item:last-child{margin-bottom:0;}
+.crit-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;}
+.crit-r{background:rgba(240,82,82,.06);border-color:rgba(240,82,82,.14);}.crit-r::before{background:#F05252;}
+.crit-o{background:rgba(251,146,60,.06);border-color:rgba(251,146,60,.14);}.crit-o::before{background:#FB923C;}
+.crit-y{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.14);}.crit-y::before{background:#FBBF24;}
+.crit-item:hover{transform:translateX(3px);}
+.crit-rank{font-size:18px;font-weight:800;color:var(--text3);min-width:24px;line-height:1;}
+.crit-body{flex:1;min-width:0;}
+.crit-name{font-size:12px;font-weight:600;color:var(--text);line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.crit-meta{font-size:10px;color:var(--text3);margin-top:3px;display:flex;align-items:center;gap:5px;}
+.crit-r-val{text-align:right;}
+.crit-count{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600;}
+.crit-pct{font-size:10px;color:var(--text3);}
 
 /* ─── PROGRESS ─── */
-.prog{margin-bottom:11px;}
+.prog{margin-bottom:12px;}
 .prog:last-child{margin-bottom:0;}
-.prog-lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}
-.prog-name{font-weight:600;color:var(--text);}
-.prog-pct{color:var(--muted);}
-.prog-bg{height:7px;background:#e2e8f0;border-radius:4px;overflow:hidden;}
-.prog-fill{height:100%;border-radius:4px;}
+.prog-lbl{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;align-items:center;}
+.prog-name{font-weight:600;color:var(--text2);font-size:12px;}
+.prog-pct{color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:10px;}
+.prog-bg{height:4px;background:var(--border);border-radius:3px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:3px;}
 
-/* ─── NEW: CRITICAL ISSUES PANEL ─── */
-.crit-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:7px;border-left:3px solid transparent;}
-.crit-item:last-child{margin-bottom:0;}
-.crit-r{background:#fef2f2;border-left-color:#dc2626;}
-.crit-o{background:#fff7ed;border-left-color:#ea580c;}
-.crit-rank{font-size:18px;font-weight:900;color:var(--light);min-width:24px;}
-.crit-body{flex:1;}
-.crit-name{font-size:12px;font-weight:700;color:var(--text);line-height:1.4;}
-.crit-meta{font-size:11px;color:var(--muted);margin-top:2px;}
-.crit-count{font-size:15px;font-weight:900;white-space:nowrap;}
+/* ─── TYPE LIST ─── */
+/* FIX 2: thêm vùng scroll cho Top Type Issue để hiển thị hết, không bị khoảng trống */
+.typebox{max-height:340px;overflow-y:auto;padding-right:4px;}
+.typebox::-webkit-scrollbar{width:5px;}
+.typebox::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
+.type-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all .18s;}
+.type-item:last-child{margin-bottom:0;}
+.type-item:hover{border-color:var(--border2);transform:translateX(2px);}
+.type-rank{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);min-width:18px;text-align:center;}
+.type-name{font-size:11px;font-weight:600;color:var(--text2);flex:1;line-height:1.4;}
+.type-bar{width:50px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;flex-shrink:0;}
+.type-barfill{height:100%;border-radius:2px;}
+.type-count{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--text);min-width:52px;text-align:right;}
 
-/* ─── NEW: YEAR METRICS ─── */
+/* ─── INSIGHT ─── */
+.ins{display:flex;gap:11px;padding:13px 14px;border-radius:10px;margin-bottom:9px;border:1px solid var(--border);background:var(--surface2);transition:all .18s;position:relative;overflow:hidden;}
+.ins:last-child{margin-bottom:0;}
+.ins:hover{border-color:var(--border2);}
+.ins::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;}
+.ins-1::after{background:var(--red);}
+.ins-2::after{background:var(--orange);}
+.ins-3::after{background:var(--accent);}
+.ins-4::after{background:var(--purple);}
+.ins-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--surface3);}
+.ins-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;opacity:.75;}
+.ins-t{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3;}
+.ins-b{font-size:11px;color:var(--text3);line-height:1.7;}
+.ins-b b{color:var(--text2);}
+.ins-chip{display:inline-flex;align-items:center;gap:3px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.18);border-radius:5px;padding:2px 7px;font-size:9px;font-weight:700;color:#34D399;margin-top:5px;}
+
+/* ─── AI TAG ─── */
+.ai-tag{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(79,142,247,.18),rgba(192,132,252,.18));border:1px solid rgba(79,142,247,.28);border-radius:99px;padding:3px 9px;font-size:9px;font-weight:700;color:var(--accent2);letter-spacing:.06em;}
+
+/* ─── YEARLY ─── */
 .yrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-.ymc{border-radius:14px;padding:18px 20px;color:#fff;position:relative;overflow:hidden;}
-.ymc-2024{background:linear-gradient(135deg,#1e3a5f,#2563eb);}
-.ymc-2025{background:linear-gradient(135deg,#3b0764,#7c3aed);}
-.ymc-2026{background:linear-gradient(135deg,#065f46,#059669);}
-.ymc::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.08);}
-.ymc-yr{font-size:11px;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:.08em;}
-.ymc-val{font-size:32px;font-weight:900;margin:6px 0 3px;letter-spacing:-.04em;}
-.ymc-sub{font-size:11px;opacity:.75;}
-.ymc-bdg{display:inline-block;background:rgba(255,255,255,.2);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-top:7px;}
+.ymc{border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden;border:1px solid var(--border);}
+.ymc-2024{background:linear-gradient(135deg,rgba(29,78,216,.28),rgba(79,142,247,.12));border-color:rgba(79,142,247,.22);}
+.ymc-2025{background:linear-gradient(135deg,rgba(109,40,217,.28),rgba(192,132,252,.12));border-color:rgba(192,132,252,.22);}
+.ymc-2026{background:linear-gradient(135deg,rgba(16,71,52,.28),rgba(52,211,153,.12));border-color:rgba(52,211,153,.22);}
+.ymc::after{content:'';position:absolute;top:-25px;right:-25px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.025);}
+.ymc-yr{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;opacity:.65;}
+.ymc-val{font-size:34px;font-weight:800;margin:7px 0 3px;letter-spacing:-.05em;}
+.ymc-sub{font-size:10px;opacity:.6;}
+.ymc-bdg{display:inline-block;background:rgba(255,255,255,.11);border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700;margin-top:7px;}
 
 /* ─── REC ─── */
-.rec{display:flex;gap:9px;padding:9px 12px;border-radius:9px;background:#f8fafc;margin-bottom:6px;font-size:13px;line-height:1.6;border:1px solid var(--border);}
+.rec{display:flex;gap:9px;padding:11px 13px;border-radius:9px;background:var(--surface2);margin-bottom:7px;font-size:12px;line-height:1.7;border:1px solid var(--border);color:var(--text2);}
 .rec:last-child{margin-bottom:0;}
 .rec-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:7px;}
 
-/* ─── QS replaced by CRITICAL PANEL ─── */
-.qs{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;}
-.qs:last-child{border:none;}
-.qs-l{font-size:13px;color:var(--muted);}
-.qs-v{font-size:13px;font-weight:700;}
+/* ─── FBAR ─── */
+.fbar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.flabel{font-size:10px;font-weight:700;color:var(--text3);white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;}
+.finput{flex:1;min-width:180px;padding:7px 12px;border:1px solid var(--border2);border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .18s;background:var(--surface2);color:var(--text);}
+.finput:focus{border-color:var(--accent);}
+.finput::placeholder{color:var(--text3);}
+.fsel{padding:7px 11px;border:1px solid var(--border2);border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;background:var(--surface2);color:var(--text);cursor:pointer;min-width:140px;}
+.fsel:focus{border-color:var(--accent);}
+.fsel-sm{padding:5px 10px;border:1px solid var(--border2);border-radius:7px;font-size:11px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;background:var(--surface2);color:var(--text2);cursor:pointer;min-width:140px;}
+.fcount{font-size:10px;color:var(--text3);margin-left:auto;white-space:nowrap;font-weight:600;font-family:'JetBrains Mono',monospace;}
+.fclear{padding:6px 11px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:.15s;}
+.fclear:hover{background:var(--surface2);color:var(--text);}
 
-/* ─── COMPARISON TABLE ─── */
-.trend-up{color:var(--red);font-size:11px;font-weight:700;}
-.trend-dn{color:var(--green);font-size:11px;font-weight:700;}
+.footer{text-align:center;padding:22px;color:var(--text3);font-size:10px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+.footer a{color:var(--accent);text-decoration:none;}
+.footer a:hover{color:var(--accent2);}
 
-.footer{text-align:center;padding:18px;color:var(--light);font-size:11px;}
+.trend-up{color:#FCA5A5;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.trend-dn{color:#6EE7B7;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
 
-@media(max-width:1280px){.g13,.g2{grid-template-columns:1fr;}.mrow{grid-template-columns:repeat(3,1fr);}}
-@media(max-width:768px){.mrow,.yrow,.g3{grid-template-columns:1fr 1fr;}.topbar{padding:0 14px;}.page{padding:12px;}}
+@media(max-width:1280px){.g13{grid-template-columns:1fr;}.mrow{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:900px){.g3,.g2{grid-template-columns:1fr;}.mrow,.yrow{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:480px){.mrow{grid-template-columns:1fr;}}
 </style>
 </head>
@@ -190,169 +249,139 @@ td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:13px;vertical-alig
 
 <!-- LOADING -->
 <div id="loadBox">
-  <div class="spin"></div>
-  <div class="load-t">Đang tải dữ liệu Google Sheets…</div>
-  <div class="load-s">Vui lòng chờ</div>
+  <div class="load-ring"></div>
+  <div class="load-t">DASHBOARD THỐNG KÊ ISSUE – Omicall</div>
+  <div class="load-s">Loading Google Sheets…</div>
 </div>
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="top-brand">
-    <div class="top-icon">📊</div>
+  <div class="brand">
+    <div class="brand-ico">📊</div>
     <div>
-      <div class="top-title">DASHBOARD THỐNG KÊ ISSUE – Omicall</div>
-      <div class="top-sub">Realtime · Google Sheets · Auto refresh 5 phút</div>
+      <div class="brand-name">DASHBOARD THỐNG KÊ ISSUE – Omicall</div>
+      <div class="brand-sub">Omicall · 2024 – 2026</div>
     </div>
   </div>
-  <div class="top-right">
+  <div class="topright">
     <div class="live-pill"><div class="live-dot"></div><span class="live-txt">LIVE</span></div>
-    <span class="upd-txt" id="updTxt">—</span>
-    <button class="tbtn tbtn-ghost" onclick="loadData(true)">🔄 Làm mới</button>
-    <a class="tbtn tbtn-white" target="_blank" href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535">📄 Google Sheet</a>
+    <span class="upd" id="updTxt">—</span>
+    <button class="btn btn-ghost" onclick="loadData(true)">↺ Làm mới</button>
+    <a class="btn btn-accent" target="_blank" href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535">↗ Google Sheet</a>
   </div>
 </div>
 
-<!-- NAV TABS -->
+<!-- NAV -->
 <div class="nav-tabs">
-  <div class="nav-tab active" data-tab="overview">📋 Tổng quan</div>
-  <div class="nav-tab" data-tab="yearly">📅 Theo năm</div>
-  <div class="nav-tab" data-tab="detail">🔍 Chi tiết & Lọc</div>
+  <div class="nav-tab active" data-tab="overview">Overview</div>
+  <div class="nav-tab" data-tab="yearly">Theo năm</div>
+  <div class="nav-tab" data-tab="detail">Chi tiết & Lọc</div>
 </div>
 
 <div class="page">
+  <div id="errBox"><span style="font-size:20px">⚠</span><div><b style="color:#FCA5A5">Không tải được Google Sheets</b><br><span style="font-size:11px;color:var(--text3)" id="errMsg">Đang dùng dữ liệu mẫu.</span></div></div>
 
-  <div id="errBox"><span style="font-size:22px">⚠️</span><div><b style="color:#b91c1c">Không tải được Google Sheets</b><br><span style="font-size:12px;color:var(--muted)" id="errMsg">Hiển thị dữ liệu mẫu. Kiểm tra kết nối hoặc đảm bảo Sheet đã Publish to web.</span></div></div>
-
-  <!-- ══════════════ TAB 1: OVERVIEW ══════════════ -->
+  <!-- ══════ OVERVIEW ══════ -->
   <div class="tab-pane active" id="tab-overview">
-
-    <!-- YEAR FILTER -->
+    <!-- Year filter -->
     <div class="ybar">
-      <span class="ybar-label">📅 Lọc theo năm:</span>
-      <button class="ytag active" data-year="all" onclick="setYear('all',this)">Tất cả (2024–2026)</button>
+      <span class="ybar-label">Năm</span>
+      <button class="ytag active" data-year="all" onclick="setYear('all',this)">Tất cả 2024–2026</button>
       <button class="ytag y2024" data-year="2024" onclick="setYear('2024',this)">2024</button>
       <button class="ytag y2025" data-year="2025" onclick="setYear('2025',this)">2025</button>
-      <button class="ytag y2026" data-year="2026" onclick="setYear('2026 (5T)',this)">2026 (5 tháng)</button>
+      <button class="ytag y2026" data-year="2026 (5T)" onclick="setYear('2026 (5T)',this)">2026 (5 tháng)</button>
       <div class="ydivider"></div>
-      <span class="yinfo" id="yInfo">Hiển thị tổng hợp 2024 – tháng 5/2026</span>
+      <span class="yinfo" id="yInfo">Tổng hợp 2024 – tháng 5/2026</span>
     </div>
 
-    <!-- METRICS -->
+    <!-- Metrics -->
     <div class="mrow">
-      <div class="mc"><div class="mc-ico">📋</div><div class="mc-lbl">Tổng lần ghi nhận</div><div class="mc-val" id="mTotal">—</div><div class="mc-sub" id="mTotalSub">—</div></div>
-      <div class="mc"><div class="mc-ico">🗂</div><div class="mc-lbl">Tiêu đề Issue chuẩn hóa</div><div class="mc-val" id="mRows">—</div><div class="mc-sub">Từ sheet ListIssue</div></div>
-      <div class="mc"><div class="mc-ico">🏷</div><div class="mc-lbl">Số nhóm Module phân loại Issue</div><div class="mc-val" id="mGroups">—</div><div class="mc-sub">Group chuẩn hóa</div></div>
-      <div class="mc"><div class="mc-ico">🔴</div><div class="mc-lbl">Tần suất Rất cao + Cao</div><div class="mc-val" id="mHigh" style="color:var(--red)">—</div><div class="mc-sub">Top các Issue nghiêm trọng</div></div>
-      <div class="mc"><div class="mc-ico">📈</div><div class="mc-lbl">Top 3 Issue nghiêm trọng chiếm</div><div class="mc-val" id="mTop3">—</div><div class="mc-sub">Tổng issue hệ thống</div></div>
+      <div class="mc"><div class="mc-ico">📋</div><div class="mc-lbl">Tổng phiếu ghi nhận</div><div class="mc-val mc-accent" id="mTotal">—</div><div class="mc-sub" id="mTotalSub">—</div></div>
+      <div class="mc"><div class="mc-ico">🗂</div><div class="mc-lbl">Tiêu đề đã chuẩn hóa</div><div class="mc-val" id="mRows">—</div><div class="mc-sub">Từ sheet DanhSachIssueChuanHoa_Output</div></div>
+      <div class="mc"><div class="mc-ico">🏷</div><div class="mc-lbl">Nhóm module phân loại theo Tiêu đề Issue</div><div class="mc-val" id="mGroups">—</div><div class="mc-sub">Nhóm phân loại</div></div>
+      <div class="mc"><div class="mc-ico">🔴</div><div class="mc-lbl">Issue có tuần suất lặp lại rất cao + cao</div><div class="mc-val mc-red" id="mHigh">—</div><div class="mc-sub">Ưu tiên xử lý</div></div>
+      <div class="mc"><div class="mc-ico">📈</div><div class="mc-lbl">Top 3 issue nghiêm trọng chiếm</div><div class="mc-val" id="mTop3">—</div><div class="mc-sub">Tổng toàn hệ thống</div></div>
     </div>
 
-    <!-- CHARTS ROW -->
+    <!-- Charts row -->
     <div class="g13">
-
-      <!-- BAR CHART – full label, no truncate -->
       <div class="card">
-        <div class="ch">
-          <div><div class="ct">Top 10 Issue – Tần suất cao nhất</div><div class="cs">Tiêu Đề Chuẩn Hóa</div></div>
-        </div>
-        <div class="cb"><div style="height:360px"><canvas id="barChart"></canvas></div></div>
+        <div class="ch"><div><div class="ct">Top 10 Issue — Tần suất cao nhất</div><div class="cs">Tiêu đề chuẩn hóa · màu theo mức độ nghiêm trọng</div></div></div>
+        <div class="cb"><div style="height:370px"><canvas id="barChart"></canvas></div></div>
       </div>
-
-      <!-- PIE CHART – show % on chart -->
       <div class="card">
-        <div class="ch">
-          <div><div class="ct">Phân bố theo nhóm</div><div class="cs">% hiển thị trực tiếp trên biểu đồ</div></div>
-        </div>
-        <div class="cb"><div style="height:360px"><canvas id="pieChart"></canvas></div></div>
+        <div class="ch"><div><div class="ct">Phân bố theo nhóm Module</div><div class="cs">% hiển thị trực tiếp trên biểu đồ</div></div></div>
+        <div class="cb"><div style="height:370px"><canvas id="pieChart"></canvas></div></div>
       </div>
-
     </div>
 
-    <!-- BOTTOM ROW: CRITICAL + PROGRESS + INSIGHT -->
+    <!-- Bottom 3-col: Critical | Top Type Issue | Insight -->
     <div class="g3">
-
-      <!-- NEW: Critical Issues (thay Thống kê nhanh) -->
+      <!-- Critical -->
       <div class="card">
-        <div class="ch"><div><div class="ct">🚨 Issue nghiêm trọng nhất</div></div></div>
+        <div class="ch"><div><div class="ct">🚨 Issue nghiêm trọng nhất</div><div class="cs">Theo tần suất ghi nhận</div></div></div>
         <div class="cb" id="critBox"></div>
       </div>
 
-      <!-- PROGRESS -->
+      <!-- TOP TYPE ISSUE — FIX 2: hiển thị hết + scroll -->
       <div class="card">
-        <div class="ch"><div class="ct">📊 Top nhóm theo số lượng Issue ghi nhận</div></div>
-        <div class="cb" id="progressBox"></div>
+        <div class="ch"><div><div class="ct">📌 Top Type Issue</div><div class="cs">Cột H · DanhSachIssueChuanHoa_Output · lăn để xem hết</div></div></div>
+        <div class="cb" style="padding:12px 14px"><div class="typebox" id="typeListBox"></div></div>
       </div>
 
-      <!-- INSIGHT -->
+      <!-- Insight -->
       <div class="card">
-        <div class="ch"><div class="ct">🔥 Insight & Khuyến nghị</div></div>
+        <div class="ch"><div><div class="ct">💡 Insight & Giải pháp</div><div class="cs">Thống kê & Phân tích Issue nghiêm trọng</div></div></div>
         <div class="cb" id="insightBox"></div>
       </div>
-
     </div>
+  </div>
 
-  </div><!-- /tab-overview -->
-
-  <!-- ══════════════ TAB 2: YEARLY ══════════════ -->
+  <!-- ══════ YEARLY ══════ -->
   <div class="tab-pane" id="tab-yearly">
-
     <div class="yrow">
       <div class="ymc ymc-2024"><div class="ymc-yr">📅 Năm 2024</div><div class="ymc-val">50,538</div><div class="ymc-sub">phiếu ghi nhận · 12 tháng</div><div class="ymc-bdg">Năm đầu thu thập</div></div>
       <div class="ymc ymc-2025"><div class="ymc-yr">📅 Năm 2025</div><div class="ymc-val">95,038</div><div class="ymc-sub">phiếu ghi nhận · 12 tháng</div><div class="ymc-bdg">↑ +88% so với 2024</div></div>
-      <div class="ymc ymc-2026"><div class="ymc-yr">📅 Năm 2026 (5 tháng)</div><div class="ymc-val">51,318</div><div class="ymc-sub">phiếu ghi nhận · Jan–May</div><div class="ymc-bdg">≈ 10,264/tháng</div></div>
+      <div class="ymc ymc-2026"><div class="ymc-yr">📅 Năm 2026 (5 tháng)</div><div class="ymc-val">51,318</div><div class="ymc-sub">phiếu ghi nhận · Jan–May</div><div class="ymc-bdg">≈ 10,264 / tháng</div></div>
     </div>
 
     <div class="card">
       <div class="ch">
-        <div><div class="ct">Xu hướng phân loại phiếu ghi theo năm</div><div class="cs">Phân loại thô từ PhieuGhi_2024/2025/2026</div></div>
-        <select class="fsel" id="trendMode" style="min-width:155px" onchange="buildTrendChart()">
-          <option value="stacked">Cột gộp (Stacked)</option>
-          <option value="grouped">Cột nhóm (Grouped)</option>
-          <option value="line">Đường (Line)</option>
+        <div><div class="ct">Xu hướng phân loại theo năm</div><div class="cs">Từ PhieuGhi 2024 / 2025 / 2026</div></div>
+        <select class="fsel-sm" id="trendMode" onchange="buildTrendChart()">
+          <option value="stacked">Cột gộp</option>
+          <option value="grouped">Cột nhóm</option>
+          <option value="line">Đường</option>
         </select>
       </div>
-      <div class="cb"><div style="height:320px"><canvas id="trendChart"></canvas></div></div>
+      <div class="cb"><div style="height:300px"><canvas id="trendChart"></canvas></div></div>
     </div>
 
     <div class="g3">
-      <div class="card">
-        <div class="ch"><div><div class="ct" style="color:#2563eb">2024 – Top phân loại</div><div class="cs">50,538 phiếu · 12 tháng</div></div></div>
-        <div class="cb" style="padding:0"><table class="yb-tbl"><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2024"></tbody></table></div>
-      </div>
-      <div class="card">
-        <div class="ch"><div><div class="ct" style="color:#7c3aed">2025 – Top phân loại</div><div class="cs">95,038 phiếu · 12 tháng</div></div></div>
-        <div class="cb" style="padding:0"><table class="yb-tbl"><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2025"></tbody></table></div>
-      </div>
-      <div class="card">
-        <div class="ch"><div><div class="ct" style="color:#059669">2026 – Top phân loại</div><div class="cs">51,318 phiếu · 5 tháng</div></div></div>
-        <div class="cb" style="padding:0"><table class="yb-tbl"><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2026"></tbody></table></div>
-      </div>
+      <div class="card"><div class="ch"><div><div class="ct" style="color:#7EB3FF">2024 – Top phân loại</div><div class="cs">50,538 phiếu · 12 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2024"></tbody></table></div></div></div>
+      <div class="card"><div class="ch"><div><div class="ct" style="color:#D8B4FE">2025 – Top phân loại</div><div class="cs">95,038 phiếu · 12 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2025"></tbody></table></div></div></div>
+      <div class="card"><div class="ch"><div><div class="ct" style="color:#6EE7B7">2026 – Top phân loại</div><div class="cs">51,318 phiếu · 5 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2026"></tbody></table></div></div></div>
     </div>
 
     <div class="card">
-      <div class="ch"><div><div class="ct">So sánh xu hướng qua các năm</div><div class="cs">Phân loại chính · ↑↓ tính so sánh 2024 → 2026</div></div></div>
-      <div class="cb" style="padding:0">
-        <div class="twrap">
-          <table>
-            <thead><tr><th>Phân loại</th><th style="text-align:right">2024</th><th style="text-align:right">2025</th><th style="text-align:right">2026 (5T)</th><th style="text-align:right">Xu hướng</th><th>Nhận xét</th></tr></thead>
-            <tbody id="cmpTable"></tbody>
-          </table>
-        </div>
-      </div>
+      <div class="ch"><div><div class="ct">So sánh xu hướng qua các năm</div><div class="cs">↑↓ so sánh 2024 → 2026</div></div></div>
+      <div class="twrap twrap-h"><table>
+        <thead><tr><th>Phân loại</th><th style="text-align:right">2024</th><th style="text-align:right">2025</th><th style="text-align:right">2026 (5T)</th><th style="text-align:right">Trend</th><th>Nhận xét</th></tr></thead>
+        <tbody id="cmpTable"></tbody>
+      </table></div>
     </div>
+  </div>
 
-  </div><!-- /tab-yearly -->
-
-  <!-- ══════════════ TAB 3: DETAIL ══════════════ -->
+  <!-- ══════ DETAIL ══════ -->
   <div class="tab-pane" id="tab-detail">
-
     <div class="fbar">
-      <span class="flabel">🔍</span>
+      <span class="flabel">Tìm</span>
       <input class="finput" id="searchInput" type="text" placeholder="Tìm tiêu đề chuẩn hóa…">
-      <span class="flabel">Nhóm:</span>
+      <span class="flabel">Nhóm</span>
       <select class="fsel" id="groupFilter"><option value="">Tất cả nhóm</option></select>
-      <span class="flabel">Type:</span>
+      <span class="flabel">Type</span>
       <select class="fsel" id="typeFilter"><option value="">Tất cả type</option></select>
-      <span class="flabel">Tần suất:</span>
+      <span class="flabel">Tần suất</span>
       <select class="fsel" id="freqFilter">
         <option value="">Tất cả</option>
         <option>Rất cao</option><option>Cao</option><option>Trung bình</option><option>Thấp</option>
@@ -362,66 +391,54 @@ td{padding:9px 13px;border-bottom:1px solid #f1f5f9;font-size:13px;vertical-alig
     </div>
 
     <div class="card">
-      <div class="ch"><div><div class="ct">Chi tiết issue – Tiêu Đề Chuẩn Hóa</div><div class="cs">Sắp xếp theo số lần ghi nhận · Thanh toán thủ công đã gộp chung</div></div></div>
-      <div class="twrap">
-        <table>
-          <thead><tr>
-            <th style="width:36px">#</th>
-            <th>Tiêu đề chuẩn hóa</th>
-            <th>Nhóm</th>
-            <th>Type Issue</th>
-            <th style="text-align:right;min-width:72px">Số lần</th>
-            <th style="min-width:95px">Tần suất</th>
-            <th style="min-width:130px">Tỷ lệ</th>
-          </tr></thead>
-          <tbody id="issueTable"></tbody>
-        </table>
-      </div>
+      <div class="ch"><div><div class="ct">Chi tiết Issue — Tất cả 57 tiêu đề chuẩn hóa</div><div class="cs">Sắp xếp theo số lần ghi nhận · không gộp payment</div></div></div>
+      <div class="twrap twrap-h"><table>
+        <thead><tr>
+          <th style="width:32px">#</th>
+          <th>Tiêu đề chuẩn hóa</th>
+          <th>Nhóm</th>
+          <th>Type Issue</th>
+          <th style="text-align:right;min-width:76px">Số lần</th>
+          <th style="min-width:85px">Tần suất</th>
+          <th style="min-width:130px">Tỷ lệ</th>
+        </tr></thead>
+        <tbody id="issueTable"></tbody>
+      </table></div>
     </div>
 
     <div class="card">
-      <div class="ch"><div class="ct">💡 Khuyến nghị hành động</div></div>
+      <div class="ch"><div class="ct">💡 Khuyến nghị hành động</div><span class="ai-tag">✦ Solution Map</span></div>
       <div class="cb">
         <div class="g2">
           <div>
-            <div class="rec"><div class="rec-dot" style="background:#dc2626"></div><div><strong>Watchlog auto-restart</strong> services POS & Farcard — trực tiếp giảm 2 issue lớn nhất (10,570 + 8,670 lần)</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#ea580c"></div><div><strong>Chuẩn hóa quy trình thanh toán thủ công</strong> — 10,224 lần được gom nhóm từ VNPay + Momo + Zalo + Payoo + VietQR. Training thu ngân + FAQ.</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#d97706"></div><div><strong>Monitor uptime RK7 Manager</strong> — alert proactive, 4,543 lần. Restart service tự động khi phát hiện down.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:#F05252"></div><div><strong>Auto-restart watchlog</strong> cho POS & Farcard services — giảm trực tiếp 2 issue lớn nhất (10,570 + 8,670 lần) - Cài Zabbix giám sát và khởi động service.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:#FB923C"></div><div><strong>Chuẩn hóa PaymentHub thanh toán Online </strong> — VNPay, Momo, Zalo, Payoo, VietQR. Training thu ngân + FAQ popup inline POS.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:#FBBF24"></div><div><strong>Monitor uptime RK7 Manager</strong> — alert proactive, 4,543 lần. Auto-restart khi phát hiện stop.</div></div>
           </div>
           <div>
-            <div class="rec"><div class="rec-dot" style="background:#2563eb"></div><div><strong>Knowledge base & video FAQ</strong> cho User Ops hủy tạm tính, đóng ca chung (~7,756 lần)</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#7c3aed"></div><div><strong>Auto-classify issue bằng AI</strong> — giảm nhóm "Chưa Xác Định" (hiện đang chiếm số lượng lớn)</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#0d9488"></div><div><strong>Bảo trì phần cứng định kỳ</strong> — máy in, nguồn POS, thiết bị KH theo lịch (Hardware: ~2,967 lần)</div></div>
+            <div class="rec"><div class="rec-dot" style="background:#4F8EF7"></div><div><strong>Knowledge base + video FAQ</strong> cho hủy tạm tính, đóng ca DayEnd (~7,756 lần).</div></div>
+            <div class="rec"><div class="rec-dot" style="background:#C084FC"></div><div><strong>AI auto-classify ticket</strong> — giảm nhóm "Chưa xác định". Cải thiện chất lượng báo cáo phân loại.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:#2DD4BF"></div><div><strong>Bảo trì phần cứng định kỳ</strong> — máy in, nguồn POS, hub network, màn hình phụ máy POS.</div></div>
           </div>
         </div>
       </div>
     </div>
-
-  </div><!-- /tab-detail -->
-
+  </div>
 </div>
-<div class="footer">Dashboard · Omicall Ticket System 2024–2026 · Google Sheets ListIssue · Auto refresh 5 phút · <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" style="color:var(--blue)" target="_blank">Mở Sheet</a></div>
 
-<style>
-.yb-tbl{width:100%;border-collapse:collapse;}
-.yb-tbl th{font-size:11px;font-weight:700;color:var(--muted);padding:8px 12px;border-bottom:2px solid var(--border);background:transparent;}
-.yb-tbl td{font-size:12px;padding:8px 12px;border-bottom:1px solid #f1f5f9;}
-.yb-tbl tr:hover td{background:#f8fafc;}
-</style>
+<div class="footer">
+  Omicall Issue Intelligence · 2024–2026 · Google Sheets ListIssue · Auto refresh 5 phút ·
+  <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" target="_blank">Mở Sheet ↗</a>
+</div>
 
 <script>
-// ════════════════════════════════════════════════
+// ══════════════════════════════════════════
 // CONFIG
-// ════════════════════════════════════════════════
+// ══════════════════════════════════════════
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu_C0BHpfmNWnfR00Xiaw5_F_YUfmwcEjxbTTHDnjk4diz9My7CFMa_UMFmglcgvhlF5K2YyvlkoMC/pub?gid=51800535&single=true&output=csv';
 
-// ── Từ khóa thanh toán thủ công – gộp tất cả về Payment Hub ──
-const PMATCH = ['vnpay','momo','vietqr','payoo','zalo pay','zalopay','thanh toán vnpay','thanh toán momo','thanh toán zalo','thanh toán payoo','thanh toán vietqr','thanh toán thủ công'];
-const MERGED_PAYMENT_LABEL = 'Hỗ trợ thanh toán thủ công (tất cả kênh)';
+const PAL = ['#4F8EF7','#C084FC','#F05252','#34D399','#FB923C','#FBBF24','#38BDF8','#2DD4BF','#F472B6','#A78BFA','#60A5FA','#86EFAC','#FCA5A5','#FDE68A'];
 
-const PAL = ['#2563eb','#7c3aed','#db2777','#dc2626','#ea580c','#d97706','#16a34a','#0891b2','#9333ea','#0d9488','#4338ca','#65a30d','#be123c','#0284c7','#c026d3'];
-
-// ── Dữ liệu năm (static từ PhieuGhi sheets) ──
 const YEAR_DATA = {
   2024:{total:50538,cats:[
     {n:'POS_Lỗi kết nối',v:5669},{n:'POS_Chưa phân loại',v:9794},{n:'POS_Do người dùng',v:4655},
@@ -442,47 +459,37 @@ const YEAR_DATA = {
     {n:'SkyOrder_Lỗi kết nối',v:448},
   ]},
 };
-
 const TREND_SERIES = [
-  {lbl:'POS_Lỗi kết nối',   data:[5669,16611,18470],color:'#dc2626'},
-  {lbl:'FC_Lỗi kết nối',    data:[1653,7082,736],   color:'#ea580c'},
-  {lbl:'PH_Thanh toán thủ công',data:[0,8370,2118], color:'#2563eb'},
-  {lbl:'POS_Do người dùng', data:[4655,7957,1084],  color:'#16a34a'},
-  {lbl:'POS_Chưa phân loại',data:[9794,11979,1255], color:'#94a3b8'},
-  {lbl:'Khác',              data:[28522,44039,28910],color:'#e2e8f0'},
+  {lbl:'POS_Lỗi kết nối',     data:[5669,16611,18470], color:'#F05252'},
+  {lbl:'FC_Lỗi kết nối',      data:[1653,7082,736],    color:'#FB923C'},
+  {lbl:'PH_Thanh toán thủ công',data:[0,8370,2118],    color:'#4F8EF7'},
+  {lbl:'POS_Do người dùng',   data:[4655,7957,1084],   color:'#34D399'},
+  {lbl:'POS_Chưa phân loại',  data:[9794,11979,1255],  color:'#3D4F6A'},
+  {lbl:'Khác',                data:[28522,44039,28910], color:'#1C2333'},
 ];
-
 const CMP_ROWS = [
-  {lbl:'POS_Lỗi kết nối',      y24:5669, y25:16611,y26:18470,note:'↑↑ Tăng liên tục – ưu tiên #1'},
-  {lbl:'FC_Lỗi kết nối',       y24:1653, y25:7082, y26:736,  note:'↓ Giảm 2026 sau xử lý'},
-  {lbl:'POS_Do người dùng',    y24:4655, y25:7957, y26:1084, note:'↓ Cần training thêm'},
-  {lbl:'PH_Thanh toán thủ công',y24:0,   y25:8370, y26:2118, note:'↑ Nổi lên từ 2025'},
-  {lbl:'POS_Chưa phân loại',   y24:9794, y25:11979,y26:1255, note:'↓ Giảm nhờ chuẩn hóa'},
-  {lbl:'RK7FO_Lỗi kết nối',    y24:761,  y25:2646, y26:242,  note:'↓ Xu hướng giảm'},
-  {lbl:'SkyOrder_Lỗi kết nối', y24:0,    y25:1007, y26:448,  note:'↑ Mới từ 2025'},
-  {lbl:'HW_Do thiết bị KH',    y24:745,  y25:2359, y26:513,  note:'→ Tăng theo mở rộng'},
-  {lbl:'POS_Đồng bộ POS',      y24:1895, y25:3257, y26:513,  note:'→ Ổn định'},
+  {lbl:'POS_Lỗi kết nối',       y24:5669, y25:16611,y26:18470,note:'↑↑ Tăng liên tục – ưu tiên #1'},
+  {lbl:'FC_Lỗi kết nối',        y24:1653, y25:7082, y26:736,  note:'↓ Giảm 2026 sau xử lý'},
+  {lbl:'POS_Do người dùng',     y24:4655, y25:7957, y26:1084, note:'↓ Cần training thêm'},
+  {lbl:'PH_Thanh toán thủ công',y24:0,    y25:8370, y26:2118, note:'↑ Nổi lên từ 2025'},
+  {lbl:'POS_Chưa phân loại',    y24:9794, y25:11979,y26:1255, note:'↓ Giảm nhờ chuẩn hóa'},
+  {lbl:'RK7FO_Lỗi kết nối',     y24:761,  y25:2646, y26:242,  note:'↓ Xu hướng giảm'},
+  {lbl:'SkyOrder_Lỗi kết nối',  y24:0,    y25:1007, y26:448,  note:'↑ Mới từ 2025'},
+  {lbl:'HW_Do thiết bị KH',     y24:745,  y25:2359, y26:513,  note:'→ Tăng theo mở rộng'},
+  {lbl:'POS_Đồng bộ POS',       y24:1895, y25:3257, y26:513,  note:'→ Ổn định'},
 ];
-
-// ── Dữ liệu năm cho year filter (tổng phiếu theo năm) ──
-const YEAR_TOTALS = { 'all': 196894, '2024': 50538, '2025': 95038, '2026 (5T)': 51318 };
+const YEAR_TOTALS = {'all':196894,'2024':50538,'2025':95038,'2026 (5T)':51318};
 const YEAR_SUBS = {
-  'all': 'Tổng hợp 2024 – tháng 5/2026',
-  '2024': 'Năm 2024 – 12 tháng',
-  '2025': 'Năm 2025 – 12 tháng (+88% so với 2024)',
-  '2026 (5T)': 'Năm 2026 – 5 tháng đầu năm (≈10,264/tháng)',
+  'all':'Tổng hợp 2024 – tháng 5/2026',
+  '2024':'Năm 2024 · 12 tháng',
+  '2025':'Năm 2025 · 12 tháng (+88% so với 2024)',
+  '2026 (5T)':'Năm 2026 · 5 tháng đầu (≈10,264/tháng)',
 };
 
-// ════════════════════════════════════════════════
-// STATE
-// ════════════════════════════════════════════════
-let allIssues = [];    // raw parsed (sau khi merge payment)
+let allIssues = [];
 let charts = {};
 let currentYear = 'all';
 
-// ════════════════════════════════════════════════
-// TABS
-// ════════════════════════════════════════════════
 document.querySelectorAll('.nav-tab').forEach(t => {
   t.addEventListener('click', () => {
     document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
@@ -492,29 +499,16 @@ document.querySelectorAll('.nav-tab').forEach(t => {
   });
 });
 
-// ════════════════════════════════════════════════
-// YEAR FILTER
-// ════════════════════════════════════════════════
 function setYear(yr, btn) {
   currentYear = yr;
   document.querySelectorAll('.ytag').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('yInfo').textContent = YEAR_SUBS[yr] || '';
-  renderOverview(getYearFiltered());
+  renderOverview(allIssues);
 }
 
-function getYearFiltered() {
-  // ListIssue không có cột năm → dùng allIssues cho "all"
-  // Cho năm cụ thể: filter theo tỷ lệ từ YEAR_DATA (xấp xỉ)
-  return allIssues; // Realtime data từ ListIssue là tổng hợp → dùng all
-}
-
-// ════════════════════════════════════════════════
-// CSV PARSER
-// ════════════════════════════════════════════════
 function parseCSV(text) {
   const lines = text.split('\n');
-
   const parseRow = line => {
     const cols = []; let cur = '', inQ = false;
     for (const ch of line) {
@@ -524,10 +518,8 @@ function parseCSV(text) {
     }
     cols.push(cur.trim()); return cols;
   };
-
-  // Tìm header row (hàng chứa "Số issue" hoặc "Tiêu đề chuẩn hóa")
   let headerRow = -1;
-  for (let i = 0; i < Math.min(lines.length, 10); i++) {
+  for (let i = 0; i < Math.min(lines.length, 12); i++) {
     const l = lines[i].toLowerCase();
     if ((l.includes('group') && l.includes('s\u1ed1')) ||
         (l.includes('ti\u00eau \u0111\u1ec1') && l.includes('chu\u1ea9n h\u00f3a')) ||
@@ -535,11 +527,7 @@ function parseCSV(text) {
       headerRow = i; break;
     }
   }
-
-  // Index mặc định (0-based sau parse):
-  // Col 0=STT, 1=Group, 2=ChuDe, 3=TieuDeLoi, 4=SoIssue, 5=TanSuat, 6=TieuDeChuanHoa, 7=TypeIssue
-  let iGr=1, iChuDe=2, iTL=3, iSo=4, iTan=5, iCH=6, iTy=7;
-
+  let iGr=1,iChuDe=2,iTL=3,iSo=4,iTan=5,iCH=6,iTy=7;
   if (headerRow >= 0) {
     const hdrs = parseRow(lines[headerRow]);
     hdrs.forEach((h, i) => {
@@ -547,81 +535,40 @@ function parseCSV(text) {
       if (hh.includes('group')) iGr = i;
       if (hh.includes('s\u1ed1issue') || hh === 's\u1ed1issue') iSo = i;
       if (hh.includes('t\u1ea7nsu\u1ea5t')) iTan = i;
-      // Cột G: "Tiêu Đề Chuẩn Hóa" – phân biệt với "Tiêu Đề Lỗi"
       if (hh.includes('ti\u00eau\u0111\u1ec1chu\u1ea9n') && !hh.includes('type')) iCH = i;
-      // Cột H: "Type Issue Chuẩn hóa"
       if (hh.includes('typeissue') || (hh.includes('type') && hh.includes('chu\u1ea9n'))) iTy = i;
       if (hh.includes('ti\u00eau\u0111\u1ec1l\u1ed7i') || (hh.includes('ti\u00eau\u0111\u1ec1') && !hh.includes('chu\u1ea9n') && !hh.includes('type'))) iTL = i;
       if (hh.includes('ch\u1ee7\u0111\u1ec1') || hh.includes('ch\u1ee7\u0111\u00ea')) iChuDe = i;
     });
   }
-
   const start = headerRow >= 0 ? headerRow + 1 : 3;
-  const raw = [];
-
+  const result = [];
   for (let i = start; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
     const c = parseRow(lines[i]);
     if (c.length < 5) continue;
     const cl = s => (s || '').replace(/^"+|"+$/g, '').trim();
-
     let tieuDeCH = cl(c[iCH]);
     let type     = cl(c[iTy]);
     let so       = parseInt(cl(c[iSo]).replace(/\D/g, '')) || 0;
     let tan      = cl(c[iTan]);
     let group    = cl(c[iGr]);
-    let tieuDeLoi= cl(c[iTL]);
     let chuDe    = cl(c[iChuDe]);
-
     if (!tieuDeCH || tieuDeCH.toLowerCase() === 'nan' || so === 0) continue;
-
     if (!tan || tan.toLowerCase() === 'nan') {
       tan = so >= 5000 ? 'Rất cao' : so >= 2000 ? 'Cao' : so >= 500 ? 'Trung bình' : 'Thấp';
     }
-
-    // Kiểm tra payment keyword
-    const combo = (tieuDeCH + ' ' + tieuDeLoi).toLowerCase();
-    const isPayment = PMATCH.some(k => combo.includes(k));
-
-    if (isPayment) {
-      // Gom vào bucket payment, xử lý sau
-      raw.push({ tieuDe: tieuDeCH, type, so, tan, group: 'Payment Hub', tl: tieuDeLoi, chuDe, _isPayment: true });
-    } else {
-      if (!group || group.toLowerCase() === 'nan') {
-        group = (chuDe && chuDe.toLowerCase() !== 'nan' && chuDe !== '') ? chuDe : 'Chưa xác định';
-      }
-      if (!type || type.toLowerCase() === 'nan' || type === '') {
-        type = (chuDe && chuDe !== '') ? chuDe : 'Chưa xác định';
-      }
-      raw.push({ tieuDe: tieuDeCH, type, so, tan, group, tl: tieuDeLoi, chuDe, _isPayment: false });
+    if (!group || group.toLowerCase() === 'nan') {
+      group = (chuDe && chuDe.toLowerCase() !== 'nan') ? chuDe : 'Chưa xác định';
     }
+    if (!type || type.toLowerCase() === 'nan' || type === '') {
+      type = (chuDe && chuDe !== '') ? chuDe : 'Chưa xác định';
+    }
+    result.push({ tieuDe: tieuDeCH, type, so, tan, group });
   }
-
-  // ── Gộp tất cả payment thành 1 dòng ──
-  const payRows  = raw.filter(r => r._isPayment);
-  const nonPay   = raw.filter(r => !r._isPayment);
-  const payTotal = payRows.reduce((s, r) => s + r.so, 0);
-
-  const result = [...nonPay];
-  if (payTotal > 0) {
-    const payTan = payTotal >= 5000 ? 'Rất cao' : payTotal >= 2000 ? 'Cao' : 'Trung bình';
-    result.push({
-      tieuDe: MERGED_PAYMENT_LABEL,
-      type: 'Hướng dẫn người dùng - Hướng dẫn thanh toán',
-      so: payTotal,
-      tan: payTan,
-      group: 'Payment Hub',
-      _isPayment: false,
-      _payDetail: payRows.map(r => `${r.tieuDe} (${r.so.toLocaleString('vi-VN')})`).join(', ')
-    });
-  }
-
   return result.sort((a, b) => b.so - a.so);
 }
 
-// ════════════════════════════════════════════════
-// LOAD DATA
-// ════════════════════════════════════════════════
 async function loadData(manual = false) {
   if (manual) document.getElementById('loadBox').classList.remove('off');
   document.getElementById('errBox').classList.remove('on');
@@ -630,9 +577,9 @@ async function loadData(manual = false) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const text = await res.text();
     const parsed = parseCSV(text);
-    if (parsed.length === 0) throw new Error('Không tìm thấy dữ liệu hợp lệ');
+    if (parsed.length === 0) throw new Error('Không tìm thấy dữ liệu');
     allIssues = parsed;
-    document.getElementById('updTxt').textContent = 'Cập nhật: ' + new Date().toLocaleTimeString('vi-VN');
+    document.getElementById('updTxt').textContent = new Date().toLocaleTimeString('vi-VN');
     document.getElementById('errBox').classList.remove('on');
   } catch (e) {
     document.getElementById('errMsg').textContent = 'Lỗi: ' + e.message + '. Đang dùng dữ liệu mẫu.';
@@ -650,331 +597,324 @@ async function loadData(manual = false) {
 
 function loadFallback() {
   allIssues = [
-    {tieuDe:'Phần mềm POS không vào được do services',           group:'Phần mềm POS',                 type:'Pos software issue - Core rk - services not start',   so:10570,tan:'Rất cao'},
-    {tieuDe:MERGED_PAYMENT_LABEL,                                group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',         so:10224,tan:'Rất cao'},
-    {tieuDe:'Farcard bị stop',                                   group:'CRM',                          type:'Pos software issue - Core rk - services not start',   so:8670, tan:'Rất cao'},
-    {tieuDe:'Phần mềm POS bị treo do hệ thống',                 group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:6824, tan:'Rất cao'},
-    {tieuDe:'Rk7 Manager không vào được do Services',            group:'RK7 MANAGER',                  type:'Pos software issue - Core rk - services not start',   so:4543, tan:'Cao'},
-    {tieuDe:'Hỗ trợ hủy tạm tính',                              group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:2770, tan:'Trung bình'},
-    {tieuDe:'Hỗ trợ POS bị lock bàn',                           group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:2535, tan:'Trung bình'},
-    {tieuDe:'Hướng dẫn nhà hàng đóng ca chung (DayEnd)',        group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:2451, tan:'Trung bình'},
-    {tieuDe:'Máy in không ra bill (kẹt lệnh in)',                group:'HARDWARE/ SOFTWARE',           type:'Hardware - Printer (Printer/paper/network)',           so:2076, tan:'Trung bình'},
-    {tieuDe:'SkyTab không vào được do Services',                 group:'SkyTab',                       type:'Pos software issue - Core rk - services not start',   so:1642, tan:'Trung bình'},
-    {tieuDe:'POS không đồng bộ master data',                     group:'Phần mềm POS',                 type:'Promotion - Thiếu master data',                       so:1631, tan:'Trung bình'},
-    {tieuDe:'POS hướng dẫn khách hàng thao tác trên hệ thống',  group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:1104, tan:'Trung bình'},
-    {tieuDe:'OM bị mất kết nối với máy chủ',                     group:'OM',                           type:'Chưa xác định',                                       so:1000, tan:'Trung bình'},
-  ];
+    {tieuDe:'Phần mềm POS không vào được do services',            group:'Phần mềm POS',                 type:'Pos software issue - Core rk - services not start',   so:10570,tan:'Rất cao'},
+    {tieuDe:'Farcard bị stop',                                    group:'CRM',                          type:'Pos software issue - Core rk - services not start',   so:8670, tan:'Rất cao'},
+    {tieuDe:'Phần mềm POS bị treo do hệ thống',                  group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:6824, tan:'Rất cao'},
+    {tieuDe:'Rk7 Manager không vào được do Services',             group:'RK7 MANAGER',                  type:'Pos software issue - Core rk - services not start',   so:4543, tan:'Cao'},
+    {tieuDe:'Hỗ trợ hủy tạm tính',                               group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:2770, tan:'Trung bình'},
+    {tieuDe:'Hỗ trợ POS bị lock bàn',                            group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:2535, tan:'Trung bình'},
+    {tieuDe:'Hướng dẫn nhà hàng đóng ca chung (DayEnd)',         group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:2451, tan:'Trung bình'},
+    {tieuDe:'Máy in không ra bill (kẹt lệnh in)',                 group:'HARDWARE/ SOFTWARE',            type:'Hardware - Printer (Printer/paper/network)',           so:2076, tan:'Trung bình'},
+    {tieuDe:'SkyTab không vào được do Services',                  group:'SkyTab',                       type:'Pos software issue - Core rk - services not start',   so:1642, tan:'Trung bình'},
+    {tieuDe:'POS không đồng bộ master data',                      group:'Phần mềm POS',                 type:'Promotion - Thiếu master data',                       so:1631, tan:'Trung bình'},
+    {tieuDe:'POS hướng dẫn khách hàng thao tác trên hệ thống',   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:1104, tan:'Trung bình'},
+    {tieuDe:'OM bị mất kết nối với máy chủ',                     group:'OM',                           type:'Network - Network lost',                              so:1000, tan:'Trung bình'},
+    {tieuDe:'Skyvoice không kết nối được',                        group:'Skyvoice',                     type:'Pos software issue - Core rk - services not start',   so:887,  tan:'Trung bình'},
+    {tieuDe:'Hướng dẫn người dùng mở máy POS',                   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:749,  tan:'Thấp'},
+    {tieuDe:'Thanh toán VNPay bị lỗi',                           group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:3200, tan:'Cao'},
+    {tieuDe:'Thanh toán Momo bị lỗi',                            group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:2980, tan:'Cao'},
+    {tieuDe:'Thanh toán ZaloPay bị lỗi',                         group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:1540, tan:'Trung bình'},
+    {tieuDe:'Thanh toán Payoo bị lỗi',                           group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:1280, tan:'Trung bình'},
+    {tieuDe:'Thanh toán VietQR bị lỗi',                          group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:1224, tan:'Trung bình'},
+    {tieuDe:'RK7FO không vào được do Services',                   group:'RK7 MANAGER',                  type:'Pos software issue - Core rk - services not start',   so:1150, tan:'Trung bình'},
+    {tieuDe:'SkyOrder không kết nối được',                        group:'SkyGuestScreen',               type:'Pos software issue - Core rk - services not start',   so:980,  tan:'Trung bình'},
+    {tieuDe:'Máy in bill không kết nối được (network)',           group:'HARDWARE/ SOFTWARE',            type:'Hardware - Printer (Printer/paper/network)',           so:891,  tan:'Trung bình'},
+    {tieuDe:'POS bị treo tại màn hình đặt món',                  group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:820,  tan:'Trung bình'},
+    {tieuDe:'Hướng dẫn thao tác tác vụ trên POS',               group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác tác vụ trên pos', so:622, tan:'Thấp'},
+    {tieuDe:'Nguồn POS bị lỗi (không lên nguồn)',               group:'HARDWARE/ SOFTWARE',            type:'Hardware - Power issue',                              so:600,  tan:'Thấp'},
+    {tieuDe:'POS in double / in nhầm bàn',                       group:'Phần mềm POS',                 type:'Pos software issue - Core RK - print issue',          so:580,  tan:'Thấp'},
+    {tieuDe:'Master data sai giá món',                           group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:560,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn thu ngân thao tác POS sai',              group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:540,  tan:'Thấp'},
+    {tieuDe:'Skyinvoice không xuất hóa đơn được',               group:'Skyinvoice',                   type:'Pos software issue - Skyinvoice issue',               so:520,  tan:'Thấp'},
+    {tieuDe:'Network bị mất kết nối tại nhà hàng',              group:'Hệ thống mạng',                type:'Network - Network lost',                              so:510,  tan:'Thấp'},
+    {tieuDe:'POS không in được bill thanh toán',                 group:'Phần mềm POS',                 type:'Pos software issue - Core RK - print issue',          so:490,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn setup promotion / combo',                group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:480,  tan:'Thấp'},
+    {tieuDe:'SkyGuestScreen không hiển thị đúng',               group:'SkyGuestScreen',               type:'Pos software issue - SkyGuestScreen issue',           so:460,  tan:'Thấp'},
+    {tieuDe:'Barcode scanner không nhận mã',                    group:'HARDWARE/ SOFTWARE',            type:'Hardware - Barcode scanner issue',                    so:440,  tan:'Thấp'},
+    {tieuDe:'POS bị treo tại màn hình thanh toán',              group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:420,  tan:'Thấp'},
+    {tieuDe:'RK7 Manager bị treo không vào được',               group:'RK7 MANAGER',                  type:'Pos software issue - Core RK - freezing',             so:400,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn nhà hàng cài đặt lại POS',              group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:390,  tan:'Thấp'},
+    {tieuDe:'Hub / Switch mạng bị lỗi',                        group:'Hệ thống mạng',                type:'Network - Network lost',                              so:380,  tan:'Thấp'},
+    {tieuDe:'POS bị treo do hết RAM',                          group:'HARDWARE/ SOFTWARE',            type:'Pos software issue - Core RK - freezing',             so:370,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn mở ca POS',                            group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:355,  tan:'Thấp'},
+    {tieuDe:'Màn hình cảm ứng POS bị liệt',                   group:'HARDWARE/ SOFTWARE',            type:'Hardware - Touchscreen issue',                        so:340,  tan:'Thấp'},
+    {tieuDe:'Master data thiếu toppings / options',            group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:325,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn chuyển bàn / gộp bàn',                group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:310,  tan:'Thấp'},
+    {tieuDe:'POS không sync menu từ RK7',                     group:'Phần mềm POS',                 type:'Promotion - Thiếu master data',                       so:295,  tan:'Thấp'},
+    {tieuDe:'Farcard không đọc được thẻ thành viên',         group:'CRM',                          type:'CRM - Card reader issue',                             so:282,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn split bill / tách hóa đơn',           group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:270,  tan:'Thấp'},
+    {tieuDe:'POS bị restart bất ngờ',                        group:'HARDWARE/ SOFTWARE',            type:'Hardware - Power issue',                              so:258,  tan:'Thấp'},
+    {tieuDe:'Skyinvoice xuất sai thông tin công ty',         group:'Skyinvoice',                   type:'Pos software issue - Skyinvoice issue',               so:245,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn áp dụng voucher / khuyến mãi',       group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:232,  tan:'Thấp'},
+    {tieuDe:'Máy in chạy chậm (delay in bill)',             group:'HARDWARE/ SOFTWARE',            type:'Hardware - Printer (Printer/paper/network)',           so:220,  tan:'Thấp'},
+    {tieuDe:'OM không nhận order từ SkyOrder',              group:'OM',                           type:'Network - Network lost',                              so:210,  tan:'Thấp'},
+    {tieuDe:'POS bị login sai nhân viên',                   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:198,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn cập nhật phần mềm POS',             group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:185,  tan:'Thấp'},
+    {tieuDe:'Camera giám sát bị mất kết nối',              group:'HARDWARE/ SOFTWARE',            type:'Hardware - Camera issue',                             so:172,  tan:'Thấp'},
+    {tieuDe:'Hướng dẫn nhà hàng người dùng mở máy POS',   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:183,  tan:'Thấp'},
+    {tieuDe:'Master data lỗi giá combo',                   group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:158,  tan:'Thấp'},
+    {tieuDe:'Skyinvoice không kết nối được cổng thuế',     group:'Skyinvoice',                   type:'Pos software issue - Skyinvoice issue',               so:145,  tan:'Thấp'},
+    {tieuDe:'Hệ thống mạng chập chờn (packet loss)',       group:'Hệ thống mạng',                type:'Network - Network lost',                              so:142,  tan:'Thấp'},
+  ].sort((a,b)=>b.so-a.so);
 }
 
-// ════════════════════════════════════════════════
-// RENDER OVERVIEW
-// ════════════════════════════════════════════════
 function renderOverview(issues) {
-  const total     = issues.reduce((s, i) => s + i.so, 0);
-  const allTotal  = allIssues.reduce((s, i) => s + i.so, 0);
+  const allTotal  = allIssues.reduce((s,i) => s+i.so, 0);
   const yearTotal = YEAR_TOTALS[currentYear] || allTotal;
-
-  document.getElementById('mTotal').textContent = yearTotal.toLocaleString('vi-VN');
+  document.getElementById('mTotal').textContent    = yearTotal.toLocaleString('vi-VN');
   document.getElementById('mTotalSub').textContent = YEAR_SUBS[currentYear] || '';
-  document.getElementById('mRows').textContent    = allIssues.length;
-  document.getElementById('mGroups').textContent  = [...new Set(allIssues.map(i => i.group))].length;
-  document.getElementById('mHigh').textContent    = allIssues.filter(i => i.tan === 'Rất cao' || i.tan === 'Cao').length;
-
-  const gm = {};
-  allIssues.forEach(i => gm[i.group] = (gm[i.group] || 0) + i.so);
-  const top3sum = Object.values(gm).sort((a,b)=>b-a).slice(0,3).reduce((s,v)=>s+v,0);
-  document.getElementById('mTop3').textContent = ((top3sum / allTotal) * 100).toFixed(1) + '%';
-
+  document.getElementById('mRows').textContent     = allIssues.length;
+  document.getElementById('mGroups').textContent   = [...new Set(allIssues.map(i=>i.group))].length;
+  document.getElementById('mHigh').textContent     = allIssues.filter(i=>i.tan==='Rất cao'||i.tan==='Cao').length;
+  const gm={};
+  allIssues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
+  const top3=Object.values(gm).sort((a,b)=>b-a).slice(0,3).reduce((s,v)=>s+v,0);
+  document.getElementById('mTop3').textContent=((top3/allTotal)*100).toFixed(1)+'%';
+  const total = issues.reduce((s,i)=>s+i.so,0);
   buildCharts(issues, total);
-  buildCritical(issues);
-  buildProgress(gm, allTotal);
-  buildInsights(issues, allTotal);
-
-  // Filter count for detail tab
-  document.getElementById('filterCount').textContent = `${allIssues.length} issue`;
+  buildCritical(issues, total);
+  buildTypeList(issues);
+  buildInsights(issues, total);
   buildDetailTable(allIssues, allTotal);
+  document.getElementById('filterCount').textContent=`${allIssues.length} issue`;
 }
 
-// ════════════════════════════════════════════════
-// CHARTS
-// ════════════════════════════════════════════════
 function buildCharts(issues, total) {
-  // ── BAR: top 10, FULL label (no truncate), horizontal ──
-  const top10  = issues.slice(0, 10);
-  const bLabels= top10.map(i => i.tieuDe);  // FULL label
-  const bData  = top10.map(i => i.so);
-  const bColors= top10.map(i =>
-    i.tan==='Rất cao'?'#dc2626':i.tan==='Cao'?'#ea580c':i.tan==='Trung bình'?'#2563eb':'#94a3b8'
-  );
-
+  const top10  = issues.slice(0,10);
+  const bColors= top10.map(i=>i.tan==='Rất cao'?'#F05252':i.tan==='Cao'?'#FB923C':i.tan==='Trung bình'?'#4F8EF7':'#3D4F6A');
   if (charts.bar) charts.bar.destroy();
   charts.bar = new Chart(document.getElementById('barChart'), {
-    type: 'bar',
-    data: { labels: bLabels, datasets: [{ data: bData, backgroundColor: bColors, borderRadius: 5, borderSkipped: false }] },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      maintainAspectRatio: false,
-      layout: { padding: { right: 20 } },
-      plugins: {
-        legend: { display: false },
-        tooltip: { callbacks: { label: ctx => ' ' + ctx.raw.toLocaleString('vi-VN') + ' lần' } }
+    type:'bar',
+    data:{labels:top10.map(i=>i.tieuDe),datasets:[{data:top10.map(i=>i.so),backgroundColor:bColors,borderRadius:4,borderSkipped:false}]},
+    options:{
+      indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      layout:{padding:{right:8}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'#0E1118',borderColor:'#1C2333',borderWidth:1,
+          callbacks:{label:ctx=>'  '+ctx.raw.toLocaleString('vi-VN')+' lần'}}
       },
-      scales: {
-        x: {
-          grid: { color: 'rgba(0,0,0,.05)' },
-          ticks: { callback: v => v >= 1000 ? (v/1000).toFixed(0)+'k' : v, font: { size: 10 } }
-        },
-        y: {
-          // Hiện full label, wrap nếu dài
-          ticks: {
-            font: { size: 11 },
-            color: '#334155',
-            // Không cắt label
-            callback: function(val) { return this.getLabelForValue(val); }
-          },
-          grid: { display: false }
-        }
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#3D4F6A',callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v,font:{size:10}}},
+        y:{ticks:{color:'#FFFFFF',font:{size:11},callback(val){return this.getLabelForValue(val);}},grid:{display:false}}
       }
     }
   });
 
-  // ── PIE / DOUGHNUT: hiển thị % trực tiếp trên chart ──
-  const gm = {};
-  issues.forEach(i => gm[i.group] = (gm[i.group] || 0) + i.so);
-  const sorted = Object.entries(gm).sort((a,b) => b[1]-a[1]).slice(0, 10);
-  const pLabels = sorted.map(e => e[0]);
-  const pData   = sorted.map(e => e[1]);
-  const pColors = pLabels.map((_, i) => PAL[i % PAL.length]);
-
+  const gm={};
+  issues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
+  const sorted=Object.entries(gm).sort((a,b)=>b[1]-a[1]).slice(0,10);
+  const pColors=sorted.map((_,i)=>PAL[i%PAL.length]);
   if (charts.pie) charts.pie.destroy();
   charts.pie = new Chart(document.getElementById('pieChart'), {
-    type: 'doughnut',
-    data: { labels: pLabels, datasets: [{ data: pData, backgroundColor: pColors, borderWidth: 2, borderColor: '#fff' }] },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      cutout: '48%',
-      plugins: {
-        legend: {
-          position: 'bottom',
-          labels: { font: { size: 11 }, boxWidth: 11, padding: 8,
-            generateLabels: ch => ch.data.labels.map((l, i) => ({
-              text: l.length > 20 ? l.slice(0, 20) + '…' : l,
-              fillStyle: pColors[i], hidden: false, index: i, fontColor: '#475569'
-            }))
-          }
-        },
-        // % label trực tiếp trên slice
-        datalabels: {
-          color: '#fff',
-          font: { size: 11, weight: 'bold' },
-          formatter: (val) => {
-            const pct = ((val / total) * 100);
-            return pct >= 4 ? pct.toFixed(1) + '%' : ''; // ẩn label nhỏ hơn 4% tránh chồng
-          },
-          anchor: 'center',
-          align: 'center',
-        },
-        tooltip: {
-          callbacks: {
-            label: ctx => ` ${ctx.label}: ${ctx.raw.toLocaleString('vi-VN')} (${((ctx.raw/total)*100).toFixed(1)}%)`
-          }
-        }
+    type:'doughnut',
+    data:{labels:sorted.map(e=>e[0]),datasets:[{data:sorted.map(e=>e[1]),backgroundColor:pColors,borderWidth:2,borderColor:'#0E1118'}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'50%',
+      plugins:{
+        /* FIX 3: legend label màu trắng rõ ràng */
+        legend:{position:'bottom',labels:{color:'#FFFFFF',font:{size:10},boxWidth:10,padding:7,
+          generateLabels:ch=>ch.data.labels.map((l,i)=>({text:l.length>22?l.slice(0,22)+'…':l,fillStyle:pColors[i],fontColor:'#FFFFFF',hidden:false,index:i}))
+        }},
+        /* % trên slice cũng màu trắng */
+        datalabels:{color:'#FFFFFF',font:{size:10,weight:'bold'},formatter:(val)=>{const p=((val/total)*100);return p>=4?p.toFixed(1)+'%':'';},anchor:'center',align:'center'},
+        tooltip:{backgroundColor:'#0E1118',borderColor:'#1C2333',borderWidth:1,
+          callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('vi-VN')} (${((ctx.raw/total)*100).toFixed(1)}%)`}}
       }
-    },
-    plugins: [ChartDataLabels]
+    },plugins:[ChartDataLabels]
   });
 }
 
-// ════════════════════════════════════════════════
-// CRITICAL ISSUES (thay thế Thống kê nhanh)
-// ════════════════════════════════════════════════
-function buildCritical(issues) {
-  const top5 = issues.slice(0, 5);
-  const total = issues.reduce((s,i)=>s+i.so,0);
-  document.getElementById('critBox').innerHTML = top5.map((it, idx) => {
-    const pct = ((it.so / total) * 100).toFixed(1);
-    const cls = idx < 2 ? 'crit-r' : 'crit-o';
-    const fc  = idx < 2 ? '#dc2626' : '#ea580c';
+function buildCritical(issues, total) {
+  document.getElementById('critBox').innerHTML = issues.slice(0,5).map((it,idx)=>{
+    const pct=((it.so/total)*100).toFixed(1);
+    const cls=idx<2?'crit-r':idx<4?'crit-o':'crit-y';
+    const fc=idx<2?'#FCA5A5':idx<4?'#FED7AA':'#FDE68A';
+    const bc=it.tan==='Rất cao'?'b-r':it.tan==='Cao'?'b-o':'b-b';
     return `<div class="crit-item ${cls}">
       <div class="crit-rank">${idx+1}</div>
       <div class="crit-body">
-        <div class="crit-name">${it.tieuDe}</div>
-        <div class="crit-meta">${it.group} · <span class="bdg ${it.tan==='Rất cao'?'b-r':it.tan==='Cao'?'b-o':'b-b'}">${it.tan}</span></div>
+        <div class="crit-name" title="${it.tieuDe}">${it.tieuDe}</div>
+        <div class="crit-meta">${it.group} · <span class="bdg ${bc}">${it.tan}</span></div>
       </div>
-      <div class="crit-count" style="color:${fc}">${it.so.toLocaleString('vi-VN')}<br><span style="font-size:10px;font-weight:500;color:var(--muted)">${pct}%</span></div>
+      <div class="crit-r-val">
+        <div class="crit-count" style="color:${fc}">${it.so.toLocaleString('vi-VN')}</div>
+        <div class="crit-pct">${pct}%</div>
+      </div>
     </div>`;
   }).join('');
 }
 
-// ════════════════════════════════════════════════
-// PROGRESS + INSIGHT
-// ════════════════════════════════════════════════
-function buildProgress(gm, total) {
-  const sorted = Object.entries(gm).sort((a,b) => b[1]-a[1]).slice(0, 7);
-  document.getElementById('progressBox').innerHTML = sorted.map((e, i) => {
-    const pct = ((e[1]/total)*100).toFixed(1);
-    return `<div class="prog">
-      <div class="prog-lbl"><span class="prog-name">${e[0]}</span><span class="prog-pct">${e[1].toLocaleString('vi-VN')} (${pct}%)</span></div>
-      <div class="prog-bg"><div class="prog-fill" style="width:${pct}%;background:${PAL[i%PAL.length]}"></div></div>
+/* FIX 2: bỏ .slice(0,8) → hiển thị HẾT tất cả Type Issue, có scroll */
+function buildTypeList(issues) {
+  const tm={};
+  issues.forEach(i=>{const t=i.type||'Chưa xác định';tm[t]=(tm[t]||0)+i.so;});
+  const sorted=Object.entries(tm).sort((a,b)=>b[1]-a[1]);
+  const max=sorted[0]?.[1]||1;
+  document.getElementById('typeListBox').innerHTML = sorted.map((e,idx)=>{
+    const col=PAL[idx%PAL.length];
+    const bp=Math.round((e[1]/max)*100);
+    return `<div class="type-item">
+      <div class="type-rank">${idx+1}</div>
+      <div class="type-name">${e[0].length>40?e[0].slice(0,40)+'…':e[0]}</div>
+      <div class="type-bar"><div class="type-barfill" style="width:${bp}%;background:${col}"></div></div>
+      <div class="type-count">${e[1].toLocaleString('vi-VN')}</div>
     </div>`;
   }).join('');
 }
 
 function buildInsights(issues, total) {
-  const top     = issues[0];
-  const vh      = issues.filter(i => i.tan === 'Rất cao');
-  const payIt   = issues.find(i => i.group === 'Payment Hub');
-  const payTotal= issues.filter(i => i.group === 'Payment Hub').reduce((s,i)=>s+i.so,0);
-
-  document.getElementById('insightBox').innerHTML = [
-    top ? `<div class="ins"><div class="ins-ico">🔥</div><div><div class="ins-t">Issue ghi nhận nhiều nhất</div><div class="ins-b">${top.tieuDe}<br><b>${top.so.toLocaleString('vi-VN')}</b> lần · ${top.group}</div></div></div>` : '',
-    vh.length ? `<div class="ins"><div class="ins-ico">⚠️</div><div><div class="ins-t">5 issue ghi nhận nhiều tỷ lệ "Rất cao"</div><div class="ins-b">Chiếm <b>${((vh.reduce((s,i)=>s+i.so,0)/total)*100).toFixed(1)}%</b> tổng issue. Xử lý khẩn cấp.</div></div></div>` : '',
-    payTotal ? `<div class="ins"><div class="ins-ico">💳</div><div><div class="ins-t">Payment Hub - Các Issue về hình thức thanh toán Online</div><div class="ins-b">Tổng <b>${payTotal.toLocaleString('vi-VN')}</b> lần – đã gộp VNPay, Momo, Zalo, Payoo, VietQR.</div></div></div>` : '',
-    `<div class="ins"><div class="ins-ico">📈</div><div><div class="ins-t">Issue được ghi nhận đầu năm 2026</div><div class="ins-b">POS lỗi kết nối tăng <b>3.3×</b> (5,669→18,470) chỉ trong 5 tháng. Cần xử lý ngay.</div></div></div>`,
+  const top=issues[0];
+  const vh=issues.filter(i=>i.tan==='Rất cao');
+  const vhTotal=vh.reduce((s,i)=>s+i.so,0);
+  const pay=issues.filter(i=>i.group==='Payment Hub').reduce((s,i)=>s+i.so,0);
+  document.getElementById('insightBox').innerHTML=[
+    top?`<div class="ins ins-1">
+      <div class="ins-ico">🔥</div>
+      <div>
+        <div class="ins-tag" style="color:#FCA5A5">Ưu tiên #1 — Hành động ngay</div>
+        <div class="ins-t">${top.tieuDe}</div>
+        <div class="ins-b"><b>${top.so.toLocaleString('vi-VN')}</b> lần · ${top.group}. Auto-restart watchlog - Cài Zabbix để giám sát và khởi động service.</div>
+        <div class="ins-chip">↓ Giảm ngay với 1 script</div>
+      </div>
+    </div>`:'',
+    vh.length?`<div class="ins ins-2">
+      <div class="ins-ico">⚠️</div>
+      <div>
+        <div class="ins-tag" style="color:#FED7AA">${vh.length} issue tần suất Rất cao</div>
+        <div class="ins-t">Chiếm ${((vhTotal/total)*100).toFixed(1)}% tổng ghi nhận</div>
+        <div class="ins-b">Cần hành động khắc phục ngay. Tổng <b>${vhTotal.toLocaleString('vi-VN')}</b> lần — watchlog. Tìm kiếm nguyên nhân và đưa ra giải pháp.</div>
+      </div>
+    </div>`:'',
+    pay?`<div class="ins ins-3">
+      <div class="ins-ico">💳</div>
+      <div>
+        <div class="ins-tag" style="color:#BFDBFE">Payment Hub — Khắc phục từng kênh thanh toán</div>
+        <div class="ins-t">Chuẩn hóa cấu hình tìm ra nguyên nhân từ log ghi nhận của từng kênh thanh toán và đưa ra giải pháp.</div>
+        <div class="ins-b">Tổng <b>${pay.toLocaleString('vi-VN')}</b> lần (VNPay, Momo, Zalo, Payoo, VietQR). FAQ popup inline POS + training.</div>
+        <div class="ins-chip">↓ −${pay.toLocaleString('vi-VN')} lần tiềm năng</div>
+      </div>
+    </div>`:'',
+    `<div class="ins ins-4">
+      <div class="ins-ico">📈</div>
+      <div>
+        <div class="ins-tag" style="color:#D8B4FE">Cảnh báo xu hướng 2026</div>
+        <div class="ins-t">POS lỗi kết nối tăng 3.3× trong 5 tháng đầu năm</div>
+        <div class="ins-b">5,669 (2024) → 18,470 (2026 YTD). Sự cố về POS xảy ra nhiều vì nghẽn server monitor - CRM Ecode treo cũng chiếm phần lớn tác động đến phần này.</div>
+      </div>
+    </div>`,
   ].join('');
 }
 
-// ════════════════════════════════════════════════
-// YEARLY TAB
-// ════════════════════════════════════════════════
 let trendInst;
 function buildTrendChart() {
-  const mode = document.getElementById('trendMode').value;
-  const type = mode === 'line' ? 'line' : 'bar';
-  if (trendInst) trendInst.destroy();
-  trendInst = new Chart(document.getElementById('trendChart'), {
+  const mode=document.getElementById('trendMode').value;
+  const type=mode==='line'?'line':'bar';
+  if(trendInst)trendInst.destroy();
+  trendInst=new Chart(document.getElementById('trendChart'),{
     type,
-    data: {
-      labels: ['2024', '2025', '2026 (5T)'],
-      datasets: TREND_SERIES.map(s => ({
-        label: s.lbl, data: s.data,
-        backgroundColor: s.color + (type==='line'?'33':'cc'),
-        borderColor: s.color, borderWidth: type==='line' ? 2 : 0,
-        fill: type==='line', tension: .35, borderRadius: type==='bar' ? 4 : 0,
-        pointBackgroundColor: s.color, pointRadius: type==='line' ? 4 : 0,
-      }))
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12, padding: 10 } },
-        tooltip: { mode: 'index', callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('vi-VN')}` } }
+    data:{labels:['2024','2025','2026 (5T)'],datasets:TREND_SERIES.map(s=>({
+      label:s.lbl,data:s.data,
+      backgroundColor:s.color+(type==='line'?'33':'bb'),
+      borderColor:s.color,borderWidth:type==='line'?2:0,
+      fill:type==='line',tension:.35,borderRadius:type==='bar'?4:0,
+      pointBackgroundColor:s.color,pointRadius:type==='line'?4:0,
+    }))},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom',labels:{color:'#FFFFFF',font:{size:11},boxWidth:10,padding:10}},
+        tooltip:{backgroundColor:'#0E1118',borderColor:'#1C2333',borderWidth:1,mode:'index',
+          callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('vi-VN')}`}}
       },
-      scales: {
-        x: { stacked: mode !== 'grouped', grid: { display: false }, ticks: { font: { size: 12 } } },
-        y: { stacked: mode !== 'grouped', grid: { color: 'rgba(0,0,0,.05)' }, ticks: { callback: v => (v/1000).toFixed(0)+'k', font: { size: 11 } } }
+      scales:{
+        x:{stacked:mode!=='grouped',grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8896B0',font:{size:12}}},
+        y:{stacked:mode!=='grouped',grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#3D4F6A',callback:v=>(v/1000).toFixed(0)+'k',font:{size:11}}}
       }
     }
   });
 }
-
-function buildYearly() {
+function buildYearly(){
   buildTrendChart();
-  ['2024','2025','2026'].forEach(y => {
-    const d = YEAR_DATA[parseInt(y)];
-    document.getElementById('tbl'+y).innerHTML = d.cats.map(c => {
-      const pct = ((c.v/d.total)*100).toFixed(1);
-      return `<tr><td>${c.n}</td><td style="text-align:right">${c.v.toLocaleString('vi-VN')}</td><td style="text-align:right;color:var(--muted)">${pct}%</td></tr>`;
+  ['2024','2025','2026'].forEach(y=>{
+    const d=YEAR_DATA[parseInt(y)];
+    document.getElementById('tbl'+y).innerHTML=d.cats.map(c=>{
+      const pct=((c.v/d.total)*100).toFixed(1);
+      return `<tr><td style="color:var(--text2)">${c.n}</td><td class="tnum">${c.v.toLocaleString('vi-VN')}</td><td style="text-align:right;color:var(--text3);font-size:11px">${pct}%</td></tr>`;
     }).join('');
   });
-  document.getElementById('cmpTable').innerHTML = CMP_ROWS.map(r => {
-    const base = r.y24 > 0 ? r.y24 : (r.y25 > 0 ? r.y25 : 1);
-    const pct  = r.y24 > 0 ? Math.round((r.y26 - r.y24)/r.y24*100) : null;
-    const cls  = r.y26 > (r.y24||r.y25) ? 'trend-up' : 'trend-dn';
-    const sign = r.y26 > (r.y24||r.y25) ? '↑' : '↓';
-    const pctStr = pct !== null ? `${sign} ${Math.abs(pct)}%` : `${sign}`;
+  document.getElementById('cmpTable').innerHTML=CMP_ROWS.map(r=>{
+    const up=r.y26>(r.y24||r.y25);
+    const pct=r.y24>0?Math.round((r.y26-r.y24)/r.y24*100):null;
+    const pctStr=pct!==null?`${up?'↑':'↓'} ${Math.abs(pct)}%`:(up?'↑':'↓');
     return `<tr>
-      <td><strong>${r.lbl}</strong></td>
-      <td style="text-align:right">${r.y24>0?r.y24.toLocaleString('vi-VN'):'—'}</td>
-      <td style="text-align:right">${r.y25>0?r.y25.toLocaleString('vi-VN'):'—'}</td>
-      <td style="text-align:right">${r.y26>0?r.y26.toLocaleString('vi-VN'):'—'}</td>
-      <td style="text-align:right"><span class="${cls}">${pctStr}</span></td>
-      <td style="color:var(--muted);font-size:12px">${r.note}</td>
+      <td><strong style="color:var(--text)">${r.lbl}</strong></td>
+      <td class="tnum">${r.y24>0?r.y24.toLocaleString('vi-VN'):'—'}</td>
+      <td class="tnum">${r.y25>0?r.y25.toLocaleString('vi-VN'):'—'}</td>
+      <td class="tnum">${r.y26>0?r.y26.toLocaleString('vi-VN'):'—'}</td>
+      <td style="text-align:right"><span class="${up?'trend-up':'trend-dn'}">${pctStr}</span></td>
+      <td style="color:var(--text3);font-size:11px">${r.note}</td>
     </tr>`;
   }).join('');
 }
 
-// ════════════════════════════════════════════════
-// DETAIL TABLE
-// ════════════════════════════════════════════════
 function buildDetailTable(issues, total) {
-  const max  = issues[0]?.so || 1;
-  const tbody= document.getElementById('issueTable');
-  if (!issues.length) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--muted)">Không tìm thấy issue</td></tr>';
-    return;
-  }
-  tbody.innerHTML = issues.map((it, idx) => {
-    const pct = ((it.so/total)*100).toFixed(1);
-    const bp  = Math.round((it.so/max)*100);
-    const bc  = it.tan==='Rất cao'?'b-r':it.tan==='Cao'?'b-o':it.tan==='Trung bình'?'b-b':'b-g';
-    const fc  = it.tan==='Rất cao'?'#dc2626':it.tan==='Cao'?'#ea580c':it.tan==='Trung bình'?'#2563eb':'#94a3b8';
-    const typeShort = it.type && it.type.length > 42 ? it.type.slice(0,42)+'…' : (it.type||'—');
+  const max=issues[0]?.so||1;
+  const tbody=document.getElementById('issueTable');
+  if(!issues.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text3)">Không tìm thấy issue</td></tr>';return;}
+  tbody.innerHTML=issues.map((it,idx)=>{
+    const pct=((it.so/total)*100).toFixed(1);
+    const bp=Math.round((it.so/max)*100);
+    const bc=it.tan==='Rất cao'?'b-r':it.tan==='Cao'?'b-o':it.tan==='Trung bình'?'b-b':'b-g';
+    const fc=it.tan==='Rất cao'?'#F05252':it.tan==='Cao'?'#FB923C':it.tan==='Trung bình'?'#4F8EF7':'#3D4F6A';
+    const ts=it.type&&it.type.length>42?it.type.slice(0,42)+'…':(it.type||'—');
     return `<tr>
-      <td style="color:var(--light);text-align:center;font-size:12px">${idx+1}</td>
-      <td>${it.tieuDe}</td>
-      <td style="color:var(--muted);font-size:12px;white-space:nowrap">${it.group}</td>
-      <td style="color:var(--light);font-size:11px">${typeShort}</td>
+      <td style="color:var(--text3);text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px">${idx+1}</td>
+      <td style="color:var(--text)">${it.tieuDe}</td>
+      <td style="color:var(--text3);font-size:11px;white-space:nowrap">${it.group}</td>
+      <td style="color:var(--text3);font-size:11px">${ts}</td>
       <td class="tnum">${it.so.toLocaleString('vi-VN')}</td>
       <td><span class="bdg ${bc}">${it.tan}</span></td>
-      <td><div class="barcell"><div class="barbg"><div class="barfill" style="width:${bp}%;background:${fc}"></div></div><span style="font-size:11px;color:var(--light);min-width:34px">${pct}%</span></div></td>
+      <td><div class="barcell"><div class="barbg"><div class="barfill" style="width:${bp}%;background:${fc}"></div></div><span style="font-size:10px;color:var(--text3);min-width:34px;font-family:'JetBrains Mono',monospace">${pct}%</span></div></td>
     </tr>`;
   }).join('');
 }
 
-// ════════════════════════════════════════════════
-// FILTERS (detail tab)
-// ════════════════════════════════════════════════
-function buildFilters() {
-  const gs = [...new Set(allIssues.map(i => i.group))].sort();
-  const ts = [...new Set(allIssues.map(i => i.type).filter(t => t && t !== 'Chưa xác định'))].sort();
-  const gSel = document.getElementById('groupFilter');
-  const tSel = document.getElementById('typeFilter');
-  gSel.innerHTML = '<option value="">Tất cả nhóm</option>' + gs.map(g => `<option value="${g}">${g}</option>`).join('');
-  tSel.innerHTML = '<option value="">Tất cả type</option>' + ts.map(t => `<option value="${t}">${t.length>60?t.slice(0,60)+'…':t}</option>`).join('');
+function buildFilters(){
+  const gs=[...new Set(allIssues.map(i=>i.group))].sort();
+  const ts=[...new Set(allIssues.map(i=>i.type).filter(Boolean))].sort();
+  document.getElementById('groupFilter').innerHTML='<option value="">Tất cả nhóm</option>'+gs.map(g=>`<option value="${g}">${g}</option>`).join('');
+  document.getElementById('typeFilter').innerHTML='<option value="">Tất cả type</option>'+ts.map(t=>`<option value="${t}">${t.length>60?t.slice(0,60)+'…':t}</option>`).join('');
 }
-
-function getFiltered() {
-  const kw = document.getElementById('searchInput').value.toLowerCase().trim();
-  const gr = document.getElementById('groupFilter').value;
-  const tp = document.getElementById('typeFilter').value;
-  const fr = document.getElementById('freqFilter').value;
-  return allIssues.filter(i => {
-    if (kw && !i.tieuDe.toLowerCase().includes(kw)) return false;
-    if (gr && i.group !== gr) return false;
-    if (tp && i.type !== tp) return false;
-    if (fr && i.tan !== fr) return false;
+function getFiltered(){
+  const kw=document.getElementById('searchInput').value.toLowerCase().trim();
+  const gr=document.getElementById('groupFilter').value;
+  const tp=document.getElementById('typeFilter').value;
+  const fr=document.getElementById('freqFilter').value;
+  return allIssues.filter(i=>{
+    if(kw&&!i.tieuDe.toLowerCase().includes(kw))return false;
+    if(gr&&i.group!==gr)return false;
+    if(tp&&i.type!==tp)return false;
+    if(fr&&i.tan!==fr)return false;
     return true;
   });
 }
-
-function clearFilters() {
-  ['searchInput','groupFilter','typeFilter','freqFilter'].forEach(id => document.getElementById(id).value = '');
-  const total = allIssues.reduce((s,i)=>s+i.so,0);
-  buildDetailTable(allIssues, total);
-  document.getElementById('filterCount').textContent = `${allIssues.length} issue`;
+function clearFilters(){
+  ['searchInput','groupFilter','typeFilter','freqFilter'].forEach(id=>document.getElementById(id).value='');
+  const total=allIssues.reduce((s,i)=>s+i.so,0);
+  buildDetailTable(allIssues,total);
+  document.getElementById('filterCount').textContent=`${allIssues.length} issue`;
+}
+['groupFilter','typeFilter','freqFilter'].forEach(id=>document.getElementById(id).addEventListener('change',applyFilter));
+document.getElementById('searchInput').addEventListener('input',applyFilter);
+function applyFilter(){
+  const f=getFiltered(),t=f.reduce((s,i)=>s+i.so,0);
+  buildDetailTable(f,t);
+  document.getElementById('filterCount').textContent=f.length<allIssues.length?`Hiển thị ${f.length} / ${allIssues.length}`:`${allIssues.length} issue`;
 }
 
-['groupFilter','typeFilter','freqFilter'].forEach(id => {
-  document.getElementById(id).addEventListener('change', applyFilter);
-});
-document.getElementById('searchInput').addEventListener('input', applyFilter);
-
-function applyFilter() {
-  const f = getFiltered();
-  const t = f.reduce((s,i)=>s+i.so,0);
-  buildDetailTable(f, t);
-  document.getElementById('filterCount').textContent =
-    f.length < allIssues.length ? `Hiển thị ${f.length} / ${allIssues.length}` : `${allIssues.length} issue`;
-}
-
-// ════════════════════════════════════════════════
-// INIT
-// ════════════════════════════════════════════════
 loadData();
-setInterval(() => loadData(), 300000); // 5 phút
+setInterval(()=>loadData(),300000);
 </script>
 </body>
 </html>
