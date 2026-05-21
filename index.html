@@ -175,14 +175,14 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .typebox{max-height:340px;overflow-y:auto;padding-right:4px;}
 .typebox::-webkit-scrollbar{width:5px;}
 .typebox::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
-.type-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:8px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all .18s;}
+.type-item{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border-radius:8px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all .18s;}
 .type-item:last-child{margin-bottom:0;}
 .type-item:hover{border-color:var(--border2);transform:translateX(2px);}
-.type-rank{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);min-width:18px;text-align:center;}
-.type-name{font-size:11px;font-weight:600;color:var(--text2);flex:1;line-height:1.4;}
-.type-bar{width:50px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;flex-shrink:0;}
+.type-rank{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text3);min-width:18px;text-align:center;padding-top:2px;}
+.type-name{font-size:11px;font-weight:600;color:var(--text2);flex:1;line-height:1.45;word-break:break-word;}
+.type-bar{width:50px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;flex-shrink:0;margin-top:5px;}
 .type-barfill{height:100%;border-radius:2px;}
-.type-count{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--text);min-width:52px;text-align:right;}
+.type-count{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--text);min-width:52px;text-align:right;padding-top:1px;}
 
 /* ─── INSIGHT ─── */
 .ins{display:flex;gap:11px;padding:13px 14px;border-radius:10px;margin-bottom:9px;border:1px solid var(--border);background:var(--surface2);transition:all .18s;position:relative;overflow:hidden;}
@@ -299,7 +299,7 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       <div class="mc"><div class="mc-ico">📋</div><div class="mc-lbl">Tổng phiếu ghi nhận</div><div class="mc-val mc-accent" id="mTotal">—</div><div class="mc-sub" id="mTotalSub">—</div></div>
       <div class="mc"><div class="mc-ico">🗂</div><div class="mc-lbl">Tiêu đề đã chuẩn hóa</div><div class="mc-val" id="mRows">—</div><div class="mc-sub">Từ sheet DanhSachIssueChuanHoa_Output</div></div>
       <div class="mc"><div class="mc-ico">🏷</div><div class="mc-lbl">Nhóm module phân loại theo Tiêu đề Issue</div><div class="mc-val" id="mGroups">—</div><div class="mc-sub">Nhóm phân loại</div></div>
-      <div class="mc"><div class="mc-ico">🔴</div><div class="mc-lbl">Issue có tuần suất lặp lại rất cao + cao</div><div class="mc-val mc-red" id="mHigh">—</div><div class="mc-sub">Ưu tiên xử lý</div></div>
+      <div class="mc"><div class="mc-ico">🏷️</div><div class="mc-lbl">Số Type Issue đã chuẩn hóa</div><div class="mc-val mc-accent" id="mTypes">—</div><div class="mc-sub">Cột H · DanhSachIssueChuanHoa_Output</div></div>
       <div class="mc"><div class="mc-ico">📈</div><div class="mc-lbl">Top 3 issue nghiêm trọng chiếm</div><div class="mc-val" id="mTop3">—</div><div class="mc-sub">Tổng toàn hệ thống</div></div>
     </div>
 
@@ -665,7 +665,7 @@ function renderOverview(issues) {
   document.getElementById('mTotalSub').textContent = YEAR_SUBS[currentYear] || '';
   document.getElementById('mRows').textContent     = allIssues.length;
   document.getElementById('mGroups').textContent   = [...new Set(allIssues.map(i=>i.group))].length;
-  document.getElementById('mHigh').textContent     = allIssues.filter(i=>i.tan==='Rất cao'||i.tan==='Cao').length;
+  document.getElementById('mTypes').textContent    = [...new Set(allIssues.map(i=>i.type).filter(Boolean))].length;
   const gm={};
   allIssues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
   const top3=Object.values(gm).sort((a,b)=>b-a).slice(0,3).reduce((s,v)=>s+v,0);
@@ -756,7 +756,7 @@ function buildTypeList(issues) {
     const bp=Math.round((e[1]/max)*100);
     return `<div class="type-item">
       <div class="type-rank">${idx+1}</div>
-      <div class="type-name">${e[0].length>40?e[0].slice(0,40)+'…':e[0]}</div>
+      <div class="type-name" title="${e[0]}">${e[0]}</div>
       <div class="type-bar"><div class="type-barfill" style="width:${bp}%;background:${col}"></div></div>
       <div class="type-count">${e[1].toLocaleString('vi-VN')}</div>
     </div>`;
