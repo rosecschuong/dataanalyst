@@ -780,7 +780,7 @@ function buildInsights(issues, total) {
         <div class="ins-tag" style="color:#FCA5A5">Ưu tiên hàng đầu — Hành động ngay</div>
         <div class="ins-t">Top 3 issue nghiêm trọng nhất</div>
         <div class="ins-b">${top3.map((it,i)=>`<b>${i+1}. ${it.tieuDe}</b> — ${it.so.toLocaleString('vi-VN')} lần · ${it.group}`).join('<br>')}<br><br>Auto-restart watchlog - Cài Zabbix để giám sát và khởi động lại service tự động.</div>
-        <div class="ins-chip">↓ Giảm ngay với 1 script được cấu hình từ Zabbix</div>
+        <div class="ins-chip">↓ Giảm đáng kể với script được cấu hình từ Zabbix</div>
       </div>
     </div>`:'',
     vh.length?`<div class="ins ins-2">
