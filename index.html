@@ -427,6 +427,10 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 </div>
 
 <div class="footer">
+  <div style="max-width:760px;margin:0 auto 14px;padding:11px 16px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);border-radius:9px;color:#FBBF24;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;line-height:1.7;letter-spacing:0;text-align:left;display:flex;gap:9px;align-items:flex-start;">
+    <span style="font-size:14px;flex-shrink:0">ℹ️</span>
+    <span><b style="color:#FDE68A">Lưu ý về dữ liệu:</b> Số liệu hiện tại <b>chưa hoàn toàn chuẩn xác</b> do quá trình thu thập và phân loại issue qua nhiều năm. Dữ liệu đang được <b>chuẩn hóa dần trong năm 2026</b> — các con số sẽ chính xác và đầy đủ hơn theo từng đợt cập nhật.</span>
+  </div>
   Omicall Issue Intelligence · 2024–2026 · Google Sheets ListIssue · Auto refresh 5 phút ·
   <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" target="_blank">Mở Sheet ↗</a>
 </div>
@@ -765,6 +769,7 @@ function buildTypeList(issues) {
 
 function buildInsights(issues, total) {
   const top=issues[0];
+  const top3=issues.slice(0,3);
   const vh=issues.filter(i=>i.tan==='Rất cao');
   const vhTotal=vh.reduce((s,i)=>s+i.so,0);
   const pay=issues.filter(i=>i.group==='Payment Hub').reduce((s,i)=>s+i.so,0);
@@ -772,9 +777,9 @@ function buildInsights(issues, total) {
     top?`<div class="ins ins-1">
       <div class="ins-ico">🔥</div>
       <div>
-        <div class="ins-tag" style="color:#FCA5A5">Ưu tiên #1 — Hành động ngay</div>
-        <div class="ins-t">${top.tieuDe}</div>
-        <div class="ins-b"><b>${top.so.toLocaleString('vi-VN')}</b> lần · ${top.group}. Auto-restart watchlog - Cài Zabbix để giám sát và khởi động service.</div>
+        <div class="ins-tag" style="color:#FCA5A5">Ưu tiên hàng đầu — Hành động ngay</div>
+        <div class="ins-t">Top 3 issue nghiêm trọng nhất</div>
+        <div class="ins-b">${top3.map((it,i)=>`<b>${i+1}. ${it.tieuDe}</b> — ${it.so.toLocaleString('vi-VN')} lần · ${it.group}`).join('<br>')}<br><br>Auto-restart watchlog - Cài Zabbix để giám sát và khởi động lại service tự động.</div>
         <div class="ins-chip">↓ Giảm ngay với 1 script</div>
       </div>
     </div>`:'',
@@ -782,7 +787,7 @@ function buildInsights(issues, total) {
       <div class="ins-ico">⚠️</div>
       <div>
         <div class="ins-tag" style="color:#FED7AA">${vh.length} issue tần suất Rất cao</div>
-        <div class="ins-t">Chiếm 62.9% tổng ghi nhận</div>
+        <div class="ins-t">Chiếm ${((vhTotal/total)*100).toFixed(1)}% tổng ghi nhận</div>
         <div class="ins-b">Cần hành động khắc phục ngay. Tổng <b>${vhTotal.toLocaleString('vi-VN')}</b> lần — watchlog. Tìm kiếm nguyên nhân và đưa ra giải pháp.</div>
       </div>
     </div>`:'',
