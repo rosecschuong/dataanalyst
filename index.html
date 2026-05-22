@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -9,7 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-:root{
+/* ===== DARK THEME (mặc định) ===== */
+:root,[data-theme="dark"]{
   --bg:#07090F;
   --surface:#0E1118;
   --surface2:#131720;
@@ -30,13 +31,59 @@
   --text2:#8896B0;
   --text3:#3D4F6A;
   --radius:12px;
+  /* biến cho chart + nền topbar/nav */
+  --topbar-bg:rgba(11,15,26,0.92);
+  --nav-bg:rgba(14,17,24,.95);
+  --chart-text:#FFFFFF;
+  --chart-text2:#8896B0;
+  --chart-axis:#3D4F6A;
+  --chart-grid:rgba(255,255,255,.04);
+  --chart-tooltip-bg:#0E1118;
+  --chart-border:#0E1118;
+  --bar-axis-label:#FFFFFF;
+  --mesh1:rgba(79,142,247,.05);
+  --mesh2:rgba(192,132,252,.04);
+}
+/* ===== LIGHT THEME ===== */
+[data-theme="light"]{
+  --bg:#F4F6FB;
+  --surface:#FFFFFF;
+  --surface2:#F7F9FC;
+  --surface3:#EEF2F8;
+  --border:#E2E8F2;
+  --border2:#CBD5E6;
+  --accent:#2563EB;
+  --accent2:#1D4ED8;
+  --accent-glow:rgba(37,99,235,0.08);
+  --red:#DC2626;
+  --orange:#EA580C;
+  --yellow:#D97706;
+  --green:#059669;
+  --purple:#7C3AED;
+  --teal:#0D9488;
+  --sky:#0284C7;
+  --text:#0F172A;
+  --text2:#475569;
+  --text3:#94A3B8;
+  --topbar-bg:rgba(255,255,255,0.92);
+  --nav-bg:rgba(255,255,255,.95);
+  --chart-text:#0F172A;
+  --chart-text2:#475569;
+  --chart-axis:#94A3B8;
+  --chart-grid:rgba(15,23,42,.06);
+  --chart-tooltip-bg:#FFFFFF;
+  --chart-border:#FFFFFF;
+  --bar-axis-label:#0F172A;
+  --mesh1:rgba(37,99,235,.04);
+  --mesh2:rgba(124,58,237,.03);
 }
 body{
   font-family:'Plus Jakarta Sans',system-ui,sans-serif;
   background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;
+  transition:background .25s,color .25s;
   background-image:
-    radial-gradient(ellipse 900px 500px at 15% -5%,rgba(79,142,247,.05) 0%,transparent 55%),
-    radial-gradient(ellipse 700px 500px at 85% 105%,rgba(192,132,252,.04) 0%,transparent 55%);
+    radial-gradient(ellipse 900px 500px at 15% -5%,var(--mesh1) 0%,transparent 55%),
+    radial-gradient(ellipse 700px 500px at 85% 105%,var(--mesh2) 0%,transparent 55%);
 }
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -44,10 +91,10 @@ body{
 
 /* ─── TOPBAR ─── */
 .topbar{
-  background:rgba(11,15,26,0.92);backdrop-filter:blur(20px);
+  background:var(--topbar-bg);backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border);padding:0 24px;height:56px;
   display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:900;
+  position:sticky;top:0;z-index:900;transition:background .25s;
 }
 .brand{display:flex;align-items:center;gap:12px;}
 .brand-ico{width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#4F8EF7);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 18px rgba(79,142,247,.3);}
@@ -60,13 +107,16 @@ body{
 .live-txt{font-size:10px;font-weight:700;color:#34D399;letter-spacing:.1em;}
 .upd{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
 .btn{border:none;padding:7px 13px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:5px;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;}
+/* Nút chuyển Light / Dark */
+.theme-toggle{border:1px solid var(--border2);background:var(--surface2);color:var(--text2);width:34px;height:34px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:15px;transition:all .18s;}
+.theme-toggle:hover{background:var(--surface3);color:var(--text);border-color:var(--accent);}
 .btn-ghost{background:rgba(255,255,255,.04);color:var(--text2);border:1px solid var(--border2);}
 .btn-ghost:hover{background:rgba(255,255,255,.08);color:var(--text);}
 .btn-accent{background:linear-gradient(135deg,#1D4ED8,#4F8EF7);color:#fff;text-decoration:none;box-shadow:0 0 14px rgba(79,142,247,.25);}
 .btn-accent:hover{box-shadow:0 0 22px rgba(79,142,247,.45);transform:translateY(-1px);}
 
 /* ─── NAV ─── */
-.nav-tabs{background:rgba(14,17,24,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:2px;position:sticky;top:56px;z-index:800;}
+.nav-tabs{background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:2px;position:sticky;top:56px;z-index:800;transition:background .25s;}
 .nav-tab{padding:11px 15px;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap;letter-spacing:.02em;}
 .nav-tab:hover{color:var(--text2);}
 .nav-tab.active{color:var(--accent2);border-bottom-color:var(--accent);}
@@ -113,7 +163,7 @@ body{
 .yinfo{font-size:10px;color:var(--text3);margin-left:auto;font-family:'JetBrains Mono',monospace;}
 
 /* ─── CARD ─── */
-.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:border-color .18s;}
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:border-color .18s,background .25s;}
 .card:hover{border-color:var(--border2);}
 .ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
 .ct{font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.015em;}
@@ -236,6 +286,12 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .footer{text-align:center;padding:22px;color:var(--text3);font-size:10px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
 .footer a{color:var(--accent);text-decoration:none;}
 .footer a:hover{color:var(--accent2);}
+/* Note dữ liệu — màu theo theme */
+.data-note{max-width:760px;margin:0 auto 14px;padding:11px 16px;border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;line-height:1.7;letter-spacing:0;text-align:left;display:flex;gap:9px;align-items:flex-start;
+  background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.22);color:var(--yellow);}
+[data-theme="light"] .data-note{background:rgba(217,119,6,.08);border-color:rgba(217,119,6,.25);color:#92400E;}
+.data-note b{color:var(--text);}
+[data-theme="dark"] .data-note b{color:#FDE68A;}
 
 .trend-up{color:#FCA5A5;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
 .trend-dn{color:#6EE7B7;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
@@ -266,6 +322,7 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
   <div class="topright">
     <div class="live-pill"><div class="live-dot"></div><span class="live-txt">LIVE</span></div>
     <span class="upd" id="updTxt">—</span>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Chuyển Light / Dark">🌙</button>
     <button class="btn btn-ghost" onclick="loadData(true)">↺ Làm mới</button>
     <a class="btn btn-accent" target="_blank" href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535">↗ Google Sheet</a>
   </div>
@@ -427,9 +484,9 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 </div>
 
 <div class="footer">
-  <div style="max-width:760px;margin:0 auto 14px;padding:11px 16px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.18);border-radius:9px;color:#FBBF24;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;line-height:1.7;letter-spacing:0;text-align:left;display:flex;gap:9px;align-items:flex-start;">
+  <div class="data-note">
     <span style="font-size:14px;flex-shrink:0">ℹ️</span>
-    <span><b style="color:#FDE68A">Lưu ý về dữ liệu:</b> Số liệu hiện tại <b>chưa hoàn toàn chuẩn xác</b> do quá trình thu thập và phân loại issue qua nhiều năm. Dữ liệu đang được <b>chuẩn hóa dần trong năm 2026</b> — các con số sẽ chính xác và đầy đủ hơn theo từng đợt cập nhật.</span>
+    <span><b>Lưu ý về dữ liệu:</b> Số liệu hiện tại <b>chưa hoàn toàn chuẩn xác</b> do quá trình thu thập và phân loại issue qua nhiều năm. Dữ liệu đang được <b>chuẩn hóa dần trong năm 2026</b> — các con số sẽ chính xác và đầy đủ hơn theo từng đợt cập nhật.</span>
   </div>
   Omicall Issue Intelligence · 2024–2026 · Google Sheets ListIssue · Auto refresh 5 phút ·
   <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" target="_blank">Mở Sheet ↗</a>
@@ -493,6 +550,21 @@ const YEAR_SUBS = {
 let allIssues = [];
 let charts = {};
 let currentYear = 'all';
+let currentTheme = 'dark';
+
+// ── Đọc biến màu hiện tại của theme để áp vào chart ──
+function cssVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
+
+function toggleTheme(){
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeToggle').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+  // vẽ lại toàn bộ chart để màu chữ/lưới khớp theme mới
+  if(allIssues.length){
+    renderOverview(allIssues);
+    buildYearly();
+  }
+}
 
 document.querySelectorAll('.nav-tab').forEach(t => {
   t.addEventListener('click', () => {
@@ -684,6 +756,9 @@ function renderOverview(issues) {
 }
 
 function buildCharts(issues, total) {
+  const cT=cssVar('--chart-text'), cT2=cssVar('--chart-text2'), cAxis=cssVar('--chart-axis'),
+        cGrid=cssVar('--chart-grid'), cTip=cssVar('--chart-tooltip-bg'), cBorder=cssVar('--chart-border'),
+        cBarLbl=cssVar('--bar-axis-label'), cBdr=cssVar('--border');
   const top10  = issues.slice(0,10);
   const bColors= top10.map(i=>i.tan==='Rất cao'?'#F05252':i.tan==='Cao'?'#FB923C':i.tan==='Trung bình'?'#4F8EF7':'#3D4F6A');
   if (charts.bar) charts.bar.destroy();
@@ -695,12 +770,12 @@ function buildCharts(issues, total) {
       layout:{padding:{right:8}},
       plugins:{
         legend:{display:false},
-        tooltip:{backgroundColor:'#0E1118',borderColor:'#1C2333',borderWidth:1,
+        tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,
           callbacks:{label:ctx=>'  '+ctx.raw.toLocaleString('vi-VN')+' lần'}}
       },
       scales:{
-        x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#3D4F6A',callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v,font:{size:10}}},
-        y:{ticks:{color:'#FFFFFF',font:{size:11},callback(val){return this.getLabelForValue(val);}},grid:{display:false}}
+        x:{grid:{color:cGrid},ticks:{color:cAxis,callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v,font:{size:10}}},
+        y:{ticks:{color:cBarLbl,font:{size:11},callback(val){return this.getLabelForValue(val);}},grid:{display:false}}
       }
     }
   });
@@ -712,17 +787,17 @@ function buildCharts(issues, total) {
   if (charts.pie) charts.pie.destroy();
   charts.pie = new Chart(document.getElementById('pieChart'), {
     type:'doughnut',
-    data:{labels:sorted.map(e=>e[0]),datasets:[{data:sorted.map(e=>e[1]),backgroundColor:pColors,borderWidth:2,borderColor:'#0E1118'}]},
+    data:{labels:sorted.map(e=>e[0]),datasets:[{data:sorted.map(e=>e[1]),backgroundColor:pColors,borderWidth:2,borderColor:cBorder}]},
     options:{
       responsive:true,maintainAspectRatio:false,cutout:'50%',
       plugins:{
-        /* FIX 3: legend label màu trắng rõ ràng */
-        legend:{position:'bottom',labels:{color:'#FFFFFF',font:{size:10},boxWidth:10,padding:7,
-          generateLabels:ch=>ch.data.labels.map((l,i)=>({text:l.length>22?l.slice(0,22)+'…':l,fillStyle:pColors[i],fontColor:'#FFFFFF',hidden:false,index:i}))
+        /* legend label theo theme */
+        legend:{position:'bottom',labels:{color:cT,font:{size:10},boxWidth:10,padding:7,
+          generateLabels:ch=>ch.data.labels.map((l,i)=>({text:l.length>22?l.slice(0,22)+'…':l,fillStyle:pColors[i],fontColor:cT,hidden:false,index:i}))
         }},
-        /* % trên slice cũng màu trắng */
+        /* % trên slice luôn trắng (slice màu đậm) */
         datalabels:{color:'#FFFFFF',font:{size:10,weight:'bold'},formatter:(val)=>{const p=((val/total)*100);return p>=4?p.toFixed(1)+'%':'';},anchor:'center',align:'center'},
-        tooltip:{backgroundColor:'#0E1118',borderColor:'#1C2333',borderWidth:1,
+        tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,
           callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('vi-VN')} (${((ctx.raw/total)*100).toFixed(1)}%)`}}
       }
     },plugins:[ChartDataLabels]
@@ -780,14 +855,14 @@ function buildInsights(issues, total) {
         <div class="ins-tag" style="color:#FCA5A5">Ưu tiên hàng đầu — Hành động ngay</div>
         <div class="ins-t">Top 3 issue nghiêm trọng nhất</div>
         <div class="ins-b">${top3.map((it,i)=>`<b>${i+1}. ${it.tieuDe}</b> — ${it.so.toLocaleString('vi-VN')} lần · ${it.group}`).join('<br>')}<br><br>Auto-restart watchlog - Cài Zabbix để giám sát và khởi động lại service tự động.</div>
-        <div class="ins-chip">↓ Giảm đáng kể với script được cấu hình từ Zabbix</div>
+        <div class="ins-chip">↓ Giảm ngay với 1 script</div>
       </div>
     </div>`:'',
     vh.length?`<div class="ins ins-2">
       <div class="ins-ico">⚠️</div>
       <div>
         <div class="ins-tag" style="color:#FED7AA">${vh.length} issue tần suất Rất cao</div>
-        <div class="ins-t">Chiếm 62.9% tổng ghi nhận</div>
+        <div class="ins-t">Chiếm ${((vhTotal/total)*100).toFixed(1)}% tổng ghi nhận</div>
         <div class="ins-b">Cần hành động khắc phục ngay. Tổng <b>${vhTotal.toLocaleString('vi-VN')}</b> lần — watchlog. Tìm kiếm nguyên nhân và đưa ra giải pháp.</div>
       </div>
     </div>`:'',
@@ -813,6 +888,9 @@ function buildInsights(issues, total) {
 
 let trendInst;
 function buildTrendChart() {
+  const cT=cssVar('--chart-text'), cT2=cssVar('--chart-text2'), cAxis=cssVar('--chart-axis'),
+        cGrid=cssVar('--chart-grid'), cTip=cssVar('--chart-tooltip-bg'), cBdr=cssVar('--border'),
+        cLegend=cssVar('--chart-text2');
   const mode=document.getElementById('trendMode').value;
   const type=mode==='line'?'line':'bar';
   if(trendInst)trendInst.destroy();
@@ -828,13 +906,13 @@ function buildTrendChart() {
     options:{
       responsive:true,maintainAspectRatio:false,
       plugins:{
-        legend:{position:'bottom',labels:{color:'#FFFFFF',font:{size:11},boxWidth:10,padding:10}},
-        tooltip:{backgroundColor:'#0E1118',borderColor:'#1C2333',borderWidth:1,mode:'index',
+        legend:{position:'bottom',labels:{color:cLegend,font:{size:11},boxWidth:10,padding:10}},
+        tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,mode:'index',
           callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('vi-VN')}`}}
       },
       scales:{
-        x:{stacked:mode!=='grouped',grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#8896B0',font:{size:12}}},
-        y:{stacked:mode!=='grouped',grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#3D4F6A',callback:v=>(v/1000).toFixed(0)+'k',font:{size:11}}}
+        x:{stacked:mode!=='grouped',grid:{color:cGrid},ticks:{color:cT2,font:{size:12}}},
+        y:{stacked:mode!=='grouped',grid:{color:cGrid},ticks:{color:cAxis,callback:v=>(v/1000).toFixed(0)+'k',font:{size:11}}}
       }
     }
   });
