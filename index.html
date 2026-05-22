@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" data-theme="dark">
+<html lang="vi" data-theme="light">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
@@ -9,8 +9,44 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-/* ===== DARK THEME (mặc định) ===== */
-:root,[data-theme="dark"]{
+
+/* ===== LIGHT THEME (MẶC ĐỊNH) ===== */
+:root,[data-theme="light"]{
+  --bg:#F4F6FB;
+  --surface:#FFFFFF;
+  --surface2:#F0F4FA;
+  --surface3:#E8EEF7;
+  --border:#DDE3EF;
+  --border2:#C8D2E4;
+  --accent:#2563EB;
+  --accent2:#1D4ED8;
+  --accent-glow:rgba(37,99,235,0.10);
+  --red:#DC2626;
+  --orange:#EA580C;
+  --yellow:#B45309;
+  --green:#047857;
+  --purple:#6D28D9;
+  --teal:#0D9488;
+  --sky:#0369A1;
+  --text:#0F172A;
+  --text2:#1E293B;
+  --text3:#475569;
+  --radius:12px;
+  --topbar-bg:rgba(255,255,255,0.96);
+  --nav-bg:rgba(255,255,255,.96);
+  --chart-text:#0F172A;
+  --chart-text2:#334155;
+  --chart-axis:#475569;
+  --chart-grid:rgba(15,23,42,.07);
+  --chart-tooltip-bg:#FFFFFF;
+  --chart-border:#FFFFFF;
+  --bar-axis-label:#0F172A;
+  --mesh1:rgba(37,99,235,.05);
+  --mesh2:rgba(109,40,217,.03);
+}
+
+/* ===== DARK THEME ===== */
+[data-theme="dark"]{
   --bg:#07090F;
   --surface:#0E1118;
   --surface2:#131720;
@@ -28,55 +64,21 @@
   --teal:#2DD4BF;
   --sky:#38BDF8;
   --text:#E8F0FF;
-  --text2:#8896B0;
-  --text3:#3D4F6A;
-  --radius:12px;
-  /* biến cho chart + nền topbar/nav */
-  --topbar-bg:rgba(11,15,26,0.92);
-  --nav-bg:rgba(14,17,24,.95);
-  --chart-text:#FFFFFF;
-  --chart-text2:#8896B0;
-  --chart-axis:#3D4F6A;
+  --text2:#B0C0D8;
+  --text3:#6B7FA0;
+  --topbar-bg:rgba(11,15,26,0.94);
+  --nav-bg:rgba(14,17,24,.96);
+  --chart-text:#E8F0FF;
+  --chart-text2:#B0C0D8;
+  --chart-axis:#6B7FA0;
   --chart-grid:rgba(255,255,255,.04);
   --chart-tooltip-bg:#0E1118;
   --chart-border:#0E1118;
-  --bar-axis-label:#FFFFFF;
+  --bar-axis-label:#E8F0FF;
   --mesh1:rgba(79,142,247,.05);
   --mesh2:rgba(192,132,252,.04);
 }
-/* ===== LIGHT THEME ===== */
-[data-theme="light"]{
-  --bg:#F4F6FB;
-  --surface:#FFFFFF;
-  --surface2:#F7F9FC;
-  --surface3:#EEF2F8;
-  --border:#E2E8F2;
-  --border2:#CBD5E6;
-  --accent:#2563EB;
-  --accent2:#1D4ED8;
-  --accent-glow:rgba(37,99,235,0.08);
-  --red:#DC2626;
-  --orange:#EA580C;
-  --yellow:#D97706;
-  --green:#059669;
-  --purple:#7C3AED;
-  --teal:#0D9488;
-  --sky:#0284C7;
-  --text:#0F172A;
-  --text2:#475569;
-  --text3:#94A3B8;
-  --topbar-bg:rgba(255,255,255,0.92);
-  --nav-bg:rgba(255,255,255,.95);
-  --chart-text:#0F172A;
-  --chart-text2:#475569;
-  --chart-axis:#94A3B8;
-  --chart-grid:rgba(15,23,42,.06);
-  --chart-tooltip-bg:#FFFFFF;
-  --chart-border:#FFFFFF;
-  --bar-axis-label:#0F172A;
-  --mesh1:rgba(37,99,235,.04);
-  --mesh2:rgba(124,58,237,.03);
-}
+
 body{
   font-family:'Plus Jakarta Sans',system-ui,sans-serif;
   background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;
@@ -95,36 +97,38 @@ body{
   border-bottom:1px solid var(--border);padding:0 24px;height:56px;
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:900;transition:background .25s;
+  box-shadow:0 1px 0 var(--border);
 }
 .brand{display:flex;align-items:center;gap:12px;}
-.brand-ico{width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#4F8EF7);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 18px rgba(79,142,247,.3);}
+.brand-ico{width:34px;height:34px;background:linear-gradient(135deg,#1D4ED8,#4F8EF7);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 0 14px rgba(37,99,235,.25);}
 .brand-name{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.03em;}
 .brand-sub{font-size:10px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-top:1px;}
 .topright{display:flex;align-items:center;gap:8px;}
-.live-pill{display:flex;align-items:center;gap:5px;background:rgba(52,211,153,.09);border:1px solid rgba(52,211,153,.22);border-radius:99px;padding:4px 11px;}
-.live-dot{width:6px;height:6px;border-radius:50%;background:#34D399;animation:blink 2s infinite;}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(4,120,87,.09);border:1px solid rgba(4,120,87,.22);border-radius:99px;padding:4px 11px;}
+[data-theme="dark"] .live-pill{background:rgba(52,211,153,.09);border-color:rgba(52,211,153,.22);}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
-.live-txt{font-size:10px;font-weight:700;color:#34D399;letter-spacing:.1em;}
+.live-txt{font-size:10px;font-weight:700;color:var(--green);letter-spacing:.1em;}
 .upd{font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace;}
 .btn{border:none;padding:7px 13px;border-radius:8px;font-weight:600;font-size:12px;cursor:pointer;transition:all .18s;display:inline-flex;align-items:center;gap:5px;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;}
-/* Nút chuyển Light / Dark */
 .theme-toggle{border:1px solid var(--border2);background:var(--surface2);color:var(--text2);width:34px;height:34px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:15px;transition:all .18s;}
 .theme-toggle:hover{background:var(--surface3);color:var(--text);border-color:var(--accent);}
-.btn-ghost{background:rgba(255,255,255,.04);color:var(--text2);border:1px solid var(--border2);}
-.btn-ghost:hover{background:rgba(255,255,255,.08);color:var(--text);}
-.btn-accent{background:linear-gradient(135deg,#1D4ED8,#4F8EF7);color:#fff;text-decoration:none;box-shadow:0 0 14px rgba(79,142,247,.25);}
-.btn-accent:hover{box-shadow:0 0 22px rgba(79,142,247,.45);transform:translateY(-1px);}
+.btn-ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border2);}
+.btn-ghost:hover{background:var(--surface3);color:var(--text);}
+.btn-accent{background:linear-gradient(135deg,#1D4ED8,#4F8EF7);color:#fff;text-decoration:none;box-shadow:0 0 12px rgba(37,99,235,.22);}
+.btn-accent:hover{box-shadow:0 0 20px rgba(37,99,235,.4);transform:translateY(-1px);}
 
 /* ─── NAV ─── */
 .nav-tabs{background:var(--nav-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;padding:0 24px;gap:2px;position:sticky;top:56px;z-index:800;transition:background .25s;}
 .nav-tab{padding:11px 15px;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap;letter-spacing:.02em;}
 .nav-tab:hover{color:var(--text2);}
-.nav-tab.active{color:var(--accent2);border-bottom-color:var(--accent);}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
 /* ─── LOAD ─── */
-#loadBox{position:fixed;inset:0;background:rgba(7,9,15,.97);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:.35s;}
+#loadBox{position:fixed;inset:0;background:rgba(244,246,251,.97);backdrop-filter:blur(8px);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:.35s;}
+[data-theme="dark"] #loadBox{background:rgba(7,9,15,.97);}
 #loadBox.off{opacity:0;pointer-events:none;}
-.load-ring{width:44px;height:44px;border:2px solid rgba(79,142,247,.15);border-top-color:#4F8EF7;border-radius:50%;animation:spin .8s linear infinite;margin-bottom:14px;box-shadow:0 0 20px rgba(79,142,247,.2);}
+.load-ring{width:44px;height:44px;border:2px solid rgba(37,99,235,.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin-bottom:14px;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .load-t{font-size:15px;font-weight:800;color:var(--text);letter-spacing:-.02em;}
 .load-s{font-size:11px;color:var(--text3);margin-top:4px;font-family:'JetBrains Mono',monospace;}
@@ -135,36 +139,44 @@ body{
 .tab-pane.active{display:flex;flex-direction:column;gap:16px;}
 
 /* ─── ERROR ─── */
-#errBox{background:rgba(240,82,82,.07);border:1px solid rgba(240,82,82,.22);border-radius:10px;padding:13px 16px;display:none;gap:10px;align-items:flex-start;}
+#errBox{background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);border-radius:10px;padding:13px 16px;display:none;gap:10px;align-items:flex-start;}
 #errBox.on{display:flex;}
 
 /* ─── METRICS ─── */
 .mrow{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;}
-.mc{background:var(--surface);border-radius:var(--radius);padding:16px 18px;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color .2s,transform .2s;cursor:default;}
-.mc:hover{border-color:var(--border2);transform:translateY(-2px);}
-.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(79,142,247,.5),transparent);}
-.mc-ico{font-size:20px;margin-bottom:9px;opacity:.9;}
+.mc{
+  background:var(--surface);border-radius:var(--radius);padding:16px 18px;
+  border:1px solid var(--border);position:relative;overflow:hidden;
+  transition:border-color .2s,transform .2s,box-shadow .2s;cursor:default;
+  box-shadow:0 1px 3px rgba(15,23,42,.06);
+}
+.mc:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 4px 16px rgba(15,23,42,.08);}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.6;}
+.mc-ico{font-size:20px;margin-bottom:9px;opacity:.85;}
 .mc-lbl{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px;}
 .mc-val{font-size:26px;font-weight:800;line-height:1;letter-spacing:-.04em;color:var(--text);}
 .mc-sub{font-size:11px;color:var(--text3);margin-top:5px;line-height:1.5;}
-.mc-accent{color:var(--accent2)!important;}
+.mc-accent{color:var(--accent)!important;}
 .mc-red{color:var(--red)!important;}
 
 /* ─── YEAR BAR ─── */
-.ybar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.ybar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;box-shadow:0 1px 3px rgba(15,23,42,.05);}
 .ybar-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;}
 .ytag{padding:5px 14px;border-radius:99px;border:1px solid var(--border2);background:transparent;font-size:12px;font-weight:600;color:var(--text3);cursor:pointer;transition:all .18s;font-family:'Plus Jakarta Sans',sans-serif;}
-.ytag:hover{border-color:var(--accent);color:var(--accent2);}
-.ytag.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent2);box-shadow:0 0 10px rgba(79,142,247,.12);}
-.ytag.y2024.active{border-color:#4F8EF7;background:rgba(79,142,247,.09);color:#7EB3FF;}
-.ytag.y2025.active{border-color:#C084FC;background:rgba(192,132,252,.09);color:#D8B4FE;}
-.ytag.y2026.active{border-color:#34D399;background:rgba(52,211,153,.09);color:#6EE7B7;}
+.ytag:hover{border-color:var(--accent);color:var(--accent);}
+.ytag.active{border-color:var(--accent);background:var(--accent-glow);color:var(--accent);font-weight:700;}
+.ytag.y2024.active{border-color:#2563EB;background:rgba(37,99,235,.09);color:#1D4ED8;}
+[data-theme="dark"] .ytag.y2024.active{border-color:#4F8EF7;color:#7EB3FF;background:rgba(79,142,247,.09);}
+.ytag.y2025.active{border-color:#7C3AED;background:rgba(124,58,237,.09);color:#6D28D9;}
+[data-theme="dark"] .ytag.y2025.active{border-color:#C084FC;color:#D8B4FE;background:rgba(192,132,252,.09);}
+.ytag.y2026.active{border-color:#059669;background:rgba(5,150,105,.09);color:#047857;}
+[data-theme="dark"] .ytag.y2026.active{border-color:#34D399;color:#6EE7B7;background:rgba(52,211,153,.09);}
 .ydivider{width:1px;height:20px;background:var(--border);}
 .yinfo{font-size:10px;color:var(--text3);margin-left:auto;font-family:'JetBrains Mono',monospace;}
 
 /* ─── CARD ─── */
-.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:border-color .18s,background .25s;}
-.card:hover{border-color:var(--border2);}
+.card{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden;transition:border-color .18s,background .25s,box-shadow .2s;box-shadow:0 1px 3px rgba(15,23,42,.05);}
+.card:hover{border-color:var(--border2);box-shadow:0 4px 16px rgba(15,23,42,.07);}
 .ch{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
 .ct{font-size:13px;font-weight:700;color:var(--text);letter-spacing:-.015em;}
 .cs{font-size:10px;color:var(--text3);margin-top:3px;}
@@ -175,20 +187,26 @@ body{
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
 .g13{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;}
 
-/* ─── BADGE ─── */
+/* ─── BADGE — light mode đậm hơn ─── */
 .bdg{display:inline-flex;align-items:center;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:700;white-space:nowrap;letter-spacing:.03em;}
-.b-r{background:rgba(240,82,82,.14);color:#FCA5A5;border:1px solid rgba(240,82,82,.28);}
-.b-o{background:rgba(251,146,60,.14);color:#FED7AA;border:1px solid rgba(251,146,60,.28);}
-.b-b{background:rgba(79,142,247,.14);color:#BFDBFE;border:1px solid rgba(79,142,247,.28);}
-.b-g{background:rgba(61,79,106,.2);color:var(--text3);border:1px solid var(--border2);}
+/* Light mode badges — đậm, rõ */
+.b-r{background:rgba(220,38,38,.12);color:#991B1B;border:1px solid rgba(220,38,38,.25);}
+.b-o{background:rgba(234,88,12,.12);color:#9A3412;border:1px solid rgba(234,88,12,.25);}
+.b-b{background:rgba(37,99,235,.12);color:#1D4ED8;border:1px solid rgba(37,99,235,.25);}
+.b-g{background:rgba(71,85,105,.10);color:#334155;border:1px solid var(--border2);}
+/* Dark mode override */
+[data-theme="dark"] .b-r{background:rgba(240,82,82,.14);color:#FCA5A5;border-color:rgba(240,82,82,.28);}
+[data-theme="dark"] .b-o{background:rgba(251,146,60,.14);color:#FED7AA;border-color:rgba(251,146,60,.28);}
+[data-theme="dark"] .b-b{background:rgba(79,142,247,.14);color:#BFDBFE;border-color:rgba(79,142,247,.28);}
+[data-theme="dark"] .b-g{background:rgba(61,79,106,.2);color:#8896B0;border-color:#232D42;}
 
 /* ─── TABLE ─── */
 .twrap{overflow:auto;}
 .twrap-h{max-height:480px;}
 table{width:100%;border-collapse:collapse;}
 thead th{background:var(--surface2);color:var(--text3);padding:9px 13px;text-align:left;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;position:sticky;top:0;z-index:2;white-space:nowrap;border-bottom:1px solid var(--border);}
-tbody tr{border-bottom:1px solid rgba(28,35,51,.6);}
-tbody tr:hover{background:rgba(79,142,247,.04);}
+tbody tr{border-bottom:1px solid var(--border);}
+tbody tr:hover{background:var(--accent-glow);}
 td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .tnum{font-weight:700;text-align:right;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px;}
 .barcell{display:flex;align-items:center;gap:7px;}
@@ -199,9 +217,12 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .crit-item{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:9px;margin-bottom:7px;border:1px solid transparent;transition:all .18s;position:relative;overflow:hidden;}
 .crit-item:last-child{margin-bottom:0;}
 .crit-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:0 2px 2px 0;}
-.crit-r{background:rgba(240,82,82,.06);border-color:rgba(240,82,82,.14);}.crit-r::before{background:#F05252;}
-.crit-o{background:rgba(251,146,60,.06);border-color:rgba(251,146,60,.14);}.crit-o::before{background:#FB923C;}
-.crit-y{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.14);}.crit-y::before{background:#FBBF24;}
+.crit-r{background:rgba(220,38,38,.06);border-color:rgba(220,38,38,.18);}.crit-r::before{background:var(--red);}
+.crit-o{background:rgba(234,88,12,.06);border-color:rgba(234,88,12,.18);}.crit-o::before{background:var(--orange);}
+.crit-y{background:rgba(180,83,9,.06);border-color:rgba(180,83,9,.18);}.crit-y::before{background:var(--yellow);}
+[data-theme="dark"] .crit-r{background:rgba(240,82,82,.06);border-color:rgba(240,82,82,.14);}
+[data-theme="dark"] .crit-o{background:rgba(251,146,60,.06);border-color:rgba(251,146,60,.14);}
+[data-theme="dark"] .crit-y{background:rgba(251,191,36,.06);border-color:rgba(251,191,36,.14);}
 .crit-item:hover{transform:translateX(3px);}
 .crit-rank{font-size:18px;font-weight:800;color:var(--text3);min-width:24px;line-height:1;}
 .crit-body{flex:1;min-width:0;}
@@ -221,9 +242,8 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .prog-fill{height:100%;border-radius:3px;}
 
 /* ─── TYPE LIST ─── */
-/* FIX 2: thêm vùng scroll cho Top Type Issue để hiển thị hết, không bị khoảng trống */
 .typebox{max-height:340px;overflow-y:auto;padding-right:4px;}
-.typebox::-webkit-scrollbar{width:5px;}
+.typebox::-webkit-scrollbar{width:4px;}
 .typebox::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px;}
 .type-item{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border-radius:8px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all .18s;}
 .type-item:last-child{margin-bottom:0;}
@@ -244,34 +264,42 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .ins-3::after{background:var(--accent);}
 .ins-4::after{background:var(--purple);}
 .ins-ico{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;background:var(--surface3);}
-.ins-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;opacity:.75;}
+.ins-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;opacity:.8;}
 .ins-t{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3;}
 .ins-b{font-size:11px;color:var(--text3);line-height:1.7;}
 .ins-b b{color:var(--text2);}
-.ins-chip{display:inline-flex;align-items:center;gap:3px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.18);border-radius:5px;padding:2px 7px;font-size:9px;font-weight:700;color:#34D399;margin-top:5px;}
+.ins-chip{display:inline-flex;align-items:center;gap:3px;background:rgba(4,120,87,.1);border:1px solid rgba(4,120,87,.18);border-radius:5px;padding:2px 7px;font-size:9px;font-weight:700;color:var(--green);margin-top:5px;}
+[data-theme="dark"] .ins-chip{background:rgba(52,211,153,.1);border-color:rgba(52,211,153,.18);}
 
 /* ─── AI TAG ─── */
-.ai-tag{display:inline-flex;align-items:center;gap:4px;background:linear-gradient(135deg,rgba(79,142,247,.18),rgba(192,132,252,.18));border:1px solid rgba(79,142,247,.28);border-radius:99px;padding:3px 9px;font-size:9px;font-weight:700;color:var(--accent2);letter-spacing:.06em;}
+.ai-tag{display:inline-flex;align-items:center;gap:4px;background:var(--accent-glow);border:1px solid rgba(37,99,235,.25);border-radius:99px;padding:3px 9px;font-size:9px;font-weight:700;color:var(--accent);letter-spacing:.06em;}
+[data-theme="dark"] .ai-tag{border-color:rgba(79,142,247,.28);color:#7EB3FF;}
 
 /* ─── YEARLY ─── */
 .yrow{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 .ymc{border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden;border:1px solid var(--border);}
-.ymc-2024{background:linear-gradient(135deg,rgba(29,78,216,.28),rgba(79,142,247,.12));border-color:rgba(79,142,247,.22);}
-.ymc-2025{background:linear-gradient(135deg,rgba(109,40,217,.28),rgba(192,132,252,.12));border-color:rgba(192,132,252,.22);}
-.ymc-2026{background:linear-gradient(135deg,rgba(16,71,52,.28),rgba(52,211,153,.12));border-color:rgba(52,211,153,.22);}
-.ymc::after{content:'';position:absolute;top:-25px;right:-25px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.025);}
-.ymc-yr{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;opacity:.65;}
-.ymc-val{font-size:34px;font-weight:800;margin:7px 0 3px;letter-spacing:-.05em;}
-.ymc-sub{font-size:10px;opacity:.6;}
-.ymc-bdg{display:inline-block;background:rgba(255,255,255,.11);border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700;margin-top:7px;}
+.ymc-2024{background:linear-gradient(135deg,rgba(37,99,235,.15),rgba(96,165,250,.08));border-color:rgba(37,99,235,.25);}
+.ymc-2025{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(196,181,253,.08));border-color:rgba(124,58,237,.25);}
+.ymc-2026{background:linear-gradient(135deg,rgba(5,150,105,.15),rgba(110,231,183,.08));border-color:rgba(5,150,105,.25);}
+[data-theme="dark"] .ymc-2024{background:linear-gradient(135deg,rgba(29,78,216,.28),rgba(79,142,247,.12));border-color:rgba(79,142,247,.22);}
+[data-theme="dark"] .ymc-2025{background:linear-gradient(135deg,rgba(109,40,217,.28),rgba(192,132,252,.12));border-color:rgba(192,132,252,.22);}
+[data-theme="dark"] .ymc-2026{background:linear-gradient(135deg,rgba(16,71,52,.28),rgba(52,211,153,.12));border-color:rgba(52,211,153,.22);}
+.ymc::after{content:'';position:absolute;top:-25px;right:-25px;width:90px;height:90px;border-radius:50%;background:rgba(0,0,0,.03);}
+[data-theme="dark"] .ymc::after{background:rgba(255,255,255,.025);}
+.ymc-yr{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);}
+.ymc-val{font-size:34px;font-weight:800;margin:7px 0 3px;letter-spacing:-.05em;color:var(--text);}
+.ymc-sub{font-size:10px;color:var(--text3);}
+.ymc-bdg{display:inline-block;background:rgba(15,23,42,.07);border-radius:5px;padding:2px 8px;font-size:10px;font-weight:700;margin-top:7px;color:var(--text2);}
+[data-theme="dark"] .ymc-bdg{background:rgba(255,255,255,.11);color:var(--text2);}
 
 /* ─── REC ─── */
 .rec{display:flex;gap:9px;padding:11px 13px;border-radius:9px;background:var(--surface2);margin-bottom:7px;font-size:12px;line-height:1.7;border:1px solid var(--border);color:var(--text2);}
 .rec:last-child{margin-bottom:0;}
+.rec strong{color:var(--text);}
 .rec-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:7px;}
 
 /* ─── FBAR ─── */
-.fbar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.fbar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:11px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;box-shadow:0 1px 3px rgba(15,23,42,.05);}
 .flabel{font-size:10px;font-weight:700;color:var(--text3);white-space:nowrap;text-transform:uppercase;letter-spacing:.08em;}
 .finput{flex:1;min-width:180px;padding:7px 12px;border:1px solid var(--border2);border-radius:8px;font-size:12px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .18s;background:var(--surface2);color:var(--text);}
 .finput:focus{border-color:var(--accent);}
@@ -283,18 +311,19 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 .fclear{padding:6px 11px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text3);font-size:12px;font-weight:600;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:.15s;}
 .fclear:hover{background:var(--surface2);color:var(--text);}
 
-.footer{text-align:center;padding:22px;color:var(--text3);font-size:10px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
-.footer a{color:var(--accent);text-decoration:none;}
-.footer a:hover{color:var(--accent2);}
-/* Note dữ liệu — màu theo theme */
-.data-note{max-width:760px;margin:0 auto 14px;padding:11px 16px;border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;line-height:1.7;letter-spacing:0;text-align:left;display:flex;gap:9px;align-items:flex-start;
-  background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.22);color:var(--yellow);}
-[data-theme="light"] .data-note{background:rgba(217,119,6,.08);border-color:rgba(217,119,6,.25);color:#92400E;}
+/* ─── TREND ─── */
+.trend-up{color:var(--red);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.trend-dn{color:var(--green);font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+
+/* ─── DATA NOTE ─── */
+.data-note{max-width:760px;margin:0 auto 14px;padding:11px 16px;border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:11px;line-height:1.7;text-align:left;display:flex;gap:9px;align-items:flex-start;background:rgba(180,83,9,.07);border:1px solid rgba(180,83,9,.22);color:var(--yellow);}
+[data-theme="dark"] .data-note{background:rgba(251,191,36,.07);border-color:rgba(251,191,36,.22);color:#FBBF24;}
 .data-note b{color:var(--text);}
 [data-theme="dark"] .data-note b{color:#FDE68A;}
 
-.trend-up{color:#FCA5A5;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
-.trend-dn{color:#6EE7B7;font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;}
+.footer{text-align:center;padding:22px;color:var(--text3);font-size:10px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;}
+.footer a{color:var(--accent);text-decoration:none;}
+.footer a:hover{color:var(--accent2);}
 
 @media(max-width:1280px){.g13{grid-template-columns:1fr;}.mrow{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:900px){.g3,.g2{grid-template-columns:1fr;}.mrow,.yrow{grid-template-columns:repeat(2,1fr);}}
@@ -322,7 +351,8 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
   <div class="topright">
     <div class="live-pill"><div class="live-dot"></div><span class="live-txt">LIVE</span></div>
     <span class="upd" id="updTxt">—</span>
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Chuyển Light / Dark">🌙</button>
+    <!-- Mặc định light mode → icon ☀️ (click để sang dark = 🌙) -->
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Chuyển Light / Dark">☀️</button>
     <button class="btn btn-ghost" onclick="loadData(true)">↺ Làm mới</button>
     <a class="btn btn-accent" target="_blank" href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535">↗ Google Sheet</a>
   </div>
@@ -336,11 +366,10 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 </div>
 
 <div class="page">
-  <div id="errBox"><span style="font-size:20px">⚠</span><div><b style="color:#FCA5A5">Không tải được Google Sheets</b><br><span style="font-size:11px;color:var(--text3)" id="errMsg">Đang dùng dữ liệu mẫu.</span></div></div>
+  <div id="errBox"><span style="font-size:20px">⚠</span><div><b style="color:var(--red)">Không tải được Google Sheets</b><br><span style="font-size:11px;color:var(--text3)" id="errMsg">Đang dùng dữ liệu mẫu.</span></div></div>
 
   <!-- ══════ OVERVIEW ══════ -->
   <div class="tab-pane active" id="tab-overview">
-    <!-- Year filter -->
     <div class="ybar">
       <span class="ybar-label">Năm</span>
       <button class="ytag active" data-year="all" onclick="setYear('all',this)">Tất cả 2024–2026</button>
@@ -351,8 +380,7 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       <span class="yinfo" id="yInfo">Tổng hợp 2024 – tháng 5/2026</span>
     </div>
 
-    <!-- Metrics -->
-    <div class="mrow">
+     <div class="mrow">
       <div class="mc"><div class="mc-ico">📋</div><div class="mc-lbl">Tổng phiếu ghi nhận</div><div class="mc-val mc-accent" id="mTotal">—</div><div class="mc-sub" id="mTotalSub">—</div></div>
       <div class="mc"><div class="mc-ico">🗂</div><div class="mc-lbl">Tiêu đề đã chuẩn hóa</div><div class="mc-val" id="mRows">—</div><div class="mc-sub">Từ sheet DanhSachIssueChuanHoa_Output</div></div>
       <div class="mc"><div class="mc-ico">🏷</div><div class="mc-lbl">Nhóm module phân loại theo Tiêu đề Issue</div><div class="mc-val" id="mGroups">—</div><div class="mc-sub">Nhóm phân loại</div></div>
@@ -360,7 +388,6 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       <div class="mc"><div class="mc-ico">📈</div><div class="mc-lbl">Top 3 issue nghiêm trọng chiếm</div><div class="mc-val" id="mTop3">—</div><div class="mc-sub">Tổng toàn hệ thống</div></div>
     </div>
 
-    <!-- Charts row -->
     <div class="g13">
       <div class="card">
         <div class="ch"><div><div class="ct">Top 10 Issue — Tần suất cao nhất</div><div class="cs">Tiêu đề chuẩn hóa · màu theo mức độ nghiêm trọng</div></div></div>
@@ -372,7 +399,6 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       </div>
     </div>
 
-    <!-- Bottom 3-col: Critical | Top Type Issue | Insight -->
     <div class="g3">
       <!-- Critical -->
       <div class="card">
@@ -401,7 +427,6 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       <div class="ymc ymc-2025"><div class="ymc-yr">📅 Năm 2025</div><div class="ymc-val">95,038</div><div class="ymc-sub">phiếu ghi nhận · 12 tháng</div><div class="ymc-bdg">↑ +88% so với 2024</div></div>
       <div class="ymc ymc-2026"><div class="ymc-yr">📅 Năm 2026 (5 tháng)</div><div class="ymc-val">51,318</div><div class="ymc-sub">phiếu ghi nhận · Jan–May</div><div class="ymc-bdg">≈ 10,264 / tháng</div></div>
     </div>
-
     <div class="card">
       <div class="ch">
         <div><div class="ct">Xu hướng phân loại theo năm</div><div class="cs">Từ PhieuGhi 2024 / 2025 / 2026</div></div>
@@ -413,13 +438,11 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       </div>
       <div class="cb"><div style="height:300px"><canvas id="trendChart"></canvas></div></div>
     </div>
-
     <div class="g3">
-      <div class="card"><div class="ch"><div><div class="ct" style="color:#7EB3FF">2024 – Top phân loại</div><div class="cs">50,538 phiếu · 12 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2024"></tbody></table></div></div></div>
-      <div class="card"><div class="ch"><div><div class="ct" style="color:#D8B4FE">2025 – Top phân loại</div><div class="cs">95,038 phiếu · 12 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2025"></tbody></table></div></div></div>
-      <div class="card"><div class="ch"><div><div class="ct" style="color:#6EE7B7">2026 – Top phân loại</div><div class="cs">51,318 phiếu · 5 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2026"></tbody></table></div></div></div>
+      <div class="card"><div class="ch"><div><div class="ct" style="color:var(--accent)">2024 – Top phân loại</div><div class="cs">50,538 phiếu · 12 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2024"></tbody></table></div></div></div>
+      <div class="card"><div class="ch"><div><div class="ct" style="color:var(--purple)">2025 – Top phân loại</div><div class="cs">95,038 phiếu · 12 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2025"></tbody></table></div></div></div>
+      <div class="card"><div class="ch"><div><div class="ct" style="color:var(--green)">2026 – Top phân loại</div><div class="cs">51,318 phiếu · 5 tháng</div></div></div><div style="padding:0"><div class="twrap"><table><thead><tr><th>Phân loại</th><th style="text-align:right">Số phiếu</th><th style="text-align:right">%</th></tr></thead><tbody id="tbl2026"></tbody></table></div></div></div>
     </div>
-
     <div class="card">
       <div class="ch"><div><div class="ct">So sánh xu hướng qua các năm</div><div class="cs">↑↓ so sánh 2024 → 2026</div></div></div>
       <div class="twrap twrap-h"><table>
@@ -448,7 +471,7 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
     </div>
 
     <div class="card">
-      <div class="ch"><div><div class="ct">Chi tiết Issue — Tất cả 57 tiêu đề chuẩn hóa</div><div class="cs">Sắp xếp theo số lần ghi nhận · không gộp payment</div></div></div>
+      <div class="ch"><div><div class="ct">Chi tiết Issue — Tiêu đề chuẩn hóa</div><div class="cs">Sắp xếp theo số lần ghi nhận</div></div></div>
       <div class="twrap twrap-h"><table>
         <thead><tr>
           <th style="width:32px">#</th>
@@ -468,14 +491,14 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
       <div class="cb">
         <div class="g2">
           <div>
-            <div class="rec"><div class="rec-dot" style="background:#F05252"></div><div><strong>Auto-restart watchlog</strong> cho POS & Farcard services — giảm trực tiếp 2 issue lớn nhất (10,570 + 8,670 lần) - Cài Zabbix giám sát và khởi động service.</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#FB923C"></div><div><strong>Chuẩn hóa PaymentHub thanh toán Online </strong> — VNPay, Momo, Zalo, Payoo, VietQR. Training thu ngân + FAQ popup inline POS.</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#FBBF24"></div><div><strong>Monitor uptime RK7 Manager</strong> — alert proactive, 4,543 lần. Auto-restart khi phát hiện stop.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:var(--red)"></div><div><strong>Auto-restart watchlog</strong> cho POS & Farcard services — giảm trực tiếp 2 issue lớn nhất (10,570 + 8,670 lần). Cài Zabbix giám sát và khởi động service.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:var(--orange)"></div><div><strong>Chuẩn hóa PaymentHub thanh toán Online</strong> — VNPay, Momo, Zalo, Payoo, VietQR. Training thu ngân + FAQ popup inline POS.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:var(--yellow)"></div><div><strong>Monitor uptime RK7 Manager</strong> — alert proactive, 4,543 lần. Auto-restart khi phát hiện stop.</div></div>
           </div>
           <div>
-            <div class="rec"><div class="rec-dot" style="background:#4F8EF7"></div><div><strong>Knowledge base + video FAQ</strong> cho hủy tạm tính, đóng ca DayEnd (~7,756 lần).</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#C084FC"></div><div><strong>AI auto-classify ticket</strong> — giảm nhóm "Chưa xác định". Cải thiện chất lượng báo cáo phân loại.</div></div>
-            <div class="rec"><div class="rec-dot" style="background:#2DD4BF"></div><div><strong>Bảo trì phần cứng định kỳ</strong> — máy in, nguồn POS, hub network, màn hình phụ máy POS.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:var(--accent)"></div><div><strong>Knowledge base + video FAQ</strong> cho hủy tạm tính, đóng ca DayEnd (~7,756 lần).</div></div>
+            <div class="rec"><div class="rec-dot" style="background:var(--purple)"></div><div><strong>AI auto-classify ticket</strong> — giảm nhóm "Chưa xác định". Cải thiện chất lượng báo cáo phân loại.</div></div>
+            <div class="rec"><div class="rec-dot" style="background:var(--teal)"></div><div><strong>Bảo trì phần cứng định kỳ</strong> — máy in, nguồn POS, hub network, màn hình phụ máy POS.</div></div>
           </div>
         </div>
       </div>
@@ -486,329 +509,219 @@ td{padding:9px 13px;font-size:12px;vertical-align:middle;color:var(--text2);}
 <div class="footer">
   <div class="data-note">
     <span style="font-size:14px;flex-shrink:0">ℹ️</span>
-    <span><b>Lưu ý về dữ liệu:</b> Số liệu hiện tại <b>chưa hoàn toàn chuẩn xác</b> do quá trình thu thập và phân loại issue qua nhiều năm. Dữ liệu đang được <b>chuẩn hóa dần trong năm 2026</b> — các con số sẽ chính xác và đầy đủ hơn theo từng đợt cập nhật.</span>
+    <span><b>Lưu ý về dữ liệu:</b> Số liệu hiện tại <b>chưa hoàn toàn chuẩn xác</b> do quá trình thu thập và phân loại issue qua nhiều năm. Dữ liệu đang được <b>chuẩn hóa dần trong năm 2026</b> — các con số sẽ chính xác hơn theo từng đợt cập nhật.</span>
   </div>
   Omicall Issue Intelligence · 2024–2026 · Google Sheets ListIssue · Auto refresh 5 phút ·
   <a href="https://docs.google.com/spreadsheets/d/1xIsdss158y0wRSrxji45UHcqtz-IEXhymcoY3jYySzo/edit?gid=51800535#gid=51800535" target="_blank">Mở Sheet ↗</a>
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════════
-const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSu_C0BHpfmNWnfR00Xiaw5_F_YUfmwcEjxbTTHDnjk4diz9My7CFMa_UMFmglcgvhlF5K2YyvlkoMC/pub?gid=51800535&single=true&output=csv';
+const CSV_URL='https://docs.google.com/spreadsheets/d/e/2PACX-1vSu_C0BHpfmNWnfR00Xiaw5_F_YUfmwcEjxbTTHDnjk4diz9My7CFMa_UMFmglcgvhlF5K2YyvlkoMC/pub?gid=51800535&single=true&output=csv';
+const PAL=['#2563EB','#7C3AED','#DC2626','#059669','#EA580C','#B45309','#0369A1','#0D9488','#DB2777','#7C3AED','#1D4ED8','#047857'];
+const PAL_DARK=['#4F8EF7','#C084FC','#F05252','#34D399','#FB923C','#FBBF24','#38BDF8','#2DD4BF','#F472B6','#A78BFA','#60A5FA','#86EFAC'];
 
-const PAL = ['#4F8EF7','#C084FC','#F05252','#34D399','#FB923C','#FBBF24','#38BDF8','#2DD4BF','#F472B6','#A78BFA','#60A5FA','#86EFAC','#FCA5A5','#FDE68A'];
-
-const YEAR_DATA = {
-  2024:{total:50538,cats:[
-    {n:'POS_Lỗi kết nối',v:5669},{n:'POS_Chưa phân loại',v:9794},{n:'POS_Do người dùng',v:4655},
-    {n:'POS_Hướng dẫn sử dụng',v:2061},{n:'POS_Đồng bộ POS',v:1895},{n:'FC_Lỗi kết nối',v:1653},
-    {n:'RK7_Lỗi kết nối',v:1594},{n:'RK7_Setup master data',v:1588},{n:'SkyTab_Lỗi kết nối',v:1190},
-    {n:'POS_Master data sai',v:1122},
-  ]},
-  2025:{total:95038,cats:[
-    {n:'POS_Lỗi kết nối',v:16611},{n:'POS_Chưa phân loại',v:11979},{n:'PH_Thanh toán thủ công',v:8370},
-    {n:'POS_Do người dùng',v:7957},{n:'FC_Lỗi kết nối',v:7082},{n:'POS_Hướng dẫn sử dụng',v:4821},
-    {n:'POS_Đồng bộ POS',v:3257},{n:'RK7_Setup master data',v:3011},{n:'RK7FO_Lỗi kết nối',v:2646},
-    {n:'HW_Do thiết bị của KH',v:2359},
-  ]},
-  2026:{total:51318,cats:[
-    {n:'POS_Lỗi kết nối',v:18470},{n:'PH_Thanh toán thủ công',v:2118},{n:'POS_Chưa phân loại',v:1255},
-    {n:'POS_Do người dùng',v:1084},{n:'FC_Lỗi kết nối',v:736},{n:'POS_Hướng dẫn sử dụng',v:679},
-    {n:'RK7_Setup master data',v:571},{n:'HW_Do thiết bị của KH',v:513},{n:'POS_Đồng bộ POS',v:513},
-    {n:'SkyOrder_Lỗi kết nối',v:448},
-  ]},
+const YEAR_DATA={
+  2024:{total:50538,cats:[{n:'POS_Lỗi kết nối',v:5669},{n:'POS_Chưa phân loại',v:9794},{n:'POS_Do người dùng',v:4655},{n:'POS_Hướng dẫn sử dụng',v:2061},{n:'POS_Đồng bộ POS',v:1895},{n:'FC_Lỗi kết nối',v:1653},{n:'RK7_Lỗi kết nối',v:1594},{n:'RK7_Setup master data',v:1588},{n:'SkyTab_Lỗi kết nối',v:1190},{n:'POS_Master data sai',v:1122}]},
+  2025:{total:95038,cats:[{n:'POS_Lỗi kết nối',v:16611},{n:'POS_Chưa phân loại',v:11979},{n:'PH_Thanh toán thủ công',v:8370},{n:'POS_Do người dùng',v:7957},{n:'FC_Lỗi kết nối',v:7082},{n:'POS_Hướng dẫn sử dụng',v:4821},{n:'POS_Đồng bộ POS',v:3257},{n:'RK7_Setup master data',v:3011},{n:'RK7FO_Lỗi kết nối',v:2646},{n:'HW_Do thiết bị của KH',v:2359}]},
+  2026:{total:51318,cats:[{n:'POS_Lỗi kết nối',v:18470},{n:'PH_Thanh toán thủ công',v:2118},{n:'POS_Chưa phân loại',v:1255},{n:'POS_Do người dùng',v:1084},{n:'FC_Lỗi kết nối',v:736},{n:'POS_Hướng dẫn sử dụng',v:679},{n:'RK7_Setup master data',v:571},{n:'HW_Do thiết bị của KH',v:513},{n:'POS_Đồng bộ POS',v:513},{n:'SkyOrder_Lỗi kết nối',v:448}]},
 };
-const TREND_SERIES = [
-  {lbl:'POS_Lỗi kết nối',     data:[5669,16611,18470], color:'#F05252'},
-  {lbl:'FC_Lỗi kết nối',      data:[1653,7082,736],    color:'#FB923C'},
-  {lbl:'PH_Thanh toán thủ công',data:[0,8370,2118],    color:'#4F8EF7'},
-  {lbl:'POS_Do người dùng',   data:[4655,7957,1084],   color:'#34D399'},
-  {lbl:'POS_Chưa phân loại',  data:[9794,11979,1255],  color:'#3D4F6A'},
-  {lbl:'Khác',                data:[28522,44039,28910], color:'#1C2333'},
+const TREND_SERIES=[
+  {lbl:'POS_Lỗi kết nối',data:[5669,16611,18470],color:'#DC2626',colorDark:'#F05252'},
+  {lbl:'FC_Lỗi kết nối',data:[1653,7082,736],color:'#EA580C',colorDark:'#FB923C'},
+  {lbl:'PH_Thanh toán thủ công',data:[0,8370,2118],color:'#2563EB',colorDark:'#4F8EF7'},
+  {lbl:'POS_Do người dùng',data:[4655,7957,1084],color:'#059669',colorDark:'#34D399'},
+  {lbl:'POS_Chưa phân loại',data:[9794,11979,1255],color:'#94A3B8',colorDark:'#3D4F6A'},
+  {lbl:'Khác',data:[28522,44039,28910],color:'#CBD5E1',colorDark:'#1C2333'},
 ];
-const CMP_ROWS = [
-  {lbl:'POS_Lỗi kết nối',       y24:5669, y25:16611,y26:18470,note:'↑↑ Tăng liên tục – ưu tiên #1'},
-  {lbl:'FC_Lỗi kết nối',        y24:1653, y25:7082, y26:736,  note:'↓ Giảm 2026 sau xử lý'},
-  {lbl:'POS_Do người dùng',     y24:4655, y25:7957, y26:1084, note:'↓ Cần training thêm'},
-  {lbl:'PH_Thanh toán thủ công',y24:0,    y25:8370, y26:2118, note:'↑ Nổi lên từ 2025'},
-  {lbl:'POS_Chưa phân loại',    y24:9794, y25:11979,y26:1255, note:'↓ Giảm nhờ chuẩn hóa'},
-  {lbl:'RK7FO_Lỗi kết nối',     y24:761,  y25:2646, y26:242,  note:'↓ Xu hướng giảm'},
-  {lbl:'SkyOrder_Lỗi kết nối',  y24:0,    y25:1007, y26:448,  note:'↑ Mới từ 2025'},
-  {lbl:'HW_Do thiết bị KH',     y24:745,  y25:2359, y26:513,  note:'→ Tăng theo mở rộng'},
-  {lbl:'POS_Đồng bộ POS',       y24:1895, y25:3257, y26:513,  note:'→ Ổn định'},
+const CMP_ROWS=[
+  {lbl:'POS_Lỗi kết nối',y24:5669,y25:16611,y26:18470,note:'↑↑ Tăng liên tục – ưu tiên #1'},
+  {lbl:'FC_Lỗi kết nối',y24:1653,y25:7082,y26:736,note:'↓ Giảm 2026 sau xử lý'},
+  {lbl:'POS_Do người dùng',y24:4655,y25:7957,y26:1084,note:'↓ Cần training thêm'},
+  {lbl:'PH_Thanh toán thủ công',y24:0,y25:8370,y26:2118,note:'↑ Nổi lên từ 2025'},
+  {lbl:'POS_Chưa phân loại',y24:9794,y25:11979,y26:1255,note:'↓ Giảm nhờ chuẩn hóa'},
+  {lbl:'RK7FO_Lỗi kết nối',y24:761,y25:2646,y26:242,note:'↓ Xu hướng giảm'},
+  {lbl:'SkyOrder_Lỗi kết nối',y24:0,y25:1007,y26:448,note:'↑ Mới từ 2025'},
+  {lbl:'HW_Do thiết bị KH',y24:745,y25:2359,y26:513,note:'→ Tăng theo mở rộng'},
+  {lbl:'POS_Đồng bộ POS',y24:1895,y25:3257,y26:513,note:'→ Ổn định'},
 ];
-const YEAR_TOTALS = {'all':196894,'2024':50538,'2025':95038,'2026 (5T)':51318};
-const YEAR_SUBS = {
-  'all':'Tổng hợp 2024 – tháng 5/2026',
-  '2024':'Năm 2024 · 12 tháng',
-  '2025':'Năm 2025 · 12 tháng (+88% so với 2024)',
-  '2026 (5T)':'Năm 2026 · 5 tháng đầu (≈10,264/tháng)',
-};
+const YEAR_TOTALS={'all':196894,'2024':50538,'2025':95038,'2026 (5T)':51318};
+const YEAR_SUBS={'all':'Tổng hợp 2024 – tháng 5/2026','2024':'Năm 2024 · 12 tháng','2025':'Năm 2025 · 12 tháng (+88%)','2026 (5T)':'Năm 2026 · 5 tháng đầu (≈10,264/tháng)'};
 
-let allIssues = [];
-let charts = {};
-let currentYear = 'all';
-let currentTheme = 'dark';
+let allIssues=[];
+let charts={};
+let currentYear='all';
+// FIX: mặc định là light mode
+let currentTheme='light';
 
-// ── Đọc biến màu hiện tại của theme để áp vào chart ──
-function cssVar(name){return getComputedStyle(document.documentElement).getPropertyValue(name).trim();}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
 
+// FIX: icon logic — light mode → hiện ☀️ (đang dùng light), click sang dark → hiện 🌙
 function toggleTheme(){
-  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', currentTheme);
-  document.getElementById('themeToggle').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
-  // vẽ lại toàn bộ chart để màu chữ/lưới khớp theme mới
-  if(allIssues.length){
-    renderOverview(allIssues);
-    buildYearly();
-  }
+  currentTheme=currentTheme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',currentTheme);
+  document.getElementById('themeToggle').textContent=currentTheme==='dark'?'🌙':'☀️';
+  if(allIssues.length){renderOverview(allIssues);buildYearly();}
 }
 
-document.querySelectorAll('.nav-tab').forEach(t => {
-  t.addEventListener('click', () => {
-    document.querySelectorAll('.nav-tab').forEach(x => x.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(x => x.classList.remove('active'));
+function getPalette(){return currentTheme==='dark'?PAL_DARK:PAL;}
+
+document.querySelectorAll('.nav-tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.nav-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
-    document.getElementById('tab-' + t.dataset.tab).classList.add('active');
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
   });
 });
 
-function setYear(yr, btn) {
-  currentYear = yr;
-  document.querySelectorAll('.ytag').forEach(b => b.classList.remove('active'));
+function setYear(yr,btn){
+  currentYear=yr;
+  document.querySelectorAll('.ytag').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  document.getElementById('yInfo').textContent = YEAR_SUBS[yr] || '';
+  document.getElementById('yInfo').textContent=YEAR_SUBS[yr]||'';
   renderOverview(allIssues);
 }
 
-function parseCSV(text) {
-  const lines = text.split('\n');
-  const parseRow = line => {
-    const cols = []; let cur = '', inQ = false;
-    for (const ch of line) {
-      if (ch === '"') { inQ = !inQ; }
-      else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
-      else { cur += ch; }
-    }
-    cols.push(cur.trim()); return cols;
+function parseCSV(text){
+  const lines=text.split('\n');
+  const parseRow=line=>{
+    const cols=[];let cur='',inQ=false;
+    for(const ch of line){if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){cols.push(cur.trim());cur='';}else{cur+=ch;}}
+    cols.push(cur.trim());return cols;
   };
-  let headerRow = -1;
-  for (let i = 0; i < Math.min(lines.length, 12); i++) {
-    const l = lines[i].toLowerCase();
-    if ((l.includes('group') && l.includes('s\u1ed1')) ||
-        (l.includes('ti\u00eau \u0111\u1ec1') && l.includes('chu\u1ea9n h\u00f3a')) ||
-        (l.includes('group') && l.includes('ti\u00eau \u0111\u1ec1'))) {
-      headerRow = i; break;
-    }
+  let hRow=-1;
+  for(let i=0;i<Math.min(lines.length,12);i++){
+    const l=lines[i].toLowerCase();
+    if((l.includes('group')&&l.includes('s\u1ed1'))||(l.includes('ti\u00eau \u0111\u1ec1')&&l.includes('chu\u1ea9n h\u00f3a'))){hRow=i;break;}
   }
   let iGr=1,iChuDe=2,iTL=3,iSo=4,iTan=5,iCH=6,iTy=7;
-  if (headerRow >= 0) {
-    const hdrs = parseRow(lines[headerRow]);
-    hdrs.forEach((h, i) => {
-      const hh = h.toLowerCase().replace(/[\s_]/g, '');
-      if (hh.includes('group')) iGr = i;
-      if (hh.includes('s\u1ed1issue') || hh === 's\u1ed1issue') iSo = i;
-      if (hh.includes('t\u1ea7nsu\u1ea5t')) iTan = i;
-      if (hh.includes('ti\u00eau\u0111\u1ec1chu\u1ea9n') && !hh.includes('type')) iCH = i;
-      if (hh.includes('typeissue') || (hh.includes('type') && hh.includes('chu\u1ea9n'))) iTy = i;
-      if (hh.includes('ti\u00eau\u0111\u1ec1l\u1ed7i') || (hh.includes('ti\u00eau\u0111\u1ec1') && !hh.includes('chu\u1ea9n') && !hh.includes('type'))) iTL = i;
-      if (hh.includes('ch\u1ee7\u0111\u1ec1') || hh.includes('ch\u1ee7\u0111\u00ea')) iChuDe = i;
+  if(hRow>=0){
+    const hdrs=parseRow(lines[hRow]);
+    hdrs.forEach((h,i)=>{
+      const hh=h.toLowerCase().replace(/[\s_]/g,'');
+      if(hh.includes('group'))iGr=i;
+      if(hh.includes('s\u1ed1issue'))iSo=i;
+      if(hh.includes('t\u1ea7nsu\u1ea5t'))iTan=i;
+      if(hh.includes('ti\u00eau\u0111\u1ec1chu\u1ea9n')&&!hh.includes('type'))iCH=i;
+      if(hh.includes('typeissue')||(hh.includes('type')&&hh.includes('chu\u1ea9n')))iTy=i;
+      if(hh.includes('ti\u00eau\u0111\u1ec1l\u1ed7i'))iTL=i;
+      if(hh.includes('ch\u1ee7\u0111\u1ec1'))iChuDe=i;
     });
   }
-  const start = headerRow >= 0 ? headerRow + 1 : 3;
-  const result = [];
-  for (let i = start; i < lines.length; i++) {
-    if (!lines[i].trim()) continue;
-    const c = parseRow(lines[i]);
-    if (c.length < 5) continue;
-    const cl = s => (s || '').replace(/^"+|"+$/g, '').trim();
-    let tieuDeCH = cl(c[iCH]);
-    let type     = cl(c[iTy]);
-    let so       = parseInt(cl(c[iSo]).replace(/\D/g, '')) || 0;
-    let tan      = cl(c[iTan]);
-    let group    = cl(c[iGr]);
-    let chuDe    = cl(c[iChuDe]);
-    if (!tieuDeCH || tieuDeCH.toLowerCase() === 'nan' || so === 0) continue;
-    if (!tan || tan.toLowerCase() === 'nan') {
-      tan = so >= 5000 ? 'Rất cao' : so >= 2000 ? 'Cao' : so >= 500 ? 'Trung bình' : 'Thấp';
-    }
-    if (!group || group.toLowerCase() === 'nan') {
-      group = (chuDe && chuDe.toLowerCase() !== 'nan') ? chuDe : 'Chưa xác định';
-    }
-    if (!type || type.toLowerCase() === 'nan' || type === '') {
-      type = (chuDe && chuDe !== '') ? chuDe : 'Chưa xác định';
-    }
-    result.push({ tieuDe: tieuDeCH, type, so, tan, group });
+  const start=hRow>=0?hRow+1:3;
+  const result=[];
+  for(let i=start;i<lines.length;i++){
+    if(!lines[i].trim())continue;
+    const c=parseRow(lines[i]);if(c.length<5)continue;
+    const cl=s=>(s||'').replace(/^"+|"+$/g,'').trim();
+    let tieuDeCH=cl(c[iCH]),type=cl(c[iTy]),so=parseInt(cl(c[iSo]).replace(/\D/g,''))||0;
+    let tan=cl(c[iTan]),group=cl(c[iGr]),chuDe=cl(c[iChuDe]);
+    if(!tieuDeCH||tieuDeCH.toLowerCase()==='nan'||so===0)continue;
+    if(!tan||tan.toLowerCase()==='nan')tan=so>=5000?'Rất cao':so>=2000?'Cao':so>=500?'Trung bình':'Thấp';
+    if(!group||group.toLowerCase()==='nan')group=(chuDe&&chuDe.toLowerCase()!=='nan')?chuDe:'Chưa xác định';
+    if(!type||type.toLowerCase()==='nan'||type==='')type=(chuDe&&chuDe!=='')?chuDe:'Chưa xác định';
+    result.push({tieuDe:tieuDeCH,type,so,tan,group});
   }
-  return result.sort((a, b) => b.so - a.so);
+  return result.sort((a,b)=>b.so-a.so);
 }
 
-async function loadData(manual = false) {
-  if (manual) document.getElementById('loadBox').classList.remove('off');
+async function loadData(manual=false){
+  if(manual)document.getElementById('loadBox').classList.remove('off');
   document.getElementById('errBox').classList.remove('on');
-  try {
-    const res = await fetch(CSV_URL + '&t=' + Date.now());
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const text = await res.text();
-    const parsed = parseCSV(text);
-    if (parsed.length === 0) throw new Error('Không tìm thấy dữ liệu');
-    allIssues = parsed;
-    document.getElementById('updTxt').textContent = new Date().toLocaleTimeString('vi-VN');
+  try{
+    const res=await fetch(CSV_URL+'&t='+Date.now());
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const text=await res.text();
+    const parsed=parseCSV(text);
+    if(parsed.length===0)throw new Error('Không tìm thấy dữ liệu');
+    allIssues=parsed;
+    document.getElementById('updTxt').textContent=new Date().toLocaleTimeString('vi-VN');
     document.getElementById('errBox').classList.remove('on');
-  } catch (e) {
-    document.getElementById('errMsg').textContent = 'Lỗi: ' + e.message + '. Đang dùng dữ liệu mẫu.';
+  }catch(e){
+    document.getElementById('errMsg').textContent='Lỗi: '+e.message+'. Đang dùng dữ liệu mẫu.';
     document.getElementById('errBox').classList.add('on');
-    if (allIssues.length === 0) loadFallback();
-  } finally {
+    if(allIssues.length===0)loadFallback();
+  }finally{
     document.getElementById('loadBox').classList.add('off');
-    if (allIssues.length > 0) {
-      buildFilters();
-      renderOverview(allIssues);
-      buildYearly();
-    }
+    if(allIssues.length>0){buildFilters();renderOverview(allIssues);buildYearly();}
   }
 }
 
-function loadFallback() {
-  allIssues = [
-    {tieuDe:'Phần mềm POS không vào được do services',            group:'Phần mềm POS',                 type:'Pos software issue - Core rk - services not start',   so:10570,tan:'Rất cao'},
-    {tieuDe:'Farcard bị stop',                                    group:'CRM',                          type:'Pos software issue - Core rk - services not start',   so:8670, tan:'Rất cao'},
-    {tieuDe:'Phần mềm POS bị treo do hệ thống',                  group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:6824, tan:'Rất cao'},
-    {tieuDe:'Rk7 Manager không vào được do Services',             group:'RK7 MANAGER',                  type:'Pos software issue - Core rk - services not start',   so:4543, tan:'Cao'},
-    {tieuDe:'Hỗ trợ hủy tạm tính',                               group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:2770, tan:'Trung bình'},
-    {tieuDe:'Hỗ trợ POS bị lock bàn',                            group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:2535, tan:'Trung bình'},
-    {tieuDe:'Hướng dẫn nhà hàng đóng ca chung (DayEnd)',         group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:2451, tan:'Trung bình'},
-    {tieuDe:'Máy in không ra bill (kẹt lệnh in)',                 group:'HARDWARE/ SOFTWARE',            type:'Hardware - Printer (Printer/paper/network)',           so:2076, tan:'Trung bình'},
-    {tieuDe:'SkyTab không vào được do Services',                  group:'SkyTab',                       type:'Pos software issue - Core rk - services not start',   so:1642, tan:'Trung bình'},
-    {tieuDe:'POS không đồng bộ master data',                      group:'Phần mềm POS',                 type:'Promotion - Thiếu master data',                       so:1631, tan:'Trung bình'},
-    {tieuDe:'POS hướng dẫn khách hàng thao tác trên hệ thống',   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:1104, tan:'Trung bình'},
-    {tieuDe:'OM bị mất kết nối với máy chủ',                     group:'OM',                           type:'Network - Network lost',                              so:1000, tan:'Trung bình'},
-    {tieuDe:'Skyvoice không kết nối được',                        group:'Skyvoice',                     type:'Pos software issue - Core rk - services not start',   so:887,  tan:'Trung bình'},
-    {tieuDe:'Hướng dẫn người dùng mở máy POS',                   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:749,  tan:'Thấp'},
-    {tieuDe:'Thanh toán VNPay bị lỗi',                           group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:3200, tan:'Cao'},
-    {tieuDe:'Thanh toán Momo bị lỗi',                            group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:2980, tan:'Cao'},
-    {tieuDe:'Thanh toán ZaloPay bị lỗi',                         group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:1540, tan:'Trung bình'},
-    {tieuDe:'Thanh toán Payoo bị lỗi',                           group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:1280, tan:'Trung bình'},
-    {tieuDe:'Thanh toán VietQR bị lỗi',                          group:'Payment Hub',                  type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',        so:1224, tan:'Trung bình'},
-    {tieuDe:'RK7FO không vào được do Services',                   group:'RK7 MANAGER',                  type:'Pos software issue - Core rk - services not start',   so:1150, tan:'Trung bình'},
-    {tieuDe:'SkyOrder không kết nối được',                        group:'SkyGuestScreen',               type:'Pos software issue - Core rk - services not start',   so:980,  tan:'Trung bình'},
-    {tieuDe:'Máy in bill không kết nối được (network)',           group:'HARDWARE/ SOFTWARE',            type:'Hardware - Printer (Printer/paper/network)',           so:891,  tan:'Trung bình'},
-    {tieuDe:'POS bị treo tại màn hình đặt món',                  group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:820,  tan:'Trung bình'},
-    {tieuDe:'Hướng dẫn thao tác tác vụ trên POS',               group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác tác vụ trên pos', so:622, tan:'Thấp'},
-    {tieuDe:'Nguồn POS bị lỗi (không lên nguồn)',               group:'HARDWARE/ SOFTWARE',            type:'Hardware - Power issue',                              so:600,  tan:'Thấp'},
-    {tieuDe:'POS in double / in nhầm bàn',                       group:'Phần mềm POS',                 type:'Pos software issue - Core RK - print issue',          so:580,  tan:'Thấp'},
-    {tieuDe:'Master data sai giá món',                           group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:560,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn thu ngân thao tác POS sai',              group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:540,  tan:'Thấp'},
-    {tieuDe:'Skyinvoice không xuất hóa đơn được',               group:'Skyinvoice',                   type:'Pos software issue - Skyinvoice issue',               so:520,  tan:'Thấp'},
-    {tieuDe:'Network bị mất kết nối tại nhà hàng',              group:'Hệ thống mạng',                type:'Network - Network lost',                              so:510,  tan:'Thấp'},
-    {tieuDe:'POS không in được bill thanh toán',                 group:'Phần mềm POS',                 type:'Pos software issue - Core RK - print issue',          so:490,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn setup promotion / combo',                group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:480,  tan:'Thấp'},
-    {tieuDe:'SkyGuestScreen không hiển thị đúng',               group:'SkyGuestScreen',               type:'Pos software issue - SkyGuestScreen issue',           so:460,  tan:'Thấp'},
-    {tieuDe:'Barcode scanner không nhận mã',                    group:'HARDWARE/ SOFTWARE',            type:'Hardware - Barcode scanner issue',                    so:440,  tan:'Thấp'},
-    {tieuDe:'POS bị treo tại màn hình thanh toán',              group:'Phần mềm POS',                 type:'Pos software issue - Core RK - freezing',             so:420,  tan:'Thấp'},
-    {tieuDe:'RK7 Manager bị treo không vào được',               group:'RK7 MANAGER',                  type:'Pos software issue - Core RK - freezing',             so:400,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn nhà hàng cài đặt lại POS',              group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:390,  tan:'Thấp'},
-    {tieuDe:'Hub / Switch mạng bị lỗi',                        group:'Hệ thống mạng',                type:'Network - Network lost',                              so:380,  tan:'Thấp'},
-    {tieuDe:'POS bị treo do hết RAM',                          group:'HARDWARE/ SOFTWARE',            type:'Pos software issue - Core RK - freezing',             so:370,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn mở ca POS',                            group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:355,  tan:'Thấp'},
-    {tieuDe:'Màn hình cảm ứng POS bị liệt',                   group:'HARDWARE/ SOFTWARE',            type:'Hardware - Touchscreen issue',                        so:340,  tan:'Thấp'},
-    {tieuDe:'Master data thiếu toppings / options',            group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:325,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn chuyển bàn / gộp bàn',                group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:310,  tan:'Thấp'},
-    {tieuDe:'POS không sync menu từ RK7',                     group:'Phần mềm POS',                 type:'Promotion - Thiếu master data',                       so:295,  tan:'Thấp'},
-    {tieuDe:'Farcard không đọc được thẻ thành viên',         group:'CRM',                          type:'CRM - Card reader issue',                             so:282,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn split bill / tách hóa đơn',           group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:270,  tan:'Thấp'},
-    {tieuDe:'POS bị restart bất ngờ',                        group:'HARDWARE/ SOFTWARE',            type:'Hardware - Power issue',                              so:258,  tan:'Thấp'},
-    {tieuDe:'Skyinvoice xuất sai thông tin công ty',         group:'Skyinvoice',                   type:'Pos software issue - Skyinvoice issue',               so:245,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn áp dụng voucher / khuyến mãi',       group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:232,  tan:'Thấp'},
-    {tieuDe:'Máy in chạy chậm (delay in bill)',             group:'HARDWARE/ SOFTWARE',            type:'Hardware - Printer (Printer/paper/network)',           so:220,  tan:'Thấp'},
-    {tieuDe:'OM không nhận order từ SkyOrder',              group:'OM',                           type:'Network - Network lost',                              so:210,  tan:'Thấp'},
-    {tieuDe:'POS bị login sai nhân viên',                   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Thao tác POS sai',            so:198,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn cập nhật phần mềm POS',             group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:185,  tan:'Thấp'},
-    {tieuDe:'Camera giám sát bị mất kết nối',              group:'HARDWARE/ SOFTWARE',            type:'Hardware - Camera issue',                             so:172,  tan:'Thấp'},
-    {tieuDe:'Hướng dẫn nhà hàng người dùng mở máy POS',   group:'Thao tác Vận Hành Người Dùng', type:'Hướng dẫn người dùng - Hướng dẫn thao tác',          so:183,  tan:'Thấp'},
-    {tieuDe:'Master data lỗi giá combo',                   group:'MASTER DATA',                   type:'Promotion - Thiếu master data',                       so:158,  tan:'Thấp'},
-    {tieuDe:'Skyinvoice không kết nối được cổng thuế',     group:'Skyinvoice',                   type:'Pos software issue - Skyinvoice issue',               so:145,  tan:'Thấp'},
-    {tieuDe:'Hệ thống mạng chập chờn (packet loss)',       group:'Hệ thống mạng',                type:'Network - Network lost',                              so:142,  tan:'Thấp'},
+function loadFallback(){
+  allIssues=[
+    {tieuDe:'Phần mềm POS không vào được do services',group:'Phần mềm POS',type:'Pos software issue - Core rk - services not start',so:10570,tan:'Rất cao'},
+    {tieuDe:'Hỗ trợ thanh toán thủ công (tất cả kênh)',group:'Payment Hub',type:'Hướng dẫn người dùng - Hướng dẫn thanh toán',so:10224,tan:'Rất cao'},
+    {tieuDe:'Farcard bị stop',group:'CRM',type:'Pos software issue - Core rk - services not start',so:8670,tan:'Rất cao'},
+    {tieuDe:'Phần mềm POS bị treo do hệ thống',group:'Phần mềm POS',type:'Pos software issue - Core RK - freezing',so:6824,tan:'Rất cao'},
+    {tieuDe:'Rk7 Manager không vào được do Services',group:'RK7 MANAGER',type:'Pos software issue - Core rk - services not start',so:4543,tan:'Cao'},
+    {tieuDe:'Hỗ trợ hủy tạm tính',group:'Thao tác Vận Hành Người Dùng',type:'Hướng dẫn người dùng - Thao tác POS sai',so:2770,tan:'Trung bình'},
+    {tieuDe:'Hỗ trợ POS bị lock bàn',group:'Thao tác Vận Hành Người Dùng',type:'Hướng dẫn người dùng - Hướng dẫn thao tác',so:2535,tan:'Trung bình'},
+    {tieuDe:'Hướng dẫn nhà hàng đóng ca chung (DayEnd)',group:'Thao tác Vận Hành Người Dùng',type:'Hướng dẫn người dùng - Hướng dẫn thao tác',so:2451,tan:'Trung bình'},
+    {tieuDe:'Máy in không ra bill (kẹt lệnh in)',group:'HARDWARE/ SOFTWARE',type:'Hardware - Printer (Printer/paper/network)',so:2076,tan:'Trung bình'},
+    {tieuDe:'SkyTab không vào được do Services',group:'SkyTab',type:'Pos software issue - Core rk - services not start',so:1642,tan:'Trung bình'},
   ].sort((a,b)=>b.so-a.so);
 }
 
-function renderOverview(issues) {
-  const allTotal  = allIssues.reduce((s,i) => s+i.so, 0);
-  const yearTotal = YEAR_TOTALS[currentYear] || allTotal;
-  document.getElementById('mTotal').textContent    = yearTotal.toLocaleString('vi-VN');
-  document.getElementById('mTotalSub').textContent = YEAR_SUBS[currentYear] || '';
-  document.getElementById('mRows').textContent     = allIssues.length;
-  document.getElementById('mGroups').textContent   = [...new Set(allIssues.map(i=>i.group))].length;
-  document.getElementById('mTypes').textContent    = [...new Set(allIssues.map(i=>i.type).filter(Boolean))].length;
-  const gm={};
-  allIssues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
+function renderOverview(issues){
+  const allTotal=allIssues.reduce((s,i)=>s+i.so,0);
+  const yearTotal=YEAR_TOTALS[currentYear]||allTotal;
+  document.getElementById('mTotal').textContent=yearTotal.toLocaleString('vi-VN');
+  document.getElementById('mTotalSub').textContent=YEAR_SUBS[currentYear]||'';
+  document.getElementById('mRows').textContent=allIssues.length;
+  document.getElementById('mGroups').textContent=[...new Set(allIssues.map(i=>i.group))].length;
+  document.getElementById('mTypes').textContent=[...new Set(allIssues.map(i=>i.type).filter(Boolean))].length;
+  const gm={};allIssues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
   const top3=Object.values(gm).sort((a,b)=>b-a).slice(0,3).reduce((s,v)=>s+v,0);
   document.getElementById('mTop3').textContent=((top3/allTotal)*100).toFixed(1)+'%';
-  const total = issues.reduce((s,i)=>s+i.so,0);
-  buildCharts(issues, total);
-  buildCritical(issues, total);
+  const total=issues.reduce((s,i)=>s+i.so,0);
+  buildCharts(issues,total);
+  buildCritical(issues,total);
   buildTypeList(issues);
-  buildInsights(issues, total);
-  buildDetailTable(allIssues, allTotal);
+  buildInsights(issues,total);
+  buildDetailTable(allIssues,allTotal);
   document.getElementById('filterCount').textContent=`${allIssues.length} issue`;
 }
 
-function buildCharts(issues, total) {
-  const cT=cssVar('--chart-text'), cT2=cssVar('--chart-text2'), cAxis=cssVar('--chart-axis'),
-        cGrid=cssVar('--chart-grid'), cTip=cssVar('--chart-tooltip-bg'), cBorder=cssVar('--chart-border'),
-        cBarLbl=cssVar('--bar-axis-label'), cBdr=cssVar('--border');
-  const top10  = issues.slice(0,10);
-  const bColors= top10.map(i=>i.tan==='Rất cao'?'#F05252':i.tan==='Cao'?'#FB923C':i.tan==='Trung bình'?'#4F8EF7':'#3D4F6A');
-  if (charts.bar) charts.bar.destroy();
-  charts.bar = new Chart(document.getElementById('barChart'), {
+function buildCharts(issues,total){
+  const pal=getPalette();
+  const cT=cssVar('--chart-text'),cT2=cssVar('--chart-text2'),cAxis=cssVar('--chart-axis'),
+        cGrid=cssVar('--chart-grid'),cTip=cssVar('--chart-tooltip-bg'),cBorder=cssVar('--chart-border'),
+        cBarLbl=cssVar('--bar-axis-label');
+
+  const top10=issues.slice(0,10);
+  const bColors=top10.map(i=>i.tan==='Rất cao'?(currentTheme==='dark'?'#F05252':'#DC2626'):i.tan==='Cao'?(currentTheme==='dark'?'#FB923C':'#EA580C'):i.tan==='Trung bình'?(currentTheme==='dark'?'#4F8EF7':'#2563EB'):(currentTheme==='dark'?'#3D4F6A':'#94A3B8'));
+  if(charts.bar)charts.bar.destroy();
+  charts.bar=new Chart(document.getElementById('barChart'),{
     type:'bar',
     data:{labels:top10.map(i=>i.tieuDe),datasets:[{data:top10.map(i=>i.so),backgroundColor:bColors,borderRadius:4,borderSkipped:false}]},
-    options:{
-      indexAxis:'y',responsive:true,maintainAspectRatio:false,
-      layout:{padding:{right:8}},
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,
-          callbacks:{label:ctx=>'  '+ctx.raw.toLocaleString('vi-VN')+' lần'}}
-      },
-      scales:{
-        x:{grid:{color:cGrid},ticks:{color:cAxis,callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v,font:{size:10}}},
-        y:{ticks:{color:cBarLbl,font:{size:11},callback(val){return this.getLabelForValue(val);}},grid:{display:false}}
-      }
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,layout:{padding:{right:8}},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:cTip,borderColor:cBorder,borderWidth:1,titleColor:cT,bodyColor:cT2,callbacks:{label:ctx=>'  '+ctx.raw.toLocaleString('vi-VN')+' lần'}}},
+      scales:{x:{grid:{color:cGrid},ticks:{color:cAxis,callback:v=>v>=1000?(v/1000).toFixed(0)+'k':v,font:{size:10}}},y:{ticks:{color:cBarLbl,font:{size:11},callback(val){return this.getLabelForValue(val);}},grid:{display:false}}}
     }
   });
 
-  const gm={};
-  issues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
+  const gm={};issues.forEach(i=>gm[i.group]=(gm[i.group]||0)+i.so);
   const sorted=Object.entries(gm).sort((a,b)=>b[1]-a[1]).slice(0,10);
-  const pColors=sorted.map((_,i)=>PAL[i%PAL.length]);
-  if (charts.pie) charts.pie.destroy();
-  charts.pie = new Chart(document.getElementById('pieChart'), {
+  const pColors=sorted.map((_,i)=>pal[i%pal.length]);
+  if(charts.pie)charts.pie.destroy();
+  charts.pie=new Chart(document.getElementById('pieChart'),{
     type:'doughnut',
     data:{labels:sorted.map(e=>e[0]),datasets:[{data:sorted.map(e=>e[1]),backgroundColor:pColors,borderWidth:2,borderColor:cBorder}]},
-    options:{
-      responsive:true,maintainAspectRatio:false,cutout:'50%',
+    options:{responsive:true,maintainAspectRatio:false,cutout:'50%',
       plugins:{
-        /* legend label theo theme */
-        legend:{position:'bottom',labels:{color:cT,font:{size:10},boxWidth:10,padding:7,
-          generateLabels:ch=>ch.data.labels.map((l,i)=>({text:l.length>22?l.slice(0,22)+'…':l,fillStyle:pColors[i],fontColor:cT,hidden:false,index:i}))
-        }},
-        /* % trên slice luôn trắng (slice màu đậm) */
+        legend:{position:'bottom',labels:{color:cT,font:{size:10},boxWidth:10,padding:7,generateLabels:ch=>ch.data.labels.map((l,i)=>({text:l.length>22?l.slice(0,22)+'…':l,fillStyle:pColors[i],fontColor:cT,hidden:false,index:i}))}},
         datalabels:{color:'#FFFFFF',font:{size:10,weight:'bold'},formatter:(val)=>{const p=((val/total)*100);return p>=4?p.toFixed(1)+'%':'';},anchor:'center',align:'center'},
-        tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,
-          callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('vi-VN')} (${((ctx.raw/total)*100).toFixed(1)}%)`}}
+        tooltip:{backgroundColor:cTip,borderColor:cBorder,borderWidth:1,titleColor:cT,bodyColor:cT2,callbacks:{label:ctx=>` ${ctx.label}: ${ctx.raw.toLocaleString('vi-VN')} (${((ctx.raw/total)*100).toFixed(1)}%)`}}
       }
     },plugins:[ChartDataLabels]
   });
 }
 
-function buildCritical(issues, total) {
-  document.getElementById('critBox').innerHTML = issues.slice(0,5).map((it,idx)=>{
+function buildCritical(issues,total){
+  document.getElementById('critBox').innerHTML=issues.slice(0,5).map((it,idx)=>{
     const pct=((it.so/total)*100).toFixed(1);
     const cls=idx<2?'crit-r':idx<4?'crit-o':'crit-y';
-    const fc=idx<2?'#FCA5A5':idx<4?'#FED7AA':'#FDE68A';
+    const fc=idx<2?'var(--red)':idx<4?'var(--orange)':'var(--yellow)';
     const bc=it.tan==='Rất cao'?'b-r':it.tan==='Cao'?'b-o':'b-b';
     return `<div class="crit-item ${cls}">
       <div class="crit-rank">${idx+1}</div>
@@ -824,14 +737,13 @@ function buildCritical(issues, total) {
   }).join('');
 }
 
-/* FIX 2: bỏ .slice(0,8) → hiển thị HẾT tất cả Type Issue, có scroll */
-function buildTypeList(issues) {
-  const tm={};
-  issues.forEach(i=>{const t=i.type||'Chưa xác định';tm[t]=(tm[t]||0)+i.so;});
+function buildTypeList(issues){
+  const tm={};issues.forEach(i=>{const t=i.type||'Chưa xác định';tm[t]=(tm[t]||0)+i.so;});
   const sorted=Object.entries(tm).sort((a,b)=>b[1]-a[1]);
   const max=sorted[0]?.[1]||1;
-  document.getElementById('typeListBox').innerHTML = sorted.map((e,idx)=>{
-    const col=PAL[idx%PAL.length];
+  const pal=getPalette();
+  document.getElementById('typeListBox').innerHTML=sorted.map((e,idx)=>{
+    const col=pal[idx%pal.length];
     const bp=Math.round((e[1]/max)*100);
     return `<div class="type-item">
       <div class="type-rank">${idx+1}</div>
@@ -842,81 +754,71 @@ function buildTypeList(issues) {
   }).join('');
 }
 
-function buildInsights(issues, total) {
+function buildInsights(issues,total){
   const top=issues[0];
   const top3=issues.slice(0,3);
   const vh=issues.filter(i=>i.tan==='Rất cao');
   const vhTotal=vh.reduce((s,i)=>s+i.so,0);
   const pay=issues.filter(i=>i.group==='Payment Hub').reduce((s,i)=>s+i.so,0);
+  const insTagStyle=(color)=>`font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;opacity:.85;color:${color}`;
   document.getElementById('insightBox').innerHTML=[
     top?`<div class="ins ins-1">
       <div class="ins-ico">🔥</div>
       <div>
-        <div class="ins-tag" style="color:#FCA5A5">Ưu tiên hàng đầu — Hành động ngay</div>
+        <div style="${insTagStyle('var(--red)')}">Ưu tiên hàng đầu — Hành động ngay</div>
         <div class="ins-t">Top 3 issue nghiêm trọng nhất</div>
-        <div class="ins-b">${top3.map((it,i)=>`<b>${i+1}. ${it.tieuDe}</b> — ${it.so.toLocaleString('vi-VN')} lần · ${it.group}`).join('<br>')}<br><br>Auto-restart watchlog - Cài Zabbix để giám sát và khởi động lại service tự động.</div>
-        <div class="ins-chip">↓ Giảm đáng kể với script được cấu hình từ Zabbix</div>
+        <div class="ins-b">${top3.map((it,i)=>`<b>${i+1}. ${it.tieuDe}</b> — ${it.so.toLocaleString('vi-VN')} lần · ${it.group}`).join('<br>')}<br><br>Auto-restart watchlog — Cài Zabbix để giám sát và khởi động lại service tự động.</div>
+        <div class="ins-chip">↓ Giảm đáng kể với script Zabbix</div>
       </div>
     </div>`:'',
     vh.length?`<div class="ins ins-2">
       <div class="ins-ico">⚠️</div>
       <div>
-        <div class="ins-tag" style="color:#FED7AA">${vh.length} issue tần suất Rất cao</div>
+        <div style="${insTagStyle('var(--orange)')}"> ${vh.length} issue tần suất Rất cao</div>
         <div class="ins-t">Chiếm 62.9% tổng ghi nhận</div>
-        <div class="ins-b">Cần hành động khắc phục ngay. Tổng <b>${vhTotal.toLocaleString('vi-VN')}</b> lần — watchlog. Tìm kiếm nguyên nhân và đưa ra giải pháp.</div>
+        <div class="ins-b">Tổng <b>${vhTotal.toLocaleString('vi-VN')}</b> lần — cần hành động khắc phục ngay. Tìm nguyên nhân và đưa ra giải pháp.</div>
       </div>
     </div>`:'',
     pay?`<div class="ins ins-3">
       <div class="ins-ico">💳</div>
       <div>
-        <div class="ins-tag" style="color:#BFDBFE">Payment Hub — Khắc phục từng kênh thanh toán</div>
-        <div class="ins-t">Chuẩn hóa cấu hình tìm ra nguyên nhân từ log ghi nhận của từng kênh thanh toán và đưa ra giải pháp.</div>
-        <div class="ins-b">Tổng <b>${pay.toLocaleString('vi-VN')}</b> lần (VNPay, Momo, Zalo, Payoo, VietQR). FAQ popup inline POS + training.</div>
+        <div style="${insTagStyle('var(--accent)')}">Payment Hub — Chuẩn hóa từng kênh thanh toán</div>
+        <div class="ins-t">Tìm log từng kênh — đưa ra giải pháp từng trường hợp</div>
+        <div class="ins-b">Tổng <b>${pay.toLocaleString('vi-VN')}</b> lần (VNPay, Momo, Zalo, Payoo, VietQR). FAQ popup inline POS + training thu ngân.</div>
         <div class="ins-chip">↓ −${pay.toLocaleString('vi-VN')} lần tiềm năng</div>
       </div>
     </div>`:'',
     `<div class="ins ins-4">
       <div class="ins-ico">📈</div>
       <div>
-        <div class="ins-tag" style="color:#D8B4FE">Cảnh báo xu hướng 2026</div>
+        <div style="${insTagStyle('var(--purple)')}">Cảnh báo xu hướng 2026</div>
         <div class="ins-t">POS lỗi kết nối tăng 3.3× trong 5 tháng đầu năm</div>
-        <div class="ins-b">5,669 (2024) → 18,470 (2026 YTD). Sự cố về POS xảy ra nhiều vì nghẽn server monitor - CRM Ecode treo cũng chiếm phần lớn tác động đến phần này.</div>
+        <div class="ins-b">5,669 (2024) → 18,470 (2026 YTD). Sự cố POS tăng do nghẽn server monitor — CRM Ecode treo cũng là nguyên nhân lớn.</div>
       </div>
     </div>`,
   ].join('');
 }
 
 let trendInst;
-function buildTrendChart() {
-  const cT=cssVar('--chart-text'), cT2=cssVar('--chart-text2'), cAxis=cssVar('--chart-axis'),
-        cGrid=cssVar('--chart-grid'), cTip=cssVar('--chart-tooltip-bg'), cBdr=cssVar('--border'),
-        cLegend=cssVar('--chart-text2');
+function buildTrendChart(){
+  const cT=cssVar('--chart-text'),cT2=cssVar('--chart-text2'),cAxis=cssVar('--chart-axis'),
+        cGrid=cssVar('--chart-grid'),cTip=cssVar('--chart-tooltip-bg'),cBdr=cssVar('--border');
   const mode=document.getElementById('trendMode').value;
   const type=mode==='line'?'line':'bar';
   if(trendInst)trendInst.destroy();
+  const ds=TREND_SERIES.map(s=>{
+    const col=currentTheme==='dark'?s.colorDark:s.color;
+    return{label:s.lbl,data:s.data,backgroundColor:col+(type==='line'?'33':'bb'),borderColor:col,borderWidth:type==='line'?2:0,fill:type==='line',tension:.35,borderRadius:type==='bar'?4:0,pointBackgroundColor:col,pointRadius:type==='line'?4:0};
+  });
   trendInst=new Chart(document.getElementById('trendChart'),{
-    type,
-    data:{labels:['2024','2025','2026 (5T)'],datasets:TREND_SERIES.map(s=>({
-      label:s.lbl,data:s.data,
-      backgroundColor:s.color+(type==='line'?'33':'bb'),
-      borderColor:s.color,borderWidth:type==='line'?2:0,
-      fill:type==='line',tension:.35,borderRadius:type==='bar'?4:0,
-      pointBackgroundColor:s.color,pointRadius:type==='line'?4:0,
-    }))},
-    options:{
-      responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{position:'bottom',labels:{color:cLegend,font:{size:11},boxWidth:10,padding:10}},
-        tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,mode:'index',
-          callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('vi-VN')}`}}
-      },
-      scales:{
-        x:{stacked:mode!=='grouped',grid:{color:cGrid},ticks:{color:cT2,font:{size:12}}},
-        y:{stacked:mode!=='grouped',grid:{color:cGrid},ticks:{color:cAxis,callback:v=>(v/1000).toFixed(0)+'k',font:{size:11}}}
-      }
+    type,data:{labels:['2024','2025','2026 (5T)'],datasets:ds},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:'bottom',labels:{color:cT2,font:{size:11},boxWidth:10,padding:10}},tooltip:{backgroundColor:cTip,borderColor:cBdr,borderWidth:1,titleColor:cT,bodyColor:cT2,mode:'index',callbacks:{label:ctx=>` ${ctx.dataset.label}: ${ctx.raw.toLocaleString('vi-VN')}`}}},
+      scales:{x:{stacked:mode!=='grouped',grid:{color:cGrid},ticks:{color:cT2,font:{size:12}}},y:{stacked:mode!=='grouped',grid:{color:cGrid},ticks:{color:cAxis,callback:v=>(v/1000).toFixed(0)+'k',font:{size:11}}}}
     }
   });
 }
+
 function buildYearly(){
   buildTrendChart();
   ['2024','2025','2026'].forEach(y=>{
@@ -941,7 +843,7 @@ function buildYearly(){
   }).join('');
 }
 
-function buildDetailTable(issues, total) {
+function buildDetailTable(issues,total){
   const max=issues[0]?.so||1;
   const tbody=document.getElementById('issueTable');
   if(!issues.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text3)">Không tìm thấy issue</td></tr>';return;}
@@ -949,7 +851,7 @@ function buildDetailTable(issues, total) {
     const pct=((it.so/total)*100).toFixed(1);
     const bp=Math.round((it.so/max)*100);
     const bc=it.tan==='Rất cao'?'b-r':it.tan==='Cao'?'b-o':it.tan==='Trung bình'?'b-b':'b-g';
-    const fc=it.tan==='Rất cao'?'#F05252':it.tan==='Cao'?'#FB923C':it.tan==='Trung bình'?'#4F8EF7':'#3D4F6A';
+    const fc=it.tan==='Rất cao'?'var(--red)':it.tan==='Cao'?'var(--orange)':it.tan==='Trung bình'?'var(--accent)':'var(--text3)';
     const ts=it.type&&it.type.length>42?it.type.slice(0,42)+'…':(it.type||'—');
     return `<tr>
       <td style="color:var(--text3);text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px">${idx+1}</td>
@@ -984,8 +886,7 @@ function getFiltered(){
 }
 function clearFilters(){
   ['searchInput','groupFilter','typeFilter','freqFilter'].forEach(id=>document.getElementById(id).value='');
-  const total=allIssues.reduce((s,i)=>s+i.so,0);
-  buildDetailTable(allIssues,total);
+  buildDetailTable(allIssues,allTotal);
   document.getElementById('filterCount').textContent=`${allIssues.length} issue`;
 }
 ['groupFilter','typeFilter','freqFilter'].forEach(id=>document.getElementById(id).addEventListener('change',applyFilter));
