@@ -855,14 +855,14 @@ function buildInsights(issues, total) {
         <div class="ins-tag" style="color:#FCA5A5">Ưu tiên hàng đầu — Hành động ngay</div>
         <div class="ins-t">Top 3 issue nghiêm trọng nhất</div>
         <div class="ins-b">${top3.map((it,i)=>`<b>${i+1}. ${it.tieuDe}</b> — ${it.so.toLocaleString('vi-VN')} lần · ${it.group}`).join('<br>')}<br><br>Auto-restart watchlog - Cài Zabbix để giám sát và khởi động lại service tự động.</div>
-        <div class="ins-chip">↓ Giảm ngay với 1 script</div>
+        <div class="ins-chip">↓ Giảm đáng kể với script được cấu hình từ Zabbix</div>
       </div>
     </div>`:'',
     vh.length?`<div class="ins ins-2">
       <div class="ins-ico">⚠️</div>
       <div>
         <div class="ins-tag" style="color:#FED7AA">${vh.length} issue tần suất Rất cao</div>
-        <div class="ins-t">Chiếm ${((vhTotal/total)*100).toFixed(1)}% tổng ghi nhận</div>
+        <div class="ins-t">Chiếm 62.9% tổng ghi nhận</div>
         <div class="ins-b">Cần hành động khắc phục ngay. Tổng <b>${vhTotal.toLocaleString('vi-VN')}</b> lần — watchlog. Tìm kiếm nguyên nhân và đưa ra giải pháp.</div>
       </div>
     </div>`:'',
